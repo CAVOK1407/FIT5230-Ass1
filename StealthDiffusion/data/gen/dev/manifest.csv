@@ -1,0 +1,7 @@
+image_id,prompt,seed,model,steps,guidance,source512
+0000,a photo of a tench,5230000,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0000.png
+0001,a photo of a English springer spaniel,5230001,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0001.png
+0002,a photo of a cassette player,5230002,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0002.png
+0003,a photo of a chain saw,5230003,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0003.png
+0004,a photo of a church,5230004,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0004.png
+0005,a photo of a French horn,5230005,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0005.png

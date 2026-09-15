@@ -1,0 +1,18 @@
+# Local system and editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Large pretrained models are downloaded separately (see README.md)
+/StealthDiffusion/checkpoints/*.pth
+/StealthDiffusion/checkpoints/*.pt

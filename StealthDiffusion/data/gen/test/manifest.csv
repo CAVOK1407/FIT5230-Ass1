@@ -1,0 +1,21 @@
+image_id,prompt,seed,model,steps,guidance,source512
+0000,a photo of a garbage truck,5230006,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0006.png
+0001,a photo of a gas pump,5230007,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0007.png
+0002,a photo of a golf ball,5230008,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0008.png
+0003,a photo of a parachute,5230009,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0009.png
+0004,a photo of a tench,5230010,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0010.png
+0005,a photo of a English springer spaniel,5230011,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0011.png
+0006,a photo of a cassette player,5230012,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0012.png
+0007,a photo of a chain saw,5230013,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0013.png
+0008,a photo of a church,5230014,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0014.png
+0009,a photo of a French horn,5230015,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0015.png
+0010,a photo of a garbage truck,5230016,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0016.png
+0011,a photo of a gas pump,5230017,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0017.png
+0012,a photo of a golf ball,5230018,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0018.png
+0013,a photo of a parachute,5230019,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0019.png
+0014,a photo of a tench,5230020,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0020.png
+0015,a photo of a English springer spaniel,5230021,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0021.png
+0016,a photo of a cassette player,5230022,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0022.png
+0017,a photo of a chain saw,5230023,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0023.png
+0018,a photo of a church,5230024,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0024.png
+0019,a photo of a French horn,5230025,Manojb/stable-diffusion-2-1-base,30,7.5,gen512/0025.png
