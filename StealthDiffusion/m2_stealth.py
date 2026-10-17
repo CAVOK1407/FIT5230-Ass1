@@ -21,18 +21,57 @@ loop, so that every change is an explicit command-line switch:
   --di_prob 0             M2: input diversity - with this probability the decoded image is
                           randomly resized and padded before it is shown to the surrogates.
 
-With all defaults the script reproduces the official pipeline (variant "B00").
+Milestone 3 switches (all default to the official behaviour; names follow the paper draft,
+Section "Pipeline configurations", Table of configurations A1-A5 / X1-X6):
+
+  --encode_source pgd1|clean
+                          which image is DDIM-inverted into the latent.
+                          pgd1  = official: the output of the first PGD call (x1).
+                          clean = the unmodified input (configurations A4a, A4b, X4).
+                          With clean the first PGD call is skipped.
+  --control_source pgd|encoded|clean
+                          which image is fed to the Control-VAE encoder (the "control image").
+                          pgd     = official: a second PGD call on the encoded image (x2).
+                          encoded = the encoded image itself, no second PGD call (X3).
+                          clean   = the unmodified input (X2, A4a, X4).
+  --iterations 0          no latent optimisation (A2 with the defaults, X4 with clean/clean).
+  --pgd_impl torchattacks|own
+                          own = a re-implementation of the same PGD loop (needed for the
+                          switches below). With the official parameters it must give the same
+                          pixels as torchattacks; m3_run.sh pgdcheck verifies that.
+  --cap none|<float>|auto --pgd_alpha --pgd_steps
+                          capped PGD (paper, H2 "constructive check"): every PGD call stops at
+                          the first step at which the surrogate score reaches the cap. auto =
+                          median surrogate score of the real development images (--real_dev_dir).
+                          The paper's capped variant is  --cap auto --pgd_alpha eps/10
+                          --pgd_steps 40 --loss margin --kappa cap.
+  --kappa <float>|cap     margin target of --loss margin; cap = the value of --cap.
+  --pgd_eot / --lao_eot none|jpeg|resize|both
+                          expectation over transformation: the attack loss is averaged over
+                          the identity view and the listed channel views. The forward pass
+                          applies the real channel (PIL JPEG at --eot_jpeg_q, or Lanczos
+                          down-scaling by --eot_resize and bicubic up-scaling, exactly as
+                          m2_evaluate.py does); the backward pass treats the channel as the
+                          identity (straight-through estimator).
+
+With all defaults the script reproduces the official pipeline (variant "B00" = paper A5).
 Everything else (DDIM inversion, 2 diffusion steps, AdamW lr 1e-2, Control-VAE weights,
 the two PGD stages, 224x224 resolution, seed 8888 for the VAE sampling) is kept as in
 the official code so that variants are comparable.
 
 Outputs per image (in --save_dir):
   NNNN_originImage.png   input resized to 224x224 (the reference for PSNR/SSIM/LPIPS)
+  NNNN_pgd1.png          output of the first PGD call, x1 (= configuration A1 on its own)
+  NNNN_control.png       the control image fed to the Control-VAE encoder, quantised to 8 bit
+                         (= configuration X1 on its own when --control_source pgd)
   NNNN_plain_vae.png     ordinary-VAE decode of the final latent (diagnostic only)
   NNNN_adv_image.png     final Control-VAE output = the attack result
-  records.jsonl          one line per image: predictions of all detectors, PSNR, SSIM, time
-  run_config.json        the exact configuration of this run
+  records.jsonl          one line per image: predictions of all detectors at the stages
+                         clean / pgd (x1) / control (x2) / plain_vae / final, PSNR, SSIM,
+                         time, the LAO loss history and the PGD step counts
+  run_config.json        the exact configuration of this run (incl. the resolved cap)
 """
+import io
 import argparse
 import glob
 import json
@@ -228,26 +267,154 @@ def run_pgd(pgd_model, eps, x_norm, label, restore_eval):
     return out
 
 
+# ---------------------------------------------------------------------------------------
+# M3: channel views for expectation over transformation (straight-through estimator)
+# ---------------------------------------------------------------------------------------
+def _pil_channel(x01, fn):
+    """Apply a PIL operation to every image of a [B,3,H,W] tensor in [0,1]. No gradient."""
+    outs = []
+    for i in range(x01.shape[0]):
+        pil = fn(Image.fromarray(to_uint8(x01[i:i + 1])))
+        outs.append(torch.from_numpy(np.float32(pil)[:, :, :3] / 255.0).permute(2, 0, 1))
+    return torch.stack(outs).to(x01.device)
+
+
+def jpeg_channel(pil, quality):
+    buf = io.BytesIO()
+    pil.save(buf, format="JPEG", quality=quality)
+    buf.seek(0)
+    return Image.open(buf).convert("RGB")
+
+
+def resize_channel(pil, scale):
+    # identical to m2_evaluate.apply_condition: Lanczos down, bicubic back up
+    w, h = pil.size
+    small = (max(8, int(round(w * scale))), max(8, int(round(h * scale))))
+    return pil.resize(small, resample=Image.LANCZOS).resize((w, h), resample=Image.BICUBIC)
+
+
+def eot_views(x01, mode, jpeg_q=75, resize=0.5):
+    """[identity] + channel views of x01. Each channel view is  x + (channel(x) - x).detach(),
+    so its value is the real channel output and its gradient is the identity."""
+    views = [x01]
+    if mode in ("jpeg", "both"):
+        views.append(x01 + (_pil_channel(x01, lambda p: jpeg_channel(p, jpeg_q)) - x01).detach())
+    if mode in ("resize", "both"):
+        views.append(x01 + (_pil_channel(x01, lambda p: resize_channel(p, resize)) - x01).detach())
+    return views
+
+
+# ---------------------------------------------------------------------------------------
+# M3: own PGD loop = torchattacks.PGD(random_start=False) + set_normalization_used, plus
+#     an optional score cap and optional EOT. Written to be pixel-identical to torchattacks
+#     with the official parameters (eps 4/255, alpha 4/255, 10 steps, no cap, no EOT).
+# ---------------------------------------------------------------------------------------
+_MEAN_T = None
+_STD_T = None
+
+
+def _mean_std(device):
+    global _MEAN_T, _STD_T
+    if _MEAN_T is None or _MEAN_T.device != device:
+        _MEAN_T = torch.tensor(MEAN, device=device).reshape(1, 3, 1, 1)
+        _STD_T = torch.tensor(STD, device=device).reshape(1, 3, 1, 1)
+    return _MEAN_T, _STD_T
+
+
+def pgd_own(pgd_model, x_norm, label, eps, alpha, steps, cap=None, eot="none", eot_jpeg_q=75, eot_resize=0.5):
+    """Returns (adv_norm, info). adv_norm is normalised like the torchattacks output."""
+    mean, std = _mean_std(x_norm.device)
+    x01 = (x_norm * std + mean).detach()               # torchattacks.inverse_normalize
+    adv = x01.clone().detach()
+    ce = nn.CrossEntropyLoss()
+    info = {"steps": 0, "stopped_by_cap": False, "margin_start": None, "margin_end": None, "cap": cap}
+    for step in range(steps):
+        adv.requires_grad_(True)
+        views = eot_views(adv, eot, eot_jpeg_q, eot_resize)
+        outs = [pgd_model((v - mean) / std) for v in views]   # torchattacks.normalize
+        m_id = float(real_margin(outs[0]).item())
+        if step == 0:
+            info["margin_start"] = m_id
+        if cap is not None and m_id >= cap:
+            info["stopped_by_cap"] = True
+            adv = adv.detach()
+            break
+        cost = torch.stack([ce(o, label) for o in outs]).mean()
+        grad = torch.autograd.grad(cost, adv, retain_graph=False, create_graph=False)[0]
+        adv = adv.detach() + alpha * grad.sign()
+        delta = torch.clamp(adv - x01, min=-eps, max=eps)
+        adv = torch.clamp(x01 + delta, min=0, max=1).detach()
+        info["steps"] = step + 1
+    with torch.no_grad():
+        info["margin_end"] = float(real_margin(pgd_model((adv - mean) / std)).item())
+    return ((adv - mean) / std).detach(), info
+
+
+def pgd_stage(pgd_model, x_norm, label, args, restore_eval, cap):
+    """One PGD call, official or own implementation. Returns (adv_norm, info)."""
+    if args.pgd_impl == "torchattacks":
+        out = run_pgd(pgd_model, args.pgd_eps, x_norm, label, restore_eval)
+        return out, {"impl": "torchattacks", "steps": 10}
+    out, info = pgd_own(pgd_model, x_norm, label, args.pgd_eps, args.pgd_alpha, args.pgd_steps,
+                        cap=cap, eot=args.pgd_eot, eot_jpeg_q=args.eot_jpeg_q, eot_resize=args.eot_resize)
+    force_eval(restore_eval)
+    info["impl"] = "own"
+    return out, info
+
+
+@torch.no_grad()
+def median_real_margin(pgd_model, real_dir, res):
+    """Cap for --cap auto: median surrogate score of the real development images."""
+    files = natsorted([f for f in os.listdir(real_dir) if f.lower().endswith((".png", ".jpg", ".jpeg"))], alg=ns.PATH)
+    if not files:
+        raise FileNotFoundError(f"no images in {real_dir}")
+    margins = []
+    for f in files:
+        pil = Image.open(os.path.join(real_dir, f)).convert("RGB").resize((res, res), resample=Image.LANCZOS)
+        x01 = torch.from_numpy(np.float32(pil)[:, :, :3] / 255.0).permute(2, 0, 1)[None].cuda()
+        margins.append(float(real_margin(pgd_model(normalize(x01))).item()))
+    return float(np.median(margins)), margins
+
+
 @torch.enable_grad()
-def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_fn, out_prefix):
+def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_fn, out_prefix, pgd_model, cap, kappa):
     """Attack one PIL image. Returns a record dict. Mirrors diff_latent_attack.diffattack."""
     res = args.res
     label = torch.tensor([0]).cuda()  # official label convention: 0 = AI-generated
-    pgd_model = surrogate_models[0] if len(surrogate_models) == 1 else Ensemble(surrogate_models)
     # Every detector that is forwarded anywhere in this function, deduplicated by identity.
     all_models = list({id(m): m for m in list(surrogate_models) + list(detectors.values())}.values())
     force_eval(all_models)
+    pgd_infos = {}
 
-    # ---------- stage 0: PGD in pixel space (official) ----------
+    # ---------- stage 0: PGD in pixel space (official; skipped with --encode_source clean) ----------
     origin_pil = pil_image.resize((res, res), resample=Image.LANCZOS)
     origin01 = torch.from_numpy(np.float32(origin_pil)[:, :, :3] / 255.0).permute(2, 0, 1)[None].cuda()
     test_image = normalize(origin01)
-    adv_norm = run_pgd(pgd_model, args.pgd_eps, test_image, label, all_models)
-    pgd_pil = Image.fromarray(to_uint8(denormalize(adv_norm)))
+    if args.encode_source == "pgd1":
+        adv_norm, pgd_infos["pgd1"] = pgd_stage(pgd_model, test_image, label, args, all_models, cap)
+        pgd_pil = Image.fromarray(to_uint8(denormalize(adv_norm)))   # x1 (8-bit, as the official code)
+        pgd01 = denormalize(adv_norm).clamp(0, 1)
+        enc_pil = pgd_pil
+    else:
+        adv_norm, pgd_pil, pgd01 = None, None, None
+        enc_pil = origin_pil
+
+    if args.pgd_only:
+        # pixel-space baseline: the first PGD call is the whole attack (paper, "Baselines")
+        origin_u8, pgd_u8 = to_uint8(origin01), to_uint8(pgd01)
+        Image.fromarray(origin_u8).save(out_prefix + "_originImage.png")
+        pgd_pil.save(out_prefix + "_pgd1.png")
+        pgd_pil.save(out_prefix + "_adv_image.png")
+        force_eval(all_models)
+        return {"clean": predict(detectors, origin01), "pgd": predict(detectors, pgd01), "control": None,
+                "plain_vae": None, "final": predict(detectors, pgd01),
+                "psnr": float(calculate_psnr(pgd_u8, origin_u8)), "ssim": float(calculate_ssim(pgd_u8, origin_u8)),
+                "linf": float(np.abs(pgd_u8.astype(np.float32) - origin_u8.astype(np.float32)).max() / 255.0),
+                "pgd_info": pgd_infos, "history": []}
 
     # ---------- stage 1: DDIM inversion (official) ----------
     prompt = [""] * 2
-    _, inversion_latents = ddim_reverse_sample(pgd_pil, prompt, model, args.diffusion_steps, 0, res=res)
+    _, inversion_latents = ddim_reverse_sample(enc_pil, prompt, model, args.diffusion_steps, 0, res=res)
     inversion_latents = inversion_latents[::-1]
     latent = inversion_latents[args.start_step - 1].detach().clone()
 
@@ -263,14 +430,20 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
     latent.requires_grad_(True)
     optimizer = torch.optim.AdamW([latent], lr=args.lr)
 
-    init_image = preprocess(pgd_pil, res)          # PGD image in [-1, 1]
+    init_image = preprocess(enc_pil, res)             # encoded image in [-1, 1] (official: x1)
     init_image_compare = preprocess(origin_pil, res)  # clean input in [-1, 1]
 
     # ---------- Control-VAE conditioning (official final path, computed once) ----------
     newencoder, decoder = cvae
-    # second PGD stage of the official final path
-    adv2 = run_pgd(pgd_model, args.pgd_eps, normalize(init_image * 0.5 + 0.5), label, all_models)
-    init_image1 = (2.0 * denormalize(adv2) - 1).detach()
+    if args.control_source == "pgd":
+        # second PGD call of the official final path -> control image x2
+        adv2, pgd_infos["pgd2"] = pgd_stage(pgd_model, normalize(init_image * 0.5 + 0.5), label, args, all_models, cap)
+        init_image1 = (2.0 * denormalize(adv2) - 1).detach()
+    elif args.control_source == "encoded":
+        init_image1 = init_image.detach()
+    else:  # clean
+        init_image1 = init_image_compare.detach()
+    control01 = (init_image1 / 2 + 0.5).clamp(0, 1)
     with torch.no_grad():
         down_features = [f.detach() for f in newencoder(init_image1)[1]]
 
@@ -291,8 +464,12 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
         dec = decode_for_loss(latents)                       # [-1, 1]
         out01 = (dec / 2 + 0.5).clamp(0, 1)
         x_in = normalize(input_diversity(out01, args.di_prob))
-        logits_list = [m(x_in) for m in surrogate_models]
-        loss_attack = attack_objective(logits_list, label, args.loss, args.kappa, args.attack_loss_weight)
+        views = eot_views(x_in, "none") if args.lao_eot == "none" else \
+            [normalize(v) for v in eot_views(denormalize(x_in).clamp(0, 1), args.lao_eot, args.eot_jpeg_q, args.eot_resize)]
+        logits_views = [[m(v) for m in surrogate_models] for v in views]
+        logits_list = logits_views[0]                        # identity view, logged in history
+        loss_attack = torch.stack([attack_objective(lv, label, args.loss, kappa, args.attack_loss_weight)
+                                   for lv in logits_views]).mean()
         loss = loss_attack
         loss_lpips = torch.zeros(())
         if args.lpips_weight > 0:
@@ -317,16 +494,21 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
     Image.fromarray(origin_u8).save(out_prefix + "_originImage.png")
     Image.fromarray(plain_u8).save(out_prefix + "_plain_vae.png")
     Image.fromarray(final_u8).save(out_prefix + "_adv_image.png")
+    if pgd_pil is not None:
+        pgd_pil.save(out_prefix + "_pgd1.png")                       # x1
+    Image.fromarray(to_uint8(control01)).save(out_prefix + "_control.png")   # x2 (quantised)
 
     force_eval(all_models)   # nothing above may leave a detector in training mode
     record = {
         "clean": predict(detectors, origin01),
-        "pgd": predict(detectors, denormalize(adv_norm).clamp(0, 1)),
+        "pgd": predict(detectors, pgd01) if pgd01 is not None else None,
+        "control": predict(detectors, control01),
         "plain_vae": predict(detectors, plain01),
         "final": predict(detectors, final01),
         "psnr": float(calculate_psnr(final_u8, origin_u8)),
         "ssim": float(calculate_ssim(final_u8, origin_u8)),
         "linf": float(np.abs(final_u8.astype(np.float32) - origin_u8.astype(np.float32)).max() / 255.0),
+        "pgd_info": pgd_infos,
         "history": history,
     }
     return record
@@ -341,8 +523,25 @@ def main(argv=None):
     parser.add_argument("--surrogates", default="E", help="comma list of E,R,D,S used in the attack loss")
     parser.add_argument("--evaluate", default="E,R,D,S", help="comma list of detectors reported per image")
     parser.add_argument("--loss", default="ce", choices=["ce", "margin"])
-    parser.add_argument("--kappa", type=float, default=3.0, help="margin target for --loss margin")
+    parser.add_argument("--kappa", default="3.0", help="margin target for --loss margin; a number, or 'cap' = value of --cap")
     parser.add_argument("--decode_path", default="plain", choices=["plain", "final"])
+    # ---- M3 switches (defaults = official behaviour) ----
+    parser.add_argument("--encode_source", default="pgd1", choices=["pgd1", "clean"],
+                        help="image that is DDIM-inverted: pgd1 = first PGD output (official), clean = input")
+    parser.add_argument("--control_source", default="pgd", choices=["pgd", "encoded", "clean"],
+                        help="control image for the Control-VAE encoder: pgd = second PGD call on the encoded "
+                             "image (official), encoded = the encoded image itself, clean = the input")
+    parser.add_argument("--pgd_impl", default="torchattacks", choices=["torchattacks", "own"])
+    parser.add_argument("--pgd_alpha", type=float, default=4 / 255, help="step size of the own PGD loop")
+    parser.add_argument("--pgd_steps", type=int, default=10, help="max steps of the own PGD loop")
+    parser.add_argument("--cap", default="none", help="none | <float> | auto (median real-dev score of the surrogate)")
+    parser.add_argument("--real_dev_dir", default="data/real/dev", help="real development images for --cap auto")
+    parser.add_argument("--pgd_eot", default="none", choices=["none", "jpeg", "resize", "both"])
+    parser.add_argument("--lao_eot", default="none", choices=["none", "jpeg", "resize", "both"])
+    parser.add_argument("--eot_jpeg_q", type=int, default=75)
+    parser.add_argument("--eot_resize", type=float, default=0.5)
+    parser.add_argument("--pgd_only", action="store_true",
+                        help="pixel-space baseline: save the first PGD output as the attack result and skip the rest")
     parser.add_argument("--lpips_weight", type=float, default=0.0)
     parser.add_argument("--di_prob", type=float, default=0.0)
     parser.add_argument("--iterations", type=int, default=10, help="LAO iterations (official code default 10)")
@@ -367,6 +566,13 @@ def main(argv=None):
     for n in surrogate_names + evaluate_names:
         if n not in DETECTOR_NAMES:
             raise ValueError(f"unknown detector {n}; choose from E,R,D,S")
+    if args.pgd_impl == "torchattacks" and (args.cap != "none" or args.pgd_eot != "none"
+                                            or args.pgd_steps != 10 or abs(args.pgd_alpha - 4 / 255) > 1e-12):
+        raise ValueError("--cap, --pgd_eot, --pgd_steps and --pgd_alpha need --pgd_impl own")
+    if args.kappa == "cap" and args.cap == "none":
+        raise ValueError("--kappa cap needs --cap")
+    if args.pgd_only and args.encode_source != "pgd1":
+        raise ValueError("--pgd_only needs --encode_source pgd1")
 
     if os.path.isdir(args.save_dir) and os.listdir(args.save_dir) and not args.resume:
         raise FileExistsError(f"{args.save_dir} exists and is not empty; use a new save_dir or --resume")
@@ -405,6 +611,24 @@ def main(argv=None):
         detectors[name] = det
     surrogate_models = [detectors[n] for n in surrogate_names]
     eval_detectors = {n: detectors[n] for n in evaluate_names}
+    pgd_model = surrogate_models[0] if len(surrogate_models) == 1 else Ensemble(surrogate_models)
+
+    # ---- M3: resolve the cap and kappa once, record them in run_config.json ----
+    cap = None
+    if args.cap == "auto":
+        cap, dev_margins = median_real_margin(pgd_model, args.real_dev_dir, args.res)
+        force_eval(list(detectors.values()))
+        config["cap_resolved"] = cap
+        config["cap_real_dev_margins"] = dev_margins
+        print(f"[m3] cap = median real-dev surrogate score = {cap:.3f} over {len(dev_margins)} images "
+              f"(range {min(dev_margins):.2f} .. {max(dev_margins):.2f})", flush=True)
+    elif args.cap != "none":
+        cap = float(args.cap)
+        config["cap_resolved"] = cap
+    kappa = cap if args.kappa == "cap" else float(args.kappa)
+    config["kappa_resolved"] = kappa
+    with open(os.path.join(args.save_dir, "run_config.json"), "w") as f:
+        json.dump(config, f, indent=2)
 
     cvae = load_control_vae(model, args.encoder_weights)
     lpips_fn = build_lpips() if args.lpips_weight > 0 else None
@@ -424,7 +648,8 @@ def main(argv=None):
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         t0 = time.time()
-        record = attack_one(model, pil_image, args, surrogate_models, eval_detectors, cvae, lpips_fn, out_prefix)
+        record = attack_one(model, pil_image, args, surrogate_models, eval_detectors, cvae, lpips_fn, out_prefix,
+                            pgd_model, cap, kappa)
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         record.update({"image_id": image_id, "source": os.path.basename(path),
@@ -432,8 +657,9 @@ def main(argv=None):
         with open(records_path, "a") as f:
             f.write(json.dumps(record) + "\n")
         finals = " ".join(f"{k}:{'real' if v['pred'] == 1 else 'AI'}" for k, v in record["final"].items())
+        steps = " ".join(f"{k}:{v.get('steps')}" for k, v in record["pgd_info"].items()) if record["pgd_info"] else "-"
         print(f"[m2] {image_id} {record['seconds']:.1f}s psnr={record['psnr']:.2f} "
-              f"ssim={record['ssim']:.3f} final-> {finals}", flush=True)
+              f"ssim={record['ssim']:.3f} pgd_steps[{steps}] final-> {finals}", flush=True)
         m2_device.release_memory()   # keeps per-image time flat; see the note in m2_device
 
     print(f"[m2] done. outputs in {args.save_dir}", flush=True)

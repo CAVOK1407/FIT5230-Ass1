@@ -26,8 +26,9 @@ never on in-memory tensors.  For every (run, detector, condition) it reports:
                     final Control-VAE output did not (motivation for --decode_path final)
 
 Post-processing conditions (applied identically to clean and attacked images):
-  none, jpeg<Q> (PIL JPEG quality Q), resize<S> (downscale by S/10 then back to 224,
-  e.g. resize05 = 0.5x), combined with '+', e.g. jpeg75+resize05.
+  none, jpeg<Q> (PIL JPEG quality Q), resize<S> (S read as the decimals of the scale:
+  resize05 = 0.5x, resize075 = 0.75x; Lanczos down, bicubic back to 224),
+  combined with '+', e.g. jpeg75+resize05.
 """
 import argparse
 import csv
@@ -62,7 +63,8 @@ def apply_condition(pil, cond):
             buf.seek(0)
             pil = Image.open(buf).convert("RGB")
         elif token.startswith("resize"):
-            scale = int(token[6:]) / 10.0
+            digits = token[6:]                      # resize05 = 0.5x, resize075 = 0.75x, resize5 = 0.5x
+            scale = int(digits) / (10.0 ** len(digits))
             small = max(8, int(round(RES * scale)))
             pil = pil.resize((small, small), resample=Image.LANCZOS).resize((RES, RES), resample=Image.BICUBIC)
         else:
@@ -94,11 +96,14 @@ def auc(pos_scores, neg_scores):
     return float(roc_auc_score(y, list(pos_scores) + list(neg_scores)))
 
 
-def load_run(run_dir):
+def load_run(run_dir, adv_suffix="_adv_image.png"):
+    """adv_suffix selects which saved file counts as the attack output. M3: a run directory
+    also holds NNNN_pgd1.png (x1, configuration A1) and NNNN_control.png (x2, configuration X1),
+    so  --runs A1=results/m3/A5:_pgd1.png  evaluates the first PGD output on its own."""
     ids = natsorted([f[:-len("_originImage.png")] for f in os.listdir(run_dir) if f.endswith("_originImage.png")], alg=ns.PATH)
     items = []
     for i in ids:
-        adv = os.path.join(run_dir, i + "_adv_image.png")
+        adv = os.path.join(run_dir, i + adv_suffix)
         if not os.path.exists(adv):
             continue
         plain = os.path.join(run_dir, i + "_plain_vae.png")
@@ -124,7 +129,8 @@ def mean(xs):
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--runs", nargs="+", required=True, help="name=dir pairs")
+    p.add_argument("--runs", nargs="+", required=True,
+                   help="name=dir pairs; name=dir:SUFFIX evaluates dir/NNNN<SUFFIX> instead of NNNN_adv_image.png")
     p.add_argument("--real_dir", required=True, help="directory of real 224x224 PNGs (test split)")
     p.add_argument("--out", required=True)
     p.add_argument("--detectors", default="E,R,D,S")
@@ -139,11 +145,14 @@ def main(argv=None):
     runs = {}
     for spec in args.runs:
         name, d = spec.split("=", 1)
-        items, seconds = load_run(d)
+        suffix = "_adv_image.png"
+        if ":" in d:
+            d, suffix = d.rsplit(":", 1)
+        items, seconds = load_run(d, suffix)
         if not items:
             raise FileNotFoundError(f"no completed images in {d}")
         runs[name] = {"dir": d, "items": items, "seconds": seconds}
-        print(f"[eval] run {name}: {len(items)} images from {d}", flush=True)
+        print(f"[eval] run {name}: {len(items)} images from {d} ({suffix})", flush=True)
     real_files = natsorted([f for f in os.listdir(args.real_dir) if f.endswith(".png")], alg=ns.PATH)
     real_pils = [Image.open(os.path.join(args.real_dir, f)).convert("RGB") for f in real_files]
     print(f"[eval] {len(real_pils)} real test images", flush=True)
@@ -173,6 +182,7 @@ def main(argv=None):
     for det_name in [d.strip() for d in args.detectors.split(",")]:
         det = other_attacks.model_selection(det_name).eval()
         det.requires_grad_(False)
+        assert not det.training, f"detector {det_name} must be in eval mode (BatchNorm statistics)"
         for cond in conditions:
             r_pred, r_margin = predict_batch(det, [apply_condition(p, cond) for p in real_pils])
             for f, pr, mg in zip(real_files, r_pred, r_margin):

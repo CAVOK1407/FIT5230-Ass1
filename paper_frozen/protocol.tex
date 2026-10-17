@@ -1,0 +1,424 @@
+\section{Evaluation Protocol}
+\label{sec:protocol}
+
+The protocol fixes, before any result is read, what is measured, on which data, with which
+denominators and with which uncertainty. Choices that are still open carry a marker.
+
+\subsection{Data}
+\label{sec:data}
+
+Table~\ref{tab:data} lists the image sets. Image lists with file hashes are released.
+
+\emph{Generated images.} We use three sources.
+(i)~A \emph{reproduction set} drawn at random, with a fixed seed, from the eight validation subsets
+of GenImage \pcite{zhu2023genimage}. The paper drew 100 images per subset. We draw 125 for the test
+split, so that it has 1000 images, and 25 more for the development split. The 800 images of the
+original evaluation are not identified, so the set cannot be the same.
+(ii)~Images that we generate with Stable Diffusion 1.5 and 2.1 from class-name prompts. Version
+1.5 is among the generators of GenImage; version 2.1 is not, and it is also the model inside the
+attack.
+\todo{prompts, classes, resolution, sampler, number of steps and seeds of source (ii); the pilot
+used ``a photo of a'' followed by the class name, 512 pixels, 30 steps and guidance scale 7.5}
+(iii)~Synthbuster \pcite{bammey2023synthbuster}, which provides 1000 images from each of nine
+generators and is paired with the 1000 photographs of RAISE-1k \pcite{dangnguyen2015raise}.
+
+\emph{Real images.} Real images are needed for false-positive rates, for the AUC and for threshold
+calibration. For source (i) they are taken from the real folders of the same GenImage subsets. For
+source (ii) they are ImageNet validation images \pcite{deng2009imagenet}, and the two sets of
+source (ii) share them. For source (iii) they are the RAISE-1k photographs. The pilot runs used
+Imagenette \pcite{howard2019imagenette}. The released code prepares no real images for the attack
+experiments, and its test script and its training loader treat them in two other ways
+(Section~\ref{sec:released-eval}). How real images are prepared in our experiments is therefore
+our choice.
+
+\begin{table}[!t]
+\centering
+\caption{Image sets and splits. ``dev.'': development split. The two Stable Diffusion sets share
+their real images.}
+\label{tab:data}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Generated} & \multicolumn{2}{c}{Real} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Set & test & dev. & test & dev. \\
+\midrule
+Reproduction set, 8 subsets  & $8\times125$ & $8\times25$  & 1000 & 2000 \\
+Stable Diffusion 1.5         & 1000         & 200          & 1000 & 2000 \\
+Stable Diffusion 2.1         & 1000         & 200          & \multicolumn{2}{c}{as above} \\
+Synthbuster, 9 generators    & $9\times500$ & $9\times100$ & 500  & 500  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Splits.} The development split serves everything that is tuned or calibrated: thresholds at
+a target false-positive rate, the cap of the capped variant, the sensitivity sweep of
+Section~\ref{sec:h1}, the admission of detectors and any hyper-parameter of a variant. The test
+split is not used for any choice. The images and prompts of the pilot runs are kept out of all
+splits: pilot files are excluded by hash, and generation uses other seeds.
+
+\emph{Confirmatory set.} The decision rules of Section~\ref{sec:hypotheses} are applied to one set
+only, the reproduction set. The other sets are analysed in the same way and reported without a
+verdict.
+\todo{GenImage has to be obtained first. If it cannot be, the Stable Diffusion 1.5 set becomes the
+confirmatory set, the comparison with the published table is dropped, and both facts are stated as
+deviations. Decide before the freeze.}
+
+\subsection{Pre-processing and file format}
+\label{sec:preprocessing}
+
+\emph{Pre-processing.} Generated images are resized to $224\times224$ with a Lanczos filter,
+without cropping, as the released driver does (\code{MAIN}~84). Real images are first cropped to
+their central square and then resized with the same filter, as in the pilot, so that photographs
+are not squashed; the generated images of our sources are square already. This is our main
+pre-processing. It is not that of the release's test script, which resizes with a bilinear filter
+without cropping, and not that of its training loader (Section~\ref{sec:released-eval}), and
+resampling by itself moves detector scores
+\pcite{rajan2025aligned,konstantinidou2026navigating}. Before any attack is run, we therefore
+measure the clean operating point of each released detector under four pre-processings: the main
+one; the main one without the central crop; that of the test script; and that of the training
+loader with a central crop (Section~\ref{sec:results-clean}).
+\todo{the documented training command leaves the load and crop sizes open; state the sizes used for
+the fourth}
+
+\emph{File format.} In GenImage the real images are JPEG files and the generated images are PNG
+files, and detectors trained on it react to this difference \pcite{grommelt2024fakeorjpeg}. Source
+(ii) has the same asymmetry by construction, and the output of the attack is always a newly written
+PNG file. A comparison of real with generated or attacked images on the files as distributed is
+therefore confounded with the format. The channel setting ``JPEG 95'' of
+Section~\ref{sec:channel} passes all three kinds of images through the same encoder as the last
+step before detection. We call it the \emph{format-equalised reference}, following the
+recommendation of \tcite{Zhou and Wang}{zhou2026audit} to re-encode both classes in the same
+format.
+
+\emph{Which analysis decides.} H1 compares attacked images with each other and is decided in the
+main analysis: main pre-processing, lossless files. H2 and H3 compare attacked images with
+thresholds that come from real images. Their verdicts are computed three times: in the main
+analysis; with the format-equalised reference in the place of the lossless files; and with the
+pre-processing of the test script for real and unmodified generated images. A verdict on H2 or H3
+stands only if it is the same in all three. Otherwise the hypothesis is undecided, and the three
+analyses are reported side by side.
+
+\subsection{Detectors}
+\label{sec:detectors}
+
+\emph{Within-family detectors.} The four detectors released with the attack (\detE, \detR, \detD,
+\detS) are used with the released weights, the released wrapper and the threshold $\tau=0$ on the
+logit. We do not retrain them.
+
+\emph{Out-of-family detectors.} We add detectors from other groups, chosen among UnivFD
+\pcite{ojha2023univfd}, DRCT \pcite{chen2024drct}, NPR \pcite{tan2024npr}, AIDE
+\pcite{yan2025aide}, Effort \pcite{yan2025effort} and Community Forensics
+\pcite{park2025communityforensics}. UnivFD is among the five additional detectors of the original
+paper. The other four of those five, DIRE, LGrad, GFF and RECCE, are included if their public
+weights load in our environment. \todo{try them; state for each one that is left out why}
+A detector is admitted for a generated set if its clean AUC on the development split of that set
+is at least 0.8; detectors that fail are listed with their clean performance and left out of the
+attack tables for that set. The same rule applies to the four released detectors on sets other
+than the reproduction set. Each out-of-family detector is used with its official pre-processing
+and default threshold, and we record whether this pre-processing leaves a $224\times224$ input
+unchanged. Scores are oriented so that higher means ``real''.
+\todo{final list, after one test image has been run through each candidate}
+
+For every detector we record the SHA-256 hash of the weight file, the source of the code and its
+commit.
+
+\subsection{Harness}
+\label{sec:harness}
+
+\emph{Running the release.} The code needs changes to its environment before it runs elsewhere. It
+sets a proxy address and a GPU index (\code{MAIN}~\mbox{4--6}; \code{OA}~7; \code{TV}~\mbox{3--4}) and assumes a
+CUDA device (\code{MAIN}~137; \code{OA}~81; \code{DLA}~227). Its detector loaders fetch ImageNet
+weights from the network before they load the released weights (\code{OA}~58, 74). The weight
+files are distributed through a file-sharing link in the README.
+\verify{whether the default model identifier \code{stabilityai/}\allowbreak\code{stable-diffusion-2-1-base}
+still resolves; the pilot runs used a mirror, whose snapshot hash must be recorded}
+
+\emph{Departures from the release.} No line of the official files that takes part in the
+computation is changed. Our harness imports the official functions for pre-processing, inversion,
+the diffusion step, the detector wrappers and the \CVAE classes. It departs from the released
+driver in five ways. (i)~The per-image loop of Algorithm~\ref{alg:released} is re-implemented;
+every configuration of Section~\ref{sec:attacks} will be a set of command-line switches.
+(ii)~A small shim lets the same code run on devices other than CUDA. (iii)~The environment differs
+from the pinned one: PyTorch~2.2.2, torchvision~0.17.2, transformers~4.30.2, NumPy~1.26.4 and
+SciPy~1.11.4 on Python~3.10, where the repository pins 2.0.0, 0.15.1, 4.42.4, 1.24.4 and 1.9.1 and
+names Python~3.8. (iv)~The diffusion checkpoint is loaded from a mirror. (v)~In the Colab workflow
+of the pilot, eight lines in six official files that set proxies and device names were rewritten
+in place; on the laptop no file was changed. \todo{replace this patch by settings outside the
+official files, so that the statement ``no official file is modified'' holds for every run}
+\todo{Equivalence check, to be reported here: run the unmodified \code{main.py} and the harness
+with default switches on the same images and the same device, and compare the saved files pixel by
+pixel and the logged decisions one by one. Until this is done, statements about ``the released
+pipeline'' in our experiments rest on our reading of the code and on the stand-in execution of
+Appendix~\ref{app:verification}.}
+
+\emph{One pass, shared intermediates.} With $\alpha=\epsilon$, a difference in the sign of one
+gradient component changes a pixel by $4/255$ or $8/255$, so two separate runs of the same
+configuration need not agree exactly. The harness therefore computes all configurations that share
+an intermediate result in one pass per image and surrogate, from the same $\xone$, the same
+$\xtwo$ and the same latents. For each image it stores, as 8-bit PNG files written with the
+truncation of the released code, the input, $\xone$, $\xtwo$ and the output of every
+configuration. It stores the scores of all detectors on each of them twice: on the floating-point
+tensor, as the released driver logs them, and on the file read back from disk. Unless stated
+otherwise, our measures use the files.
+\todo{the pilot harness reaches the configurations \cfg{A2}, \cfg{A3}, \cfg{A5}, \cfg{X5} and
+\cfg{X6}; it stores the input, the output of the plain decoder and the final output, and logs
+tensor scores at four stages. Still to be added: storing $\xone$ and $\xtwo$, and the switches for
+the control image, for the image that is encoded and for the output decoder}
+
+\emph{Noise floor.} The released configuration is run twice on the same device and once on a
+second device, and the share of decisions that differ between these runs is reported next to every
+contrast between configurations. \todo{devices; the two pilot runs were made on different devices}
+
+\emph{Safeguards.} Every prediction that the attack script records is preceded by an assertion
+that the detector is in evaluation mode, and the scores of the unmodified images are compared
+across runs before any other number is read. Appendix~\ref{app:bn} describes the fault that led to
+these two rules.
+
+\subsection{Pipeline configurations}
+\label{sec:attacks}
+
+Table~\ref{tab:configs} lists the configurations. Each is obtained from
+Algorithm~\ref{alg:released} by choosing which image is encoded into the latent, whether and where
+the loss of the latent optimisation is computed, which decoder produces the output, and which image
+is the control image. The surrogate is part of a configuration: on the confirmatory set every
+configuration is run with each of the four released detectors as surrogate.
+
+Configurations \cfg{A1} to \cfg{A5} correspond to the rows of the published ablation
+(Table~\ref{tab:paper-ablation}). Row 4 of that table, ``no PGD'', can be read in two ways, because
+the second PGD call sits inside the \CVAE branch of the code
+(Section~\ref{sec:released-pipeline}): either both calls are removed (\cfg{A4a}) or only the
+pre-processing call is (\cfg{A4b}). Under Hypothesis~1 the two readings give opposite results, so we
+run both and set both against row 4. Configurations \cfg{X1} to \cfg{X6} are ours. Two
+configurations have a switch in the released driver, \cfg{A2} and \cfg{A3}. The two switches
+cannot be combined: with both, the driver stops with an error, because a mask that the plain
+decode of the output uses is defined inside the optimisation loop (\code{DLA}~432, 526). \cfg{X6}
+therefore has no counterpart in the release, and neither have \cfg{A1}, \cfg{A4a}, \cfg{A4b} and
+\cfg{X1} to \cfg{X5}.
+
+\begin{widetable}
+\centering
+\caption{Pipeline configurations. ``Released'' latent optimisation: lines 3 to 7 of
+Algorithm~\ref{alg:released}, with the loss on the plain decoder. ``Encoded'': the image that is
+encoded into the latent. ``Control'': the control image. A dash: the stage is absent.}
+\label{tab:configs}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllll>{\raggedright\arraybackslash}p{0.40\linewidth}@{}}
+\toprule
+ & Encoded & Latent optimisation & Decoder & Control & Purpose or counterpart \\
+\midrule
+\cfg{A1}  & --      & --                    & --    & --            & output is $\xone$; row 1 of Table~\ref{tab:paper-ablation} \\
+\cfg{A2}  & $\xone$ & none                  & skip  & $\xtwo$       & row 2; released switch \cmdarg{iterations}~\code{0} \\
+\cfg{A3}  & $\xone$ & released              & plain & --            & row 3; released switch \cmdarg{is\_encoder}~\code{0} \\
+\cfg{A4a} & $\xin$  & released              & skip  & $\xin$        & row 4, both PGD calls removed \\
+\cfg{A4b} & $\xin$  & released              & skip  & $\PGD(\xin)$  & row 4, only the pre-processing call removed \\
+\cfg{A5}  & $\xone$ & released              & skip  & $\xtwo$       & row 5; the released pipeline \\
+\midrule
+\cfg{X1}  & --      & --                    & --    & --            & output is $\Quant(\xtwo)$: the control image of the release alone \\
+\cfg{X2}  & $\xone$ & released              & skip  & $\xin$        & clean control image \\
+\cfg{X3}  & $\xone$ & released              & skip  & $\xone$       & second PGD call removed \\
+\cfg{X4}  & $\xin$  & none                  & skip  & $\xin$        & reconstruction floor: no attack at all \\
+\cfg{X5}  & $\xone$ & loss on skip decoder  & skip  & $\xtwo$       & loss computed on the decoder that produces the output \\
+\cfg{X6}  & $\xone$ & none                  & plain & --            & plain route without optimisation \\
+\bottomrule
+\end{tabular}
+\end{widetable}
+
+The plain decoder is always used with $\kv$ and the skip decoder with $\kc$, as in the release.
+The contrasts that we use are these. \cfg{A5} against \cfg{A2}: what the latent optimisation adds
+to the released pipeline. \cfg{X2} against \cfg{X4}: what the route through the latent carries when
+the control image is clean. \cfg{A5} against \cfg{A1}: what the pipeline adds to one PGD call.
+\cfg{A5} against \cfg{X3}: what the second PGD call adds. \cfg{A5} against \cfg{X1}: what the
+passage through the skip decoder changes. \cfg{X5} against \cfg{A2}: whether the latent
+optimisation reaches the saved image once its loss is computed on the skip decoder. \cfg{A3}
+against \cfg{X6}: whether it works on its own route.
+
+\emph{Variants.} Four modifications of the released pipeline are examined as exploratory material:
+a surrogate ensemble of \detE, \detR and \detD, with \detS held out, which averages their logits in
+both PGD calls and their losses in the latent optimisation \pcite{liu2017delving}; a capped
+objective, described in Section~\ref{sec:h2}; an LPIPS term in the loss of the latent
+optimisation; and input diversity \pcite{xie2019diversity} in the latent optimisation.
+\todo{weight of the LPIPS term and parameters of the input diversity; the pilot used weight 1 and
+probability 0.5} The last two change only the latent optimisation. Under Hypothesis~1 they should
+change almost no decision on the saved image, which we check with the statistic of
+Section~\ref{sec:h1}. Variants with internal randomness are run with the seeds 0, 1 and 2.
+
+\emph{Baselines.} PGD from $\xin$ with $\epsilon=8/255$, step size $2/255$ and 10 steps, on the same
+objective; a transfer baseline that combines momentum, input diversity and a surrogate ensemble
+\pcite{dong2018momentum,xie2019diversity,liu2017delving} \todo{its parameters}; and FPBA
+\pcite{diao2024fpba}, whose code is public. \todo{confirm that FPBA runs on our detectors; otherwise
+state why it is omitted} Together with \cfg{A1} and \cfg{X1}, the first baseline shows how the
+released pipeline compares with pixel-space attacks that use one PGD call, two PGD calls, and one
+call with twice the bound.
+
+All configurations use the same image lists.
+
+\subsection{Channel}
+\label{sec:channel}
+
+The following settings are applied to saved $224\times224$ files, identically for real images,
+unmodified generated images and attacked images.
+\begin{itemize}
+\item \emph{None}: the lossless file.
+\item \emph{JPEG} with quality 95, 75 and 50, encoded with Pillow at its default chroma
+sub-sampling.
+\item \emph{Resizing} by a factor of 0.75 and 0.5 with a Lanczos filter, followed by bicubic
+up-sampling back to $224\times224$.
+\item \emph{Composite settings} that follow the medium and high degradation levels of
+\tcite{Mavali et al.}{mavali2024fake}, for comparability: down-sampling to 75\% with JPEG quality 50;
+and Gaussian blur, down-sampling to 50\%, JPEG quality 20 and Gaussian noise.
+\verify{their exact parameters}
+\end{itemize}
+The pilot used JPEG 75 and resizing by 0.5. For every setting, the set of images that the detector
+catches before the attack is recomputed under that setting (Section~\ref{sec:metrics}).
+
+This channel has a limit that we state here and not only at the end. A platform processes an image
+at its native size, and the detector's pre-processing comes afterwards. We process the
+$224\times224$ file, because that is the only output the released pipeline produces. We also apply
+no cropping. Our channel results therefore describe the attack as released at its working
+resolution and are not a simulation of a platform.
+
+\subsection{Measures}
+\label{sec:metrics}
+
+Let $\Xgen$ be the generated test images and $\Xreal$ the real test images of a set, $a$ a
+configuration, with $a(v)$ its output for the input $v$, and $h$ a channel setting. Let $s_d$ be
+the score of detector $d$ and $\tau_d$ its threshold.
+
+\emph{Clean operating point.} The set of generated images that the detector catches before the
+attack, and the false-positive rate on real images, both under the channel setting $h$, are
+\begin{align}
+  \Bset_d(h) &= \{v\in\Xgen : s_d(h(v))\le\tau_d\}, \label{eq:detected}\\
+  \FPR_d(h) &= \frac{|\{v\in\Xreal : s_d(h(v))\le\tau_d\}|}{|\Xreal|}. \label{eq:fpr}
+\end{align}
+We report $|\Bset_d(h)|/|\Xgen|$ and $\FPR_d(h)$ for every detector and channel setting. We call
+the images in $\Bset_d(h)$ the \emph{caught} images.
+
+\emph{Conditional success rate.} Success is counted only on caught images:
+\begin{equation}
+  \ASR_d(a,h)=\frac{|\{v\in\Bset_d(h) : s_d(h(a(v)))>\tau_d\}|}{|\Bset_d(h)|}.
+  \label{eq:asr}
+\end{equation}
+The denominator is printed next to every value. We omit $h$ for lossless files. Whenever we write
+``success rate'' for our own results we mean this quantity, as a fraction; the rates quoted from
+the paper are percentages with an unstated denominator. For the comparison with the release we
+also report the quantity that the released driver logs: the share of all attacked images that are
+classified as real, computed on the floating-point output.
+
+\emph{Discordance.} For two configurations $a$ and $a'$, the discordance $\psi_d(a,a')$ is the
+share of the caught images whose outputs under $a$ and under $a'$ receive different decisions from
+detector $d$. The difference of the two success rates cannot exceed it in absolute value.
+
+\emph{Separability.} The area under the ROC curve (AUC) between real images and attacked images is
+taken over all generated images and not only the caught ones:
+\begin{equation}
+\begin{aligned}
+  \AUC_d(a,h)={}&\Pr\bigl[s_d(h(v_r))>s_d(h(a(v_g)))\bigr]\\
+  &+\tfrac12\Pr\bigl[s_d(h(v_r))=s_d(h(a(v_g)))\bigr],
+\end{aligned}
+  \label{eq:auc}
+\end{equation}
+with $v_r$ drawn from $\Xreal$ and $v_g$ from $\Xgen$ \pcite{hanley1982meaning,fawcett2006roc}. A
+value near 1 means that attacked images score below real images, as unmodified generated images
+do. A value near 0 means that they score above real images: the two sets are separable, in the
+reversed direction. A value near 0.5 does not show that the sets cannot be told apart: if half of
+the attacked images score above all real images and half below, the AUC is 0.5 and a two-sided test
+separates the sets completely. The AUC is therefore reported as a description, and the decision
+rules use the calibrated tests below.
+
+\emph{Calibrated tests.} Let $n$ be the number of real development images, $q$ a target
+false-positive rate and $k=\lfloor qn\rfloor$. The \emph{one-sided test} flags an image if its
+score is at most the $k$-th smallest score of the real development images under the same channel
+setting. The \emph{two-sided test} uses $k'=\lfloor qn/2\rfloor$: it flags an image if its score
+is at most the $k'$-th smallest or at least the $k'$-th largest of these scores. We call the second
+event \emph{overshoot}. We use $q=0.05$, and $q=0.01$ where 2000 real development images are
+available \pcite{carlini2022membership}. With 2000 development images, the false-positive rate
+that such a threshold realises on new real images lies between 0.041 and 0.060 for $q=0.05$ and
+between 0.006 and 0.015 for $q=0.01$, with probability 0.95; with 500 it lies between 0.033 and
+0.071 for $q=0.05$. We therefore print the false-positive rate measured on the real test images
+next to every rate of a calibrated test.
+
+\emph{Distortion.} PSNR, SSIM \pcite{wang2004ssim}, LPIPS with the VGG backbone
+\pcite{zhang2018lpips} and the maximum absolute pixel difference, all between the saved output and
+the $224\times224$ input, as means and as 5\%, 50\% and 95\% quantiles over images. The bound
+$\epsilon$ is a parameter of one stage of the pipeline and not a bound on its output, so we report
+measured distortion.
+
+\emph{Cost.} Seconds per image on named hardware, and the number of forward and backward passes
+through each detector.
+
+\subsection{Statistical reporting}
+\label{sec:statistics}
+
+\emph{Error level.} All intervals have an error level of 0.05. A two-sided interval puts 0.025 on
+each side, and a one-sided bound is taken at 0.025.
+
+\emph{Single proportions.} Every rate is given with its count and its Wilson interval
+\pcite{wilson1927probable,brown2001interval}. Where a decision rule bounds a share that may be
+zero, we use the exact binomial bound of \tcite{Clopper and Pearson}{clopper1934use}, because its
+coverage is guaranteed. We write $\underline{p}$ and $\overline{p}$ for the exact lower and upper
+bounds of a share $p$.
+
+\emph{Paired comparisons.} Two configurations are always compared on the same caught images. Let
+$m$ be their number, $n_{10}$ the number on which the first configuration succeeds and the second
+does not, and $n_{01}$ the number for the opposite case. With $p_{10}=n_{10}/m$ and
+$p_{01}=n_{01}/m$, the difference of the two success rates is $p_{10}-p_{01}$ and the discordance
+is $p_{10}+p_{01}$. A bootstrap interval is of no use when no image changes its decision, since
+every resample then gives zero. We use exact bounds instead. The interval for the difference is
+$[\underline{p}_{10}-\overline{p}_{01},\;\overline{p}_{10}-\underline{p}_{01}]$, with each of the
+four bounds at a quarter of the error level; a one-sided bound for the difference uses two of
+these bounds, each at half of its error level. The coverage is at least the nominal one, so the intervals are
+conservative. We also report the exact test of \tcite{McNemar}{mcnemar1947note} on the discordant
+pairs \pcite{dietterich1998approximate}.
+
+\emph{Equivalence.} To show the absence of a relevant difference, a non-significant test is not
+enough. We use inclusion in a margin $\delta$ that is stated in advance
+\pcite{schuirmann1987comparison,lakens2017equivalence}: two configurations are declared equivalent
+for a detector if the exact upper bound of their discordance is below $\delta$. This is stricter
+than equivalence of the two rates.
+
+\emph{Several cells.} If a rule needs every cell to pass, each cell is tested at the full error
+level. If one cell is enough to trigger a rule, each cell is tested at the error level divided by
+the number of chances, which the rule states.
+
+\emph{Ratios and AUC.} Intervals come from a percentile bootstrap \pcite{efron1979bootstrap} with
+10\,000 resamples of the test images. Real and generated images are resampled separately, all
+detectors and surrogates of an image stay together, and thresholds calibrated on the development
+split stay fixed. At an AUC of 0 or 1 this interval has zero width; we then say so and give no
+interval.
+
+\emph{Sources of variation.} The released pipeline has no random start in PGD and a fixed seed for
+the VAE posterior, so for a given image and device it is deterministic up to numerical effects,
+which the noise floor of Section~\ref{sec:harness} measures. The variation that matters is across
+images. We therefore report every headline number on three thirds of the test split, cut in the
+order of the released image list, in addition to the pooled value. For a variant with internal
+randomness each seed is reported.
+
+\subsection{Scale and order of the runs}
+\label{sec:scale}
+
+The configurations of Table~\ref{tab:configs} need three latent optimisations per image and
+surrogate: one for \cfg{A3}, \cfg{A5}, \cfg{X2} and \cfg{X3}, which differ only in the final decode,
+one for \cfg{A4a} and \cfg{A4b}, and one for \cfg{X5}. The remaining configurations need none. For
+Table~\ref{tab:configs} on the test split of the confirmatory set this is 12\,000 optimisations
+for four surrogates. The other sets, with the configurations \cfg{A1}, \cfg{A2}, \cfg{A5},
+\cfg{X1}, \cfg{X2} and \cfg{X4} and the surrogates \detE and \detS, add 13\,000. The sensitivity
+sweep adds 5600 and the variants about 11\,000. In the pilot, one image took about 5 seconds on
+an NVIDIA A100 and about 11 seconds on an Apple laptop with the MPS back end, for the whole
+released pipeline with one optimisation. \todo{confirm with a timing run; at the pilot speed the
+plan is about 60 hours on one A100} The order of work is: the clean operating point; the
+equivalence check and the noise floor; all configurations on the confirmatory set; then the other
+sets; then the variants and baselines; then the channel settings, which need no further attack
+runs.
+
+\subsection{What every table states}
+\label{sec:checklist}
+
+Each results table in this paper states, in its caption or in a note: the image set and the number
+of images; the detector and whether it was among the surrogates; the denominator of every rate; the
+threshold; the channel setting; the false-positive rate on real images under the same setting; and
+the file format. The hashes of the detector weights, the switches of every configuration and the
+software and hardware are given once, in the released material. This is the list to which we hold
+our own tables.

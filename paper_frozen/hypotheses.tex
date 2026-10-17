@@ -1,0 +1,336 @@
+\section{Hypotheses}
+\label{sec:hypotheses}
+
+This section was written on \draftdate, after the code audit of Section~\ref{sec:implementation}
+and after two pilot runs on 20 attacked images each, and before the experiments of
+Section~\ref{sec:results}. The pilot runs motivated the hypotheses. They are summarised in
+Section~\ref{sec:pilot}, and their images are kept out of the experiments
+(Section~\ref{sec:data}). The hypotheses are therefore fixed in advance with respect to the
+experiments reported here, not with respect to the pilot. The pilot already showed, on 20 images,
+part of what every one of them predicts; each rationale below says how much.
+\todo{Freeze this section before the confirmatory runs start, with a time stamp that a reader can
+check, for example a registration or a tagged commit in a public repository, and record it here.}
+
+We state three confirmatory hypotheses, H1 to H3, each with a rule that says when we regard it as
+supported, refuted or undecided, and three exploratory questions, Q1 to Q3, which have no rule.
+Table~\ref{tab:rules} collects the rules. Deviations from this plan are reported in
+Section~\ref{sec:results}.
+
+\emph{Conventions.} A \emph{cell} is a pair of a surrogate and a detector; with four released
+detectors there are 16 cells, four of them white-box and twelve transfer cells. The rules are
+applied on the confirmatory set (Section~\ref{sec:data}), to 8-bit files and at the default
+threshold unless a rule names another test. Section~\ref{sec:preprocessing} says which analysis
+decides. Measures, bounds and error levels are those of Sections~\ref{sec:metrics}
+and~\ref{sec:statistics}. A cell or a part of a hypothesis for which a rule gives no verdict
+counts as undecided, and a part with no verdict in any cell is undecided. The margin $\delta=0.02$
+is the smallest difference in a success rate that we treat as relevant. It is one fifth of the gap
+of about ten points that the published ablation shows between its rows 2 and 5
+(Table~\ref{tab:paper-ablation}).
+
+\begin{widetable}
+\centering
+\caption{Decision rules. A part is supported if the condition of the third column holds in every
+cell that gets a verdict, and refuted if the condition of the fourth column holds in at least one.
+``Upper'' and ``lower'' are one-sided bounds; the number in brackets is the error level of each.
+The last column gives when a cell gets no verdict.}
+\label{tab:rules}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{0.25\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}@{}}
+\toprule
+ & Statistic of a cell & Supported if & Refuted if & No verdict if \\
+\midrule
+H1(a) & discordance of \cfg{A5} and \cfg{A2} &
+exact upper [0.025] below $\delta$ & exact lower [0.025/32] above $\delta$ &
+fewer than 250 caught images \\ \addlinespace
+H1(b) & success rate of \cfg{X2} minus that of \cfg{X4} &
+exact upper [0.025] below $\delta$ & exact lower [0.025/32] above $\delta$ &
+fewer than 250 caught images \\ \addlinespace
+H2(a) & overshoot share of the attacked images, detector equal to surrogate &
+Wilson lower [0.025] above 0.8 & Wilson upper [0.025/4] below 0.5 & -- \\ \addlinespace
+H2(b) & recovery share, transfer cells &
+Wilson lower [0.025] above 0.5 & Wilson upper [0.025/12] below 0.5 &
+fewer than 30 evading images \\ \addlinespace
+H3 & retention ratio, pooled over the transfer cells, per channel setting &
+bootstrap upper [0.025] below 0.5 & bootstrap lower [0.025] above 0.5 &
+fewer than 100 evading images in the reference \\
+\bottomrule
+\end{tabular}
+\end{widetable}
+
+\subsection{H1: the attack reaches the saved image through the control image only}
+\label{sec:h1}
+
+\emph{Statement.} (a)~In the released configuration, the latent optimisation does not change the
+decisions on the saved image: \cfg{A5} and \cfg{A2} agree. (b)~With a clean control image nothing is
+left of the attack: under \cfg{X2} the success rate is at the level of the reconstruction floor
+\cfg{X4}.
+
+\emph{Rationale.} The control image reaches the output through a path of three convolutions at
+full resolution, and the training objective of the \CVAE cannot tell a decoder that uses the latent
+from one that copies its control image (Section~\ref{sec:cvae-structure}). The latent optimisation
+computes its loss on the plain decoder, not on the skip decoder that produces the saved image
+(Section~\ref{sec:released-pipeline}). Either fact alone could make the optimisation ineffective on
+the saved image. Part (a) tests the released configuration as it is. Part (b) tests whether the
+route through the latent carries anything at all once the pixel-space route is clean. For part (a)
+the pilot gave an indirect indication on one surrogate; part (b) was not examined in the pilot.
+
+\emph{Decision rule.} For part (a), the statistic of a cell is the discordance
+$\psi_d(\cfg{A5},\cfg{A2})$. Part (a) is supported if its exact upper bound is below $\delta$ in
+every cell, and refuted if its exact lower bound is above $\delta$ in at least one cell. For part
+(b), the statistic of a cell is $\ASR_d(\cfg{X2})-\ASR_d(\cfg{X4})$. Part (b) is supported if the
+upper bound of this difference is below $\delta$ in every cell, and refuted if its lower bound is
+above $\delta$ in at least one cell; a negative difference counts as support. A refutation can
+come from either part and any of 16 cells, so its bounds are taken at the error level divided by
+32. A cell with fewer than 250 caught images gets no verdict. H1 is supported if both parts are
+supported and refuted if either part is refuted. Otherwise it is undecided, and we report which
+cells decide.
+
+\emph{Reach of the rule.} With 1000 caught images in a cell, part (a) is supported if at most 11
+decisions differ and refuted if at least 36 differ; with 600 caught images the two numbers are 5
+and 25. Part (b) is supported, with 1000 caught images, if at most 10 images succeed under \cfg{X2}
+and not under \cfg{X4} while none goes the other way, and refuted from 48 such images. The region
+in which H1 is supported is narrow on purpose: the claim is that the optimisation changes almost
+nothing.
+
+\emph{Comparison with the published ablation.} The rule above concerns the released code. To
+relate it to the paper we also compute, with \detS as surrogate, the quantity that the released
+driver logs, at 5 iterations, the number in the paper, and at 10, the default. For each of the
+fifteen transfer values of Table~\ref{tab:paper-ablation} we give the difference between our value
+at 5 iterations and the published one, with the interval for the difference of two independent
+proportions on 1000 and 800 images, whose half-width is about 4.5 points. We call a value
+reproduced if this interval contains zero. Among fifteen values about one is expected to fall
+outside by chance, so only a pattern counts: a row whose three values fall outside on the same
+side. We call our result inconsistent with the published gap between rows 2 and 5 if, in the same
+quantity at 5 iterations, the upper bound of the paired interval for the difference between
+\cfg{A5} and \cfg{A2} is below five points, half of that gap, on each of \detE, \detR and \detD.
+This comparison is descriptive and has no part in the verdict on H1.
+
+\emph{Evidence per image.} For a given device the pipeline is deterministic up to numerical
+effects, so the direct evidence for part (a) is a comparison of the two outputs image by image. We
+report the distribution over images of the pixel difference between the outputs of \cfg{A5} and
+\cfg{A2} and of the difference of their scores on every detector, each next to the same quantity
+for two repeated runs of \cfg{A5} (Section~\ref{sec:harness}).
+
+\emph{Mechanism.} Three measurements say why the outcome is what it is. They enter no rule.
+(i)~At each of the four additions in the skip decoder, the norm of the skip features and the norm
+of the decoder features to which they are added, from forward passes on test images. (ii)~We decode
+the latent of one image with the control image of another and compare the result with the saved
+outputs of the two images. (iii)~The correlation of $\xout-\xin$ with $\xtwo-\xin$ and with
+$\xone-\xin$, which says which of the two the output follows.
+
+\emph{Further contrasts.} Reported with intervals, without a rule: \cfg{A5} against \cfg{A1}, for
+what the pipeline adds to one PGD call; \cfg{A5} against \cfg{X3}, for what the second PGD call
+adds; \cfg{A5} against \cfg{X1}, for what the skip decoder changes; \cfg{X5} against \cfg{A2}, for
+whether the optimisation reaches the saved image once its loss is computed on the skip decoder;
+\cfg{A3} against \cfg{X6}, for whether it works on its own route; and \cfg{A4a} and \cfg{A4b}
+against row 4 of the published table.
+
+\emph{Sensitivity.} To see whether part (a) is specific to the released settings, the contrasts
+\cfg{A5} against \cfg{A2} and \cfg{X5} against \cfg{A2} are repeated on the development split with
+the surrogates \detE and \detS. One setting is varied at a time: 5, 10 or 50 iterations; a
+learning rate of $10^{-2}$, $3\times10^{-2}$ or $10^{-1}$; 2, 5 or 10 denoising steps, with as many
+inversion steps. This sweep is descriptive. It cannot say what a \CVAE trained with the published
+loss would do, because we use the released weights only.
+
+\subsection{H2: decisions flip, scores do not blend in}
+\label{sec:h2}
+
+\emph{Statement.} The success rate at the default threshold overstates how well the outputs of the
+released pipeline blend in with real images. (a)~On the surrogate, the attacked images overshoot:
+their scores lie above almost all scores of real images. (b)~On a transfer detector, most of the
+images that evade the default threshold are flagged by a two-sided test calibrated on real images.
+
+\emph{Rationale.} Neither objective of the pipeline is capped or stops at the decision boundary
+(Section~\ref{sec:objectives}). On a transfer detector the perturbation can move a score across the
+default threshold without moving it into the range of real images. Part (a) is known in general
+\pcite{ozbulak2019overoptimized} and was plain in the pilot; the experiment is a replication at
+scale. Part (b) was visible in the pilot on two of three transfer detectors and absent on the
+third (Section~\ref{sec:pilot}), so it can fail.
+
+\emph{Decision rule.} For part (a), the statistic of a detector is the overshoot share at
+$q=0.05$ among all attacked test images, with that detector as surrogate. Part (a) is supported
+for a detector if the lower bound of the Wilson interval of this share is above 0.8, and refuted
+if the upper bound is below 0.5; we call two sets separable when at least four of five images are
+told apart. For part (b), the statistic of a transfer cell is the \emph{recovery share}: among the
+caught images that evade the default threshold after the attack, the share that the two-sided test
+at $q=0.05$ flags. Part (b) is supported for a cell if the lower bound of the Wilson interval of
+this share is above 0.5, and refuted if the upper bound is below 0.5. Cells with fewer than 30
+evading images get no verdict. Each part is supported overall if it is supported for every
+detector or cell that gets a verdict, and refuted overall if it is refuted for at least one, with
+the error level divided by 4 for part (a) and by 12 for part (b). H2 is supported if both parts
+are, and refuted if either is.
+
+\emph{Reach of the rule.} With 1000 attacked images, part (a) is supported for a detector from 825
+flagged images and refuted up to 460.
+
+\emph{What is printed next to it.} The default threshold and the calibrated test are different
+operating points. Next to every recovery share we therefore print the false-positive rates of both
+on the real test images and their detection rates on unmodified generated images. A recovery that
+is bought with a higher false-positive rate is visible in this way.
+
+\emph{Constructive check.} If part (a) is caused by the uncapped objectives, an attack that stops
+at a target score should not overshoot. We test one capped variant: both PGD calls use the step
+size $\epsilon/10$ and at most 40 steps and stop at the first step at which the surrogate score
+reaches a cap, and the latent optimisation minimises the amount by which the score falls short of
+the cap. The cap is the median score of the real development images. \todo{confirm the cap and
+the number of steps on the development split} A call that stops early uses less of its bound, so
+the capped variant is compared with \cfg{A5} at its measured distortion as well as at its success
+rate. This check is exploratory.
+
+\subsection{H3: compression and resizing remove most of the effect}
+\label{sec:h3}
+
+\emph{Statement.} After JPEG compression at quality 75, and after down-scaling by 0.5 and
+up-scaling back, less than half of the transfer success of the released pipeline remains, when
+success is measured at the same false-positive rate before and after.
+
+\emph{Rationale.} A small pixel-level perturbation is attenuated by compression and resampling
+\pcite{dziugaite2016jpg,guo2018countering}. The saved image as a whole is not close to its input in
+that sense; in the pilot it was 34~dB away. But if H1 holds, the part of the change that carries
+the attack is the pixel-level perturbation of the control image. The attack was not evaluated under
+post-processing in the paper (Section~\ref{sec:published-eval}), and the released code contains no
+such evaluation. At the default threshold the pilot already showed a drop of this size
+(Section~\ref{sec:pilot}); it did not measure it at a matched false-positive rate.
+
+\emph{Statistic.} The same processing can change the false-positive rate of a detector
+considerably; in the pilot it reached 0.70 for one detector. A comparison at the default threshold
+would mix the survival of the attack with this shift. We therefore use, for each channel setting
+$h$, the one-sided test calibrated to $q=0.05$ under that setting. For a transfer cell, let
+$\Bset'$ be the generated test images that this test catches before the attack both in the
+reference setting and under $h$. The \emph{retention ratio} $\rho(h)$ is the number of images in
+$\Bset'$ that evade the test under $h$ after the attack, summed over the twelve transfer cells,
+divided by the number that evade it in the reference setting, summed in the same way. The
+reference setting is the lossless file in the main analysis and JPEG~95 in the format-equalised
+analysis (Section~\ref{sec:preprocessing}). The twelve ratios of the single cells are printed next
+to the pooled one.
+
+\emph{Decision rule.} H3 has one verdict per channel setting. For JPEG 75 and for resizing by 0.5,
+it is supported if the upper bound of the bootstrap interval of $\rho(h)$ is below 0.5, and
+refuted if the lower bound is above 0.5. If fewer than 100 images evade in the reference setting
+in total, there is no verdict.
+
+\emph{Descriptive companion.} For every detector and channel setting we report the false-positive
+rate at the default threshold and the conditional success rate at the default threshold with its
+denominator. These numbers describe a defender who does not recalibrate. They enter no rule.
+
+\subsection{Exploratory questions}
+\label{sec:questions}
+
+\emph{Q1: detectors from other groups.} How does the conditional success rate on out-of-family
+detectors (Section~\ref{sec:threat}) compare with that on within-family transfer detectors? The
+paper itself reports lower rates on a CLIP-based detector, between 19\% and 61\% depending on the
+surrogate (Section~\ref{sec:published-eval}), and transfer between CNN-based and CLIP-based
+detectors is known to be weak \pcite{derosa2024clip}. We expect the same and treat the comparison
+as a description of the detectors we could run. Two cautions apply. A handful of detectors does not
+represent a family. And a detector whose pre-processing resamples the $224\times224$ file applies a
+channel of its own, so that a lower rate may be an effect of that channel.
+
+\emph{Q2: generator.} Do the contrasts of H1 and the effects of the variants differ between the
+generators of GenImage, on which the paper says the detectors were trained, and other generators?
+In the pilot the detectors missed more unmodified images of the second kind, which shrinks the set
+on which a conditional rate is computed (Section~\ref{sec:pilot}). The statistic is the difference
+between the paired differences in the two generator sets, with its interval. The comparison is
+confounded: Stable Diffusion~2.1 is both a generator outside GenImage and the model inside the
+attack.
+
+\emph{Q3: latent and pixel perturbations under the channel.} If H1 holds, the released pipeline
+says nothing about whether a perturbation of the latent survives post-processing better than a
+perturbation of the pixels. We examine this with the pixel-space route removed: the control image
+is clean and the loss is computed on the skip decoder. We add expectation over transformation
+\pcite{athalye2018eot}, with differentiable JPEG compression and resizing, to the latent
+optimisation. For comparison we add it to PGD, at the same mean LPIPS distortion. We make no
+prediction.
+
+\subsection{Pilot observations}
+\label{sec:pilot}
+
+Table~\ref{tab:pilot} summarises the two pilot runs. Both use the released configuration with
+surrogate \detE and attack 20 generated images. They differ in three respects: the generator of the
+inputs, the number of real images, and the device (an Apple laptop with the MPS back end for run A,
+an NVIDIA A100 for run B). The generated images were made at 512 pixels from prompts for ten
+classes, and the real images are Imagenette photographs, cropped to their central square; both
+were resized to $224\times224$. The table is computed from saved 8-bit files at the default
+threshold. The scores quoted below for the stages of the pipeline are those that the pilot harness
+logs on floating-point tensors. With these sample sizes the uncertainty is large: 14 successes out
+of 14 have a Wilson interval of $[0.78,1.00]$. None of these observations is a result.
+
+\begin{widetable}
+\centering
+\caption{Pilot runs with the released configuration and surrogate \textsf{E} (marked $^\ast$). Run A:
+inputs from Stable Diffusion (SD) 2.1, 20 real images. Run B: inputs from SD 1.5, 100 real images.
+Rates are given as counts where the counts were recorded; ``n.r.'': not recorded. The rows
+``evading'' count only the images caught before the attack under the same setting. The runs
+motivated the hypotheses and are not part of the results.}
+\label{tab:pilot}
+\small
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrrrrrrrr@{}}
+\toprule
+ & \multicolumn{4}{c}{Run A (SD 2.1 inputs)}
+ & \multicolumn{4}{c}{Run B (SD 1.5 inputs)} \\
+\cmidrule{2-5}\cmidrule{6-9}
+Setting and quantity & \textsf{E}$^\ast$ & \detR & \detD & \detS & \textsf{E}$^\ast$ & \detR & \detD & \detS \\
+\midrule
+\emph{Lossless files} \\
+Caught before the attack, of 20        & 14 & 12 & 19 & 12 & 18 & 14 & 20 & 20 \\
+Evading after the attack               & 14/14 & 8/12 & 11/19 & 10/12 & 18/18 & 9/14 & 9/20 & 20/20 \\
+AUC, real against attacked             & 0.00 & 0.80 & 0.94 & 0.98 & 0.00 & 0.74 & 0.96 & 0.98 \\
+Real images flagged                    & 0/20 & 0/20 & 0/20 & 0/20 & 0/100 & 1/100 & 1/100 & 0/100 \\
+\addlinespace
+\emph{JPEG 75} \\
+Caught before the attack, of 20        & 12 & 16 & 20 & 19 & 15 & n.r. & n.r. & n.r. \\
+Evading after the attack               & 11/12 & 4/16 & 2/20 & 2/19 & 14/15 & 0.07 & 0.05 & 0.10 \\
+Real images flagged                    & 0/20 & 4/20 & 3/20 & 14/20 & 11/100 & n.r. & n.r. & n.r. \\
+\addlinespace
+\emph{Resizing by 0.5} \\
+Caught before the attack, of 20        & 20 & 19 & 20 & 20 & n.r. & n.r. & n.r. & n.r. \\
+Evading after the attack               & 9/20 & 3/19 & 2/20 & 5/20 & 0.45 & 0.20 & 0.00 & 0.00 \\
+Real images flagged                    & 11/20 & 0/20 & 4/20 & 1/20 & n.r. & n.r. & n.r. & n.r. \\
+\bottomrule
+\end{tabular*}
+\end{widetable}
+
+\emph{For H1: scores of the surrogate.} In run A, the first PGD call raises the mean score of \detE
+from $-2.0$ to $+114.4$, before truncation to 8 bits. After encoding, inversion, denoising and
+decoding with the plain decoder, and before any optimisation, the mean score is $+1.8$, and 7 of
+the 20 images are back on the ``generated'' side: the plain round trip removes most of the effect
+of the perturbation. Ten iterations of latent optimisation raise the mean score on the plain
+decoder to $+88.6$, so the optimisation is effective on the route on which its loss is computed.
+On the saved image the mean score is $+153.2$. A second run computes the loss on the skip decoder.
+At its first iteration it logs the score of the skip decoder's output for the latent before
+optimisation. Image by image, this score and the score of the saved image of the released
+configuration differ by 0.49 on average in absolute value and by at most 1.17, for scores between
+120 and 207, with no shift in either direction. This is 0.3\% of the score and an upper bound on
+what the optimisation as released does to it; truncation to 8 bits alone moves the same score by
+0.28 on average, and no repeated run was made.
+
+\emph{For H1: decisions.} After the first PGD call alone, 8 of 12, 11 of 19 and 11 of 12 caught
+images evade \detR, \detD and \detS, which is 30 of 43; for the saved image the counts are 8, 11
+and 10, which is 29 of 43. On these 20 images the released pipeline thus evaded the transfer
+detectors no more often than its own first stage. With the loss on the skip decoder the latent is
+not inert: the mean score of the saved image is $166.7$ instead of $153.2$ in run A and $154.8$
+instead of $139.7$ in run B. On lossless files this changed none of the 80 decisions in run A;
+after JPEG compression or resizing it changed 5 of 160. In run B, on files, 11 instead of 9 of the
+14 caught images evade \detR. The tensor log of the same two runs gives 17 instead of 16 of 20
+images classified as real by \detR, so at least one decision differs between the tensor and the
+file. The saved images are closer to their inputs (PSNR 34.0~dB) than the outputs of the plain
+decoder are (24.1~dB). The comparison without optimisation was read from a log and was not run as
+configuration \cfg{A2}, and no score of $\xtwo$ was recorded.
+
+\emph{For H2.} In run A, the scores of \detE on the 20 real images lie between 5.5 and 38.4, and
+its scores on the 20 attacked files between 121 and 207. On the transfer detectors, the caught
+images that evade the default threshold score below every one of the 20 real images in 7 of 8
+cases on \detR and in 9 of 10 on \detS, and in none of 11 on \detD, where all evading images lie
+inside the range of the real scores.
+
+\emph{For H3.} At the default threshold in run A, the attack evades in 29 of 43 pairs of a caught
+image and a transfer detector on lossless files, and in 8 of 55 after JPEG compression; in run B
+the rates per detector fall from 0.64, 0.45 and 1.00 to 0.07, 0.05 and 0.10. In run A, \detS flags
+14 of the 20 real images after JPEG compression and \detE flags 11 of 20 after resizing. A
+false-positive rate of 0.70 on 20 images may also point to a mismatch between our pre-processing
+and that of the detector's training, which is one reason for the check of
+Section~\ref{sec:preprocessing}.
+
+\emph{For Q2.} The detectors miss more unmodified images from Stable Diffusion~2.1 than from 1.5:
+23 against 8 of 80 pairs of an image and a detector (first row of Table~\ref{tab:pilot}). The two
+runs were also made on different devices.
