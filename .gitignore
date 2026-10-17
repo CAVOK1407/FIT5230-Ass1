@@ -16,3 +16,9 @@ venv/
 # Large pretrained models are downloaded separately (see README.md)
 /StealthDiffusion/checkpoints/*.pth
 /StealthDiffusion/checkpoints/*.pt
+
+# M3: generated data and image outputs stay local (hundreds of MB); records and CSV summaries are kept
+/StealthDiffusion/data15/
+/StealthDiffusion/data/imagenette2-320*
+/StealthDiffusion/results/m3_*/**/*.png
+/StealthDiffusion/results/m3_logs/
