@@ -1,5 +1,7 @@
 # FIT5230 Assignment · Milestone 2 —— 总目录
 
+> Note (Oct 2026): this is the Milestone 2 README, kept for the M2 script and variant details. The `docs/M2_*.md` / `docs/M3_M4_RESERVE_ZH.md` working notes it mentions are no longer in the public repository; only `docs/README_LOCAL_MAC_ZH.md` remains. Start from [README.md](README.md).
+
 **队伍**:Dark.ModelBreakers · Theme 1 · Dark(攻击方)
 **基于论文**:StealthDiffusion (ACM MM 2024), [arXiv:2408.05669](https://arxiv.org/abs/2408.05669)
 **官方代码**:https://github.com/wyczzy/StealthDiffusion,锁定 commit `a156fb0`

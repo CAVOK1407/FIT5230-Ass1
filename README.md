@@ -1,63 +1,63 @@
-# FIT5230 Assignment 1
+# FIT5230 Assignment 1 — Dark.ModelBreakers (Theme 1, Dark side)
 
-Dark.ModelBreakers · Theme 1 · Milestone 2
+Attack side of Theme 1: we reproduce, measure and improve **StealthDiffusion** (Zhou et al., ACM MM 2024, [arXiv:2408.05669](https://arxiv.org/abs/2408.05669)), an attack that hides Stable-Diffusion images from forensic detectors. The official code lives in `StealthDiffusion/` (fixed at commit `a156fb0` of [wyczzy/StealthDiffusion](https://github.com/wyczzy/StealthDiffusion)) together with our scripts.
 
-本仓库包含代码、Notebook、交接文档、实验数据和已有结果。队友请先阅读 [M2 交接说明](docs/M2_HANDOVER_ZH.md)，完整项目说明见 [README_M2.md](README_M2.md)。
+## Where things are
 
-## 从这里开始
-
-| 内容 | 入口 |
+| Milestone | Entry point |
 | --- | --- |
-| 交接说明与结果解读 | [docs/M2_HANDOVER_ZH.md](docs/M2_HANDOVER_ZH.md) |
-| M2 提交 Notebook | [notebooks/M2_Submission.ipynb](notebooks/M2_Submission.ipynb) |
-| Mac 环境依赖与运行说明 | [docs/README_LOCAL_MAC_ZH.md](docs/README_LOCAL_MAC_ZH.md) |
-| 可运行的项目代码 | [StealthDiffusion/](StealthDiffusion/) |
-| 已有评测结果 | [StealthDiffusion/results/](StealthDiffusion/results/) |
-| M3/M4 待办 | [docs/M3_M4_RESERVE_ZH.md](docs/M3_M4_RESERVE_ZH.md) |
+| M1 — reproduction | `notebooks/M1_original_DO_NOT_EDIT.ipynb` |
+| M2 — switches, variants, evaluation protocol | `notebooks/M2_Submission.ipynb`, scripts `StealthDiffusion/m2_*.py`, `StealthDiffusion/run_local_mac.sh`, [README_M2.md](README_M2.md) |
+| M3 — hypothesis tests, capped / EOT variants, LAO experiments | `StealthDiffusion/m3_run.sh`, `StealthDiffusion/m3_*.py`, results under `StealthDiffusion/results/m3_*`, Colab bundle in [m3_colab/](m3_colab/README.md), notebook `notebooks/M3_Submission.ipynb` |
+| M4 — defence demos, Control-VAE fine-tuning (individual) | [m4/README.md](m4/README.md), `StealthDiffusion/m4_finetune_cvae.py`, `StealthDiffusion/m4_run.sh` |
 
-## 下载并运行
+`m2_scripts/` holds the git-tracked source of every script; `StealthDiffusion/` holds the copy that runs inside the official code base. Edit in `StealthDiffusion/`, then sync to `m2_scripts/`.
+
+## Setup
 
 ```bash
 git clone https://github.com/CAVOK1407/FIT5230-Ass1.git
 cd FIT5230-Ass1/StealthDiffusion
 ```
 
-先按 [本地环境说明](docs/README_LOCAL_MAC_ZH.md) 安装依赖。本仓库已包含官方代码和 M2 脚本，可以跳过该文档中另行克隆官方仓库、复制脚本的步骤。
+1. Environment: Python 3.10, `torch 2.2.2`, `diffusers 0.12.1`, `timm 0.6.12`, plus `StealthDiffusion/requirements.txt`. Step-by-step instructions for macOS (Apple Silicon, MPS) are in [docs/README_LOCAL_MAC_ZH.md](docs/README_LOCAL_MAC_ZH.md); the same packages work on CUDA (`--device cuda`). The device shim `m2_device.py` redirects the official `.cuda()` calls.
+2. Weights (about 2.6 GB, not in git): the six files below from the official release (links in [StealthDiffusion/README.md](StealthDiffusion/README.md)) go into `StealthDiffusion/checkpoints/` with these exact names:
 
-### 模型权重
+   ```text
+   checkpoints/
+   ├── efficientnet-b0.pth
+   ├── resnet50.pth
+   ├── deit.pth
+   ├── swin-t.pth
+   ├── Controlvae.pt
+   └── dncnn_color_blind.pth
+   ```
 
-6 个模型权重约 2.6 GB，单独下载，不包含在 Git 仓库中。原项目 [权重说明](StealthDiffusion/README.md) 提供 [百度网盘下载链接](https://pan.baidu.com/s/1gWCPS--IUbu3QWKlWD5bRA)，提取码为 `z8se`。也可以向队内获取已有权重文件。
+   The LPIPS VGG weights (`.cache/checkpoints/vgg16-397923af.pth`) and the Stable Diffusion 2.1-base pipeline are downloaded automatically on first run.
+3. Data: generated images and real photographs are produced by the scripts (`bash run_local_mac.sh data` for the SD 2.1 set, `bash m3_run.sh data15` for the SD 1.5 set + Imagenette). They are not in git; the manifests and all per-image records and evaluation CSVs are.
 
-下载后把下面 6 个文件直接放入 `StealthDiffusion/checkpoints/`，保留文件名：
-
-```text
-checkpoints/
-├── efficientnet-b0.pth
-├── resnet50.pth
-├── deit.pth
-├── swin-t.pth
-├── Controlvae.pt
-└── dncnn_color_blind.pth
-```
-
-激活环境后，在 `StealthDiffusion/` 内检查并运行：
+## Run
 
 ```bash
-conda activate fit5230m2
-bash run_local_mac.sh check
-N_ATTACK=20 bash run_local_mac.sh attack
-bash run_local_mac.sh eval
+conda activate fit5230m2            # or your own environment
+bash run_local_mac.sh check         # verifies torch / device / the six checkpoints
+bash m3_run.sh status               # what has been run
+bash m3_run.sh t4                   # M3: all configurations on the SD 1.5 set (100 images, resumable)
+bash m3_run.sh eval15               # evaluation -> results/m3_sd15/eval/summary.csv
+bash m4_run.sh smoke && bash m4_run.sh all   # M4: fine-tune the control branch, re-run X4 / A5 / ENS, evaluate
 ```
 
-只查看文档与已有实验结果不需要下载权重。
+The M4 defence demos need only the committed CSVs and `pandas`:
 
-## 协作说明
+```bash
+cd m4/defense && python m4_defense_calibrated.py --data_dir ../data --alpha 0.05 --beta 0 --out /tmp/out.csv
+```
 
-- 私有仓库需要先接受仓库拥有者发出的 GitHub 邀请才能访问。
-- 日常修改请从最新 `main` 新建分支，提交后通过 Pull Request 合并。
-- M2 脚本以 `StealthDiffusion/` 中的副本为准；修改后同步到 `m2_scripts/`。
-- `notebooks/M1_original_DO_NOT_EDIT.ipynb` 保留为 M1 原件。
+Reading the existing results (`StealthDiffusion/results/*/eval/summary.csv`, `records.jsonl`) needs no weights and no GPU.
 
-## 来源
+## Conventions
 
-基于 [wyczzy/StealthDiffusion](https://github.com/wyczzy/StealthDiffusion)，原有项目说明和作者致谢保留在 [StealthDiffusion/README.md](StealthDiffusion/README.md)。
+- Every rate is recomputed from saved PNG files, never from in-memory tensors (`m2_evaluate.py`).
+- Conditional ASR counts only images the detector caught before the attack; the denominator is reported next to every rate.
+- Detectors are always in `eval()` mode (see the note on `Ensemble` in `m2_stealth.py`).
+- Hypotheses for M3 were frozen before the runs: tag `m3-hypotheses-frozen`.
