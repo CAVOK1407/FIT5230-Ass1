@@ -1,8 +1,0 @@
-{
-  "release_after_human_review": true,
-  "control_filenames": [
-    "peer_01.npy",
-    "peer_08.npy"
-  ],
-  "proposal_sha256": "78c0d1af923b1736c2d83103b488beba861162d4600d1b92c23e1d013a276fc7"
-}

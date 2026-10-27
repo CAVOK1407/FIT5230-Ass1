@@ -1,8 +1,0 @@
-{
-  "started_at": "2026-10-18T14:10:34.712910+08:00",
-  "finished_at": "2026-10-18T14:10:35.064878+08:00",
-  "purpose": "user_requested_local_reproduction",
-  "protocol_sha256": "5f9b12966dfb48c16928046b5946f8e54bad16c51d73582f88abd74793738aa9",
-  "status": "reproduced",
-  "external_submission": false
-}

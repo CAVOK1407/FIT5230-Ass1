@@ -1,6 +1,6 @@
 # Milestone 4 — individual report demo (Yunjie Wang)
 
-Everything referenced in the Milestone 4 report (`report/main.pdf`) lives here or in `StealthDiffusion/`.
+Everything referenced in the Milestone 4 individual report (submitted on Moodle) lives here or in `StealthDiffusion/`.
 
 ## Role reversal: defending against our own attack (report Section IV)
 
@@ -20,7 +20,7 @@ cd m4/defense
 python m4_defense_twosided.py   --data_dir ../data --out results/twosided_results.csv
 python m4_defense_preprocess.py --data_dir ../data --out results/preprocess_results.csv
 python m4_defense_calibrated.py --data_dir ../data --alpha 0.05 --beta 0 --out results/calibrated_a05_b0.csv
-CVAE_DIR=../data_cvae python make_tables.py ../data . ../report/tables_defence.tex
+CVAE_DIR=../data_cvae python make_tables.py ../data . tables_defence.tex   # LaTeX tables of the report
 ```
 
 ## Unconstrained enhancement: fine-tuning the Control-VAE control branch (report Section III)
@@ -40,7 +40,3 @@ bash m4_run.sh all       # train (30 epochs, ~20 min on an M5 Max) + three 100-i
 ```
 
 The 150 training images are the three SD 1.5 batches generated for the Milestone 3 LAO validations (`results/m3_lao_*/.../data/gen/test`), disjoint from the 100-image test set; they are not committed either (see `.gitignore`), the generation plans and manifests are.
-
-## Report
-
-`report/main.tex` + `refs.bib` + `tables_*.tex`: IEEE Transactions template (IEEEtran, journal mode); compiles on Overleaf as is.

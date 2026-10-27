@@ -31,3 +31,11 @@ venv/
 
 # LPIPS VGG weights are downloaded by the code on first run (528 MB)
 /StealthDiffusion/.cache/
+
+# Reports, working notes and peer-evaluation material stay local; the public repository keeps code, run records and READMEs
+/m4/report/
+/paper_frozen/
+/m3_colab/REPORTING_NOTES.md
+/peer_eval/
+/docs/*
+!/docs/README_LOCAL_MAC_ZH.md

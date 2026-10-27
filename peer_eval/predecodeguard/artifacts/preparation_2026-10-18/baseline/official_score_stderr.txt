@@ -1,2 +1,0 @@
-OMP: Error #179: Function Can't open SHM failed:
-OMP: System error #0: Undefined error: 0
