@@ -1,0 +1,22 @@
+[m2_device] using device: mps
+Loaded pretrained weights for efficientnet-b0
+Traceback (most recent call last):
+  File "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3.py", line 522, in <module>
+    main()
+  File "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3.py", line 384, in main
+    detector = legacy.other_attacks.model_selection("E").eval().requires_grad_(False)
+  File "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/other_attacks.py", line 81, in model_selection
+    return model.cuda()
+  File "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_device.py", line 117, in <lambda>
+    torch.nn.Module.cuda = lambda self, *a, **k: self.to(dev)   # type: ignore[assignment]
+  File "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+  File "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+  File "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+RuntimeError: The MPS backend is supported on MacOS 12.3+.Current OS version can be queried using `sw_vers`

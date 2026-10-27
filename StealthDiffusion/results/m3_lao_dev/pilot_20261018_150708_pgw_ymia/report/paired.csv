@@ -1,0 +1,13 @@
+baseline,run,detector,condition,n,n_clean_detected,n_clean_and_baseline_detected,added_success,lost_success,net_added_success,net_asr_change,success_on_clean_and_baseline_detected,rate_on_clean_and_baseline_detected,quality_qualified_new_flips,quality_qualified_new_flip_rate,new_flip_ids,lost_flip_ids,quality_qualified_new_flip_ids
+R0,R1,D,none,10,10,10,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R1,E,none,10,8,8,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R1,R,none,10,9,8,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R1,S,none,10,10,10,2,0,2,0.2,2,0.2,2,0.2,"[""0001"", ""0006""]",[],"[""0001"", ""0006""]"
+R0,R2,D,none,10,10,10,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R2,E,none,10,8,8,2,0,2,0.25,2,0.25,2,0.25,"[""0001"", ""0007""]",[],"[""0001"", ""0007""]"
+R0,R2,R,none,10,9,8,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R2,S,none,10,10,10,2,0,2,0.2,2,0.2,2,0.2,"[""0001"", ""0003""]",[],"[""0001"", ""0003""]"
+R0,R3,D,none,10,10,10,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R3,E,none,10,8,8,2,0,2,0.25,2,0.25,2,0.25,"[""0001"", ""0007""]",[],"[""0001"", ""0007""]"
+R0,R3,R,none,10,9,8,0,0,0,0.0,0,0.0,0,0.0,[],[],[]
+R0,R3,S,none,10,10,10,1,0,1,0.1,1,0.1,1,0.1,"[""0003""]",[],"[""0003""]"

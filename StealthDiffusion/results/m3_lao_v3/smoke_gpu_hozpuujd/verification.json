@@ -1,0 +1,7 @@
+{
+  "status": "verified",
+  "budget_outputs": 4,
+  "actual_reset_checks": 2,
+  "hybrid_stage_checks": 1,
+  "purpose": "single old-development image smoke, not candidate selection"
+}

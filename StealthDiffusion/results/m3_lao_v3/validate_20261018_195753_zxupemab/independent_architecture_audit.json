@@ -1,0 +1,212 @@
+{
+  "status": "verified",
+  "n": 50,
+  "scope": "PNG bytes, canonical inputs, source hashes, strict budget, recorded candidate selection, finite logged gradients/update counts, stage/reset equivalence and recorded compute accounting; no model rescoring or gradient reexecution",
+  "methods": {
+    "Z": {
+      "outputs": 50,
+      "max_budget": 8,
+      "latent_updates": 0,
+      "pixel_updates": 0,
+      "refinement_probes": 0,
+      "nonzero_latent_updates": 0,
+      "nonzero_pixel_updates": 0,
+      "E_forwards": 200,
+      "renderer_forwards": 100,
+      "JPEG_encodes": 0,
+      "seconds": {
+        "median": 2.9887189374421723,
+        "mean": 3.014903831530828,
+        "min": 2.915476290974766,
+        "max": 3.441300041973591
+      },
+      "selected_phase_distribution": {
+        "trajectory": 50
+      },
+      "selected_step_zero": 50,
+      "records_sha256": "95889c5a4dbacc650c5ac7544e3d68fb98f214996ee5964c527bf8faefca18b3",
+      "run_config_sha256": "9fdda854fb58d26713a779673529ab1a0c0dd2d586afb16fbc3d93d6001628b5"
+    },
+    "P": {
+      "outputs": 50,
+      "max_budget": 3,
+      "latent_updates": 0,
+      "pixel_updates": 642,
+      "refinement_probes": 720,
+      "nonzero_latent_updates": 0,
+      "nonzero_pixel_updates": 642,
+      "E_forwards": 1712,
+      "renderer_forwards": 0,
+      "JPEG_encodes": 0,
+      "seconds": {
+        "median": 0.9634742920170538,
+        "mean": 1.6551184517121873,
+        "min": 0.7277131249429658,
+        "max": 16.977926708059385
+      },
+      "selected_phase_distribution": {
+        "refinement": 42,
+        "trajectory": 4,
+        "original_clean": 4
+      },
+      "selected_step_zero": 6,
+      "records_sha256": "d55085a25a1166c63b9b52ded4a1714a1aefc476a9e938432b47d9362065df88",
+      "run_config_sha256": "a1c6270674616a155a3a09d4b5d8fdcbc41474f2afa910f3b10fab5bce7dda1c"
+    },
+    "L": {
+      "outputs": 50,
+      "max_budget": 8,
+      "latent_updates": 352,
+      "pixel_updates": 0,
+      "refinement_probes": 235,
+      "nonzero_latent_updates": 352,
+      "nonzero_pixel_updates": 0,
+      "E_forwards": 787,
+      "renderer_forwards": 687,
+      "JPEG_encodes": 0,
+      "seconds": {
+        "median": 8.479291875497438,
+        "mean": 10.009577134223655,
+        "min": 4.736071416991763,
+        "max": 32.849355416954495
+      },
+      "selected_phase_distribution": {
+        "refinement": 33,
+        "trajectory": 17
+      },
+      "selected_step_zero": 8,
+      "records_sha256": "8b83056ad84ad10f34067ab8ef580da8c2c4eeddef6cb912b250c91a0252a0e4",
+      "run_config_sha256": "fcee465f0a2d10ef3102e046c8c7125d28cdb250b9d1ec6b1a23c56d7da8422a"
+    },
+    "H": {
+      "outputs": 50,
+      "max_budget": 8,
+      "latent_updates": 352,
+      "pixel_updates": 329,
+      "refinement_probes": 955,
+      "nonzero_latent_updates": 352,
+      "nonzero_pixel_updates": 329,
+      "E_forwards": 2086,
+      "renderer_forwards": 687,
+      "JPEG_encodes": 0,
+      "seconds": {
+        "median": 9.155739500478376,
+        "mean": 11.16506506243255,
+        "min": 5.498364624916576,
+        "max": 41.38699941697996
+      },
+      "selected_phase_distribution": {
+        "refinement": 31,
+        "stage_initial_png": 15,
+        "original_clean": 4
+      },
+      "selected_step_zero": 28,
+      "records_sha256": "072ba6faf4eb02366752e1b5ef0f65b06926d8ded980a301ffe10c5c31c57a2c",
+      "run_config_sha256": "9f6d07f0a51fd60cd1c63fb5a98359bad7e80104f7592548607e34781226c20f"
+    },
+    "P_EOT": {
+      "outputs": 50,
+      "max_budget": 3,
+      "latent_updates": 0,
+      "pixel_updates": 1083,
+      "refinement_probes": 705,
+      "nonzero_latent_updates": 0,
+      "nonzero_pixel_updates": 1083,
+      "E_forwards": 6414,
+      "renderer_forwards": 0,
+      "JPEG_encodes": 4276,
+      "seconds": {
+        "median": 2.305052749987226,
+        "mean": 4.893545952476561,
+        "min": 1.5332729170331731,
+        "max": 38.05813120806124
+      },
+      "selected_phase_distribution": {
+        "refinement": 23,
+        "trajectory": 23,
+        "original_clean": 4
+      },
+      "selected_step_zero": 4,
+      "records_sha256": "58b9b8fbd6b2faa4693199b203a143b7b26ed83c9db0f9699303fa28c8162a02",
+      "run_config_sha256": "4f32cc40a8476ba1d5e4ea831d9019aeb010b395a0de5191e69bda2f0d557cdf"
+    },
+    "L_EOT": {
+      "outputs": 50,
+      "max_budget": 8,
+      "latent_updates": 821,
+      "pixel_updates": 0,
+      "refinement_probes": 175,
+      "nonzero_latent_updates": 821,
+      "nonzero_pixel_updates": 0,
+      "E_forwards": 3588,
+      "renderer_forwards": 1096,
+      "JPEG_encodes": 2392,
+      "seconds": {
+        "median": 11.187273750489112,
+        "mean": 18.030667755852917,
+        "min": 5.037512750015594,
+        "max": 39.234803291969
+      },
+      "selected_phase_distribution": {
+        "trajectory": 26,
+        "refinement": 24
+      },
+      "selected_step_zero": 8,
+      "records_sha256": "3bbe837993421ed8a129137269df8bd7362781c58c15ed7eed8feb3e246c916e",
+      "run_config_sha256": "ddcdbc27110cf8724e0f26af2f155f57a177abcbcc1b088e80c68d42a7306362"
+    },
+    "H_EOT": {
+      "outputs": 50,
+      "max_budget": 8,
+      "latent_updates": 821,
+      "pixel_updates": 556,
+      "refinement_probes": 880,
+      "nonzero_latent_updates": 821,
+      "nonzero_pixel_updates": 556,
+      "E_forwards": 8121,
+      "renderer_forwards": 1096,
+      "JPEG_encodes": 5414,
+      "seconds": {
+        "median": 12.822864249523263,
+        "mean": 21.306927508339285,
+        "min": 6.371302167070098,
+        "max": 55.88311687496025
+      },
+      "selected_phase_distribution": {
+        "refinement": 37,
+        "stage_initial_png": 8,
+        "original_clean": 4,
+        "trajectory": 1
+      },
+      "selected_step_zero": 23,
+      "records_sha256": "b661847942e8e8a1e6cb16ffeac68fffa4f5409441eca488a93105828c61dae1",
+      "run_config_sha256": "1086eea10aa0c8e5385dc9b355c529bd5c6039ac808e9b6fdadd778ff5a62bf1"
+    }
+  },
+  "stage_comparison": {
+    "H": {
+      "lao_stage_matches_independent_L": 50,
+      "final_unchanged_from_L": 15,
+      "final_equals_original": 4,
+      "L_success_preserved": 47,
+      "L_failure_pixel_stage_success": 1,
+      "L_success_pixel_stage_failure": 0,
+      "zero_pixel_gradient_but_output_changed_from_L": 13
+    },
+    "H_EOT": {
+      "lao_stage_matches_independent_L": 50,
+      "final_unchanged_from_L": 8,
+      "final_equals_original": 4,
+      "L_success_preserved": 35,
+      "L_failure_pixel_stage_success": 12,
+      "L_success_pixel_stage_failure": 0,
+      "zero_pixel_gradient_but_output_changed_from_L": 14
+    }
+  },
+  "limitations": [
+    "Recorded finite gradients establish logged execution, not an independent recomputation of autograd.",
+    "Stage success counts use all input images, including originally benign predictions; confirmatory ASR requires the predeclared common clean-detected cohort.",
+    "H stage relations do not establish LAO necessity or compute-matched superiority.",
+    "No detector or LPIPS model is executed by this audit."
+  ]
+}

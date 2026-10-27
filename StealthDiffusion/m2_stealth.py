@@ -45,6 +45,9 @@ Section "Pipeline configurations", Table of configurations A1-A5 / X1-X6):
                           median surrogate score of the real development images (--real_dev_dir).
                           The paper's capped variant is  --cap auto --pgd_alpha eps/10
                           --pgd_steps 40 --loss margin --kappa cap.
+  --cap_bisect            with --cap: a step that crosses the cap is shortened by bisection so the
+                          score lands at the cap (one sign step of eps/10 can overshoot a sensitive
+                          detector several times over).
   --kappa <float>|cap     margin target of --loss margin; cap = the value of --cap.
   --pgd_eot / --lao_eot none|jpeg|resize|both
                           expectation over transformation: the attack loss is averaged over
@@ -53,6 +56,14 @@ Section "Pipeline configurations", Table of configurations A1-A5 / X1-X6):
                           down-scaling by --eot_resize and bicubic up-scaling, exactly as
                           m2_evaluate.py does); the backward pass treats the channel as the
                           identity (straight-through estimator).
+  --control_scale 1      opt-in scaling of fixed Control-VAE skip features, in [0, 1].
+  --lao_quantization none|ste
+                         ste evaluates the LAO detector loss on saved 8-bit values.
+  --lao_weight_decay .01 explicit AdamW decay; use 0 for a latent-only attribution study.
+  --lao_diagnostics     record latent updates and final-path scores; save a reset-latent
+                         counterfactual. Adds inference work, so timings are diagnostic.
+  --lao_residual_anchor preserve the full-skip initial reconstruction and apply only
+                         the gated decoder's latent-driven residual; clean/clean + final only.
 
 With all defaults the script reproduces the official pipeline (variant "B00" = paper A5).
 Everything else (DDIM inversion, 2 diffusion steps, AdamW lr 1e-2, Control-VAE weights,
@@ -101,6 +112,11 @@ from diff_latent_attack import (  # noqa: E402
     ddim_reverse_sample, diffusion_step, preprocess, calculate_psnr, calculate_ssim,
 )
 from ControlVAE import NewEncoder, NewDecoder  # noqa: E402
+from m3_lao_support import (  # noqa: E402
+    changed_pixel_fraction, make_latent_optimizer, quantize_like_save,
+    require_finite, residual_anchor, saved_image_ste, scale_control_features, tensor_norms,
+    validate_control_scale, validate_residual_anchor,
+)
 
 MEAN = [0.485, 0.456, 0.406]
 STD = [0.229, 0.224, 0.225]
@@ -321,7 +337,8 @@ def _mean_std(device):
     return _MEAN_T, _STD_T
 
 
-def pgd_own(pgd_model, x_norm, label, eps, alpha, steps, cap=None, eot="none", eot_jpeg_q=75, eot_resize=0.5):
+def pgd_own(pgd_model, x_norm, label, eps, alpha, steps, cap=None, eot="none", eot_jpeg_q=75, eot_resize=0.5,
+            cap_bisect=False, bisect_iters=10):
     """Returns (adv_norm, info). adv_norm is normalised like the torchattacks output."""
     mean, std = _mean_std(x_norm.device)
     x01 = (x_norm * std + mean).detach()               # torchattacks.inverse_normalize
@@ -341,10 +358,32 @@ def pgd_own(pgd_model, x_norm, label, eps, alpha, steps, cap=None, eot="none", e
             break
         cost = torch.stack([ce(o, label) for o in outs]).mean()
         grad = torch.autograd.grad(cost, adv, retain_graph=False, create_graph=False)[0]
+        prev = adv.detach()
         adv = adv.detach() + alpha * grad.sign()
         delta = torch.clamp(adv - x01, min=-eps, max=eps)
         adv = torch.clamp(x01 + delta, min=0, max=1).detach()
         info["steps"] = step + 1
+        if cap is not None and cap_bisect:
+            # If this step crossed the cap, shrink it by bisection so the score lands just above the
+            # cap instead of far beyond it (a single sign step can overshoot a sensitive detector).
+            with torch.no_grad():
+                m_new = float(real_margin(pgd_model((adv - mean) / std)).item())
+            if m_new >= cap:
+                lo, hi = 0.0, 1.0          # fraction of the step: lo stays below the cap, hi is above
+                full = adv - prev
+                for _ in range(bisect_iters):
+                    mid = (lo + hi) / 2
+                    cand = (prev + mid * full).detach()
+                    with torch.no_grad():
+                        m_mid = float(real_margin(pgd_model((cand - mean) / std)).item())
+                    if m_mid >= cap:
+                        hi = mid
+                    else:
+                        lo = mid
+                adv = (prev + hi * full).detach()
+                info["stopped_by_cap"] = True
+                info["bisected"] = True
+                break
     with torch.no_grad():
         info["margin_end"] = float(real_margin(pgd_model((adv - mean) / std)).item())
     return ((adv - mean) / std).detach(), info
@@ -356,7 +395,8 @@ def pgd_stage(pgd_model, x_norm, label, args, restore_eval, cap):
         out = run_pgd(pgd_model, args.pgd_eps, x_norm, label, restore_eval)
         return out, {"impl": "torchattacks", "steps": 10}
     out, info = pgd_own(pgd_model, x_norm, label, args.pgd_eps, args.pgd_alpha, args.pgd_steps,
-                        cap=cap, eot=args.pgd_eot, eot_jpeg_q=args.eot_jpeg_q, eot_resize=args.eot_resize)
+                        cap=cap, eot=args.pgd_eot, eot_jpeg_q=args.eot_jpeg_q, eot_resize=args.eot_resize,
+                        cap_bisect=args.cap_bisect, bisect_iters=args.bisect_iters)
     force_eval(restore_eval)
     info["impl"] = "own"
     return out, info
@@ -379,6 +419,7 @@ def median_real_margin(pgd_model, real_dir, res):
 @torch.enable_grad()
 def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_fn, out_prefix, pgd_model, cap, kappa):
     """Attack one PIL image. Returns a record dict. Mirrors diff_latent_attack.diffattack."""
+    validate_residual_anchor(args.lao_residual_anchor, args.encode_source, args.control_source, args.decode_path)
     res = args.res
     label = torch.tensor([0]).cuda()  # official label convention: 0 = AI-generated
     # Every detector that is forwarded anywhere in this function, deduplicated by identity.
@@ -428,7 +469,14 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
 
     original_latent = latent.clone()
     latent.requires_grad_(True)
-    optimizer = torch.optim.AdamW([latent], lr=args.lr)
+    optimizer = make_latent_optimizer(latent, args.lr, args.lao_weight_decay)
+    lao_research = (args.lao_diagnostics or args.lao_quantization != "none"
+                    or args.control_scale != 1.0 or args.lao_weight_decay != 0.01
+                    or args.lao_residual_anchor)
+    if lao_research:
+        require_finite(original_latent, "initial latent")
+        if lpips_fn is not None:
+            lpips_fn.eval().requires_grad_(False)
 
     init_image = preprocess(enc_pil, res)             # encoded image in [-1, 1] (official: x1)
     init_image_compare = preprocess(origin_pil, res)  # clean input in [-1, 1]
@@ -446,14 +494,44 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
     control01 = (init_image1 / 2 + 0.5).clamp(0, 1)
     with torch.no_grad():
         down_features = [f.detach() for f in newencoder(init_image1)[1]]
+        full_down_features = down_features
+        down_features = scale_control_features(down_features, args.control_scale)
 
     def decode_plain(latents):
         return model.vae.decode(1 / PLAIN_SCALE * latents)["sample"][1:]
 
+    if args.lao_residual_anchor:
+        with torch.no_grad():
+            # Match the optimization's batch size, schedule, and conditioning.
+            initial_decoding_latents = torch.cat([original_latent, original_latent])
+            for ind, t in enumerate(timesteps):
+                initial_decoding_latents = diffusion_step(
+                    model, initial_decoding_latents, context[ind], t, args.guidance)
+            initial_decoding_latents = model.vae.post_quant_conv(1 / FINAL_SCALE * initial_decoding_latents)
+            full_reference = decoder(initial_decoding_latents, full_down_features)[1:].detach()
+            gated_reference = decoder(initial_decoding_latents, down_features)[1:].detach()
+            require_finite(full_reference, "full-skip initial-latent reference")
+            require_finite(gated_reference, "gated initial-latent reference")
+
     def decode_final(latents):
-        return decoder(model.vae.post_quant_conv(1 / FINAL_SCALE * latents), down_features)[1:]
+        decoded = decoder(model.vae.post_quant_conv(1 / FINAL_SCALE * latents), down_features)[1:]
+        if args.lao_residual_anchor:
+            decoded = residual_anchor(decoded, full_reference, gated_reference)
+        return decoded
 
     decode_for_loss = decode_final if args.decode_path == "final" else decode_plain
+
+    @torch.no_grad()
+    def final_path_scores(image01):
+        """Identity-view margins, not the DI/EOT average used by the objective."""
+        values = {}
+        for name, image in (("float_margins", image01),
+                            ("quantized_margins", quantize_like_save(image01))):
+            margins = [real_margin(det(normalize(image))) for det in surrogate_models]
+            for margin in margins:
+                require_finite(margin, "diagnostic final-path margin")
+            values[name] = [float(margin.item()) for margin in margins]
+        return values
 
     # ---------- stage 2: latent adversarial optimisation ----------
     history = []
@@ -463,6 +541,17 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
             latents = diffusion_step(model, latents, context[ind], t, args.guidance)
         dec = decode_for_loss(latents)                       # [-1, 1]
         out01 = (dec / 2 + 0.5).clamp(0, 1)
+        step_diagnostics = None
+        if args.lao_diagnostics:
+            latent_before_step = latent.detach().clone()
+            step_diagnostics = {"score_timing": "pre_update"}
+            if it in (0, args.iterations - 1):
+                with torch.no_grad():
+                    final_before_step = out01 if args.decode_path == "final" else \
+                        (decode_final(latents) / 2 + 0.5).clamp(0, 1)
+                    step_diagnostics["final_path"] = final_path_scores(final_before_step)
+        if args.lao_quantization == "ste":
+            out01 = saved_image_ste(out01)
         x_in = normalize(input_diversity(out01, args.di_prob))
         views = eot_views(x_in, "none") if args.lao_eot == "none" else \
             [normalize(v) for v in eot_views(denormalize(x_in).clamp(0, 1), args.lao_eot, args.eot_jpeg_q, args.eot_resize)]
@@ -475,12 +564,26 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
         if args.lpips_weight > 0:
             loss_lpips = lpips_fn(init_image_compare, dec).mean()
             loss = loss + args.lpips_weight * loss_lpips
+        if lao_research:
+            require_finite(loss, "loss")
         optimizer.zero_grad()
         loss.backward()
+        if lao_research:
+            require_finite(latent.grad, "latent gradient")
+        if args.lao_diagnostics:
+            step_diagnostics["gradient"] = tensor_norms(latent.grad, "latent gradient")
         optimizer.step()
-        history.append({"iter": it, "loss": float(loss.item()), "attack": float(loss_attack.item()),
+        if lao_research:
+            require_finite(latent, "updated latent")
+        history_item = {"iter": it, "loss": float(loss.item()), "attack": float(loss_attack.item()),
                         "lpips": float(loss_lpips.item()),
-                        "margins": [float(real_margin(l).item()) for l in logits_list]})
+                        "margins": [float(real_margin(l).item()) for l in logits_list]}
+        if args.lao_diagnostics:
+            step_diagnostics["update"] = tensor_norms(latent - latent_before_step, "latent update")
+            step_diagnostics["distance_from_initial"] = tensor_norms(
+                latent - original_latent, "latent distance from initial")
+            history_item["lao_diagnostics"] = step_diagnostics
+        history.append(history_item)
 
     # ---------- final decode (official) ----------
     with torch.no_grad():
@@ -489,11 +592,25 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
             latents = diffusion_step(model, latents, context[ind], t, args.guidance)
         plain01 = (decode_plain(latents) / 2 + 0.5).clamp(0, 1)
         final01 = (decode_final(latents) / 2 + 0.5).clamp(0, 1)
+        if lao_research:
+            require_finite(final01, "final decoded image")
+        if args.lao_diagnostics:
+            # The first batch member followed the same diffusion trajectory from
+            # original_latent. Reuse it instead of performing another UNet pass.
+            # Even with residual anchoring, actually decode the reset latent through
+            # the same output path; do not return the full reference by definition.
+            reset_latents = torch.cat([latents[:1], latents[:1]])
+            reset01 = (decode_final(reset_latents) / 2 + 0.5).clamp(0, 1)
+            reset_scores = final_path_scores(reset01)
+            final_scores = final_path_scores(final01)
 
     origin_u8, plain_u8, final_u8 = to_uint8(origin01), to_uint8(plain01), to_uint8(final01)
     Image.fromarray(origin_u8).save(out_prefix + "_originImage.png")
     Image.fromarray(plain_u8).save(out_prefix + "_plain_vae.png")
     Image.fromarray(final_u8).save(out_prefix + "_adv_image.png")
+    if args.lao_diagnostics:
+        reset_u8 = to_uint8(reset01)
+        Image.fromarray(reset_u8).save(out_prefix + "_reset_image.png")
     if pgd_pil is not None:
         pgd_pil.save(out_prefix + "_pgd1.png")                       # x1
     Image.fromarray(to_uint8(control01)).save(out_prefix + "_control.png")   # x2 (quantised)
@@ -511,6 +628,24 @@ def attack_one(model, pil_image, args, surrogate_models, detectors, cvae, lpips_
         "pgd_info": pgd_infos,
         "history": history,
     }
+    if args.lao_diagnostics:
+        record["lao_diagnostics"] = {
+            "surrogate_order": [name.strip() for name in args.surrogates.split(",") if name.strip()],
+            "score_definition": "identity-view real-minus-AI margin on the final decoder path",
+            "initial_latent_reset": reset_scores,
+            "final_after_all_updates": final_scores,
+            "distance_from_initial": tensor_norms(latent - original_latent, "final latent distance"),
+            "changed_saved_pixel_fraction": changed_pixel_fraction(reset_u8, final_u8),
+            "reset_image": os.path.basename(out_prefix + "_reset_image.png"),
+            "timing_includes_diagnostics": True,
+        }
+        if args.lao_residual_anchor:
+            record["lao_diagnostics"]["residual_anchor"] = {
+                "enabled": True,
+                "formula": "full_reference + (current_gated_decode - gated_reference)",
+                "applied_before_image_clamp": True,
+                "reference_batch_size": 2,
+            }
     return record
 
 
@@ -525,6 +660,17 @@ def main(argv=None):
     parser.add_argument("--loss", default="ce", choices=["ce", "margin"])
     parser.add_argument("--kappa", default="3.0", help="margin target for --loss margin; a number, or 'cap' = value of --cap")
     parser.add_argument("--decode_path", default="plain", choices=["plain", "final"])
+    parser.add_argument("--control_scale", type=float, default=1.0,
+                        help="scale fixed Control-VAE features in [0,1]; 1 preserves the original path")
+    parser.add_argument("--lao_quantization", default="none", choices=["none", "ste"],
+                        help="ste uses exact saved 8-bit image values in the LAO detector forward")
+    parser.add_argument("--lao_weight_decay", type=float, default=0.01,
+                        help="AdamW latent weight decay; use 0 for the new latent-only study")
+    parser.add_argument("--lao_diagnostics", action="store_true",
+                        help="record latent gradients/updates and save the initial-latent counterfactual")
+    parser.add_argument("--lao_residual_anchor", action="store_true",
+                        help="anchor the gated latent residual to the full-skip initial reconstruction; "
+                             "requires clean encoding, clean control and final loss decoder")
     # ---- M3 switches (defaults = official behaviour) ----
     parser.add_argument("--encode_source", default="pgd1", choices=["pgd1", "clean"],
                         help="image that is DDIM-inverted: pgd1 = first PGD output (official), clean = input")
@@ -536,6 +682,9 @@ def main(argv=None):
     parser.add_argument("--pgd_steps", type=int, default=10, help="max steps of the own PGD loop")
     parser.add_argument("--cap", default="none", help="none | <float> | auto (median real-dev score of the surrogate)")
     parser.add_argument("--real_dev_dir", default="data/real/dev", help="real development images for --cap auto")
+    parser.add_argument("--cap_bisect", action="store_true",
+                        help="with --cap: when a PGD step crosses the cap, bisect the step so the score lands at the cap")
+    parser.add_argument("--bisect_iters", type=int, default=10)
     parser.add_argument("--pgd_eot", default="none", choices=["none", "jpeg", "resize", "both"])
     parser.add_argument("--lao_eot", default="none", choices=["none", "jpeg", "resize", "both"])
     parser.add_argument("--eot_jpeg_q", type=int, default=75)
@@ -558,6 +707,11 @@ def main(argv=None):
     parser.add_argument("--device", default="auto", choices=["auto", "cuda", "mps", "cpu"],
                         help="auto = cuda if available, else mps (Apple Silicon), else cpu")
     args = parser.parse_args(argv)
+
+    validate_control_scale(args.control_scale)
+    validate_residual_anchor(args.lao_residual_anchor, args.encode_source, args.control_source, args.decode_path)
+    if not np.isfinite(args.lao_weight_decay) or args.lao_weight_decay < 0:
+        raise ValueError("--lao_weight_decay must be finite and non-negative")
 
     m2_device.enable(args.device)
     seed_everything(args.seed)

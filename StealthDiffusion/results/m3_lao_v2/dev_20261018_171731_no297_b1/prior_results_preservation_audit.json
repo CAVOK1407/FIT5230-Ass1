@@ -1,0 +1,12 @@
+{
+  "status": "verified",
+  "files": 1873,
+  "bytes": 211393582,
+  "archive": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/snapshots/before_lao_low_distortion_v2_20261018_165859",
+  "scope": [
+    "StealthDiffusion/results/m3_lao_validation/",
+    "StealthDiffusion/results/m3_lao_dev/",
+    "peer_eval/"
+  ],
+  "conclusion": "Archived and live prior LAO development, first validation, and peer files are unchanged."
+}

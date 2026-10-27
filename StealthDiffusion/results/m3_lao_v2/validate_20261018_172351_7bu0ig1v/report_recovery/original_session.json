@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "completed": [
+    "data",
+    "RAW_RECON",
+    "RAW_LAO",
+    "old_export",
+    "new_zero",
+    "new_lao",
+    "pgd",
+    "evaluation"
+  ],
+  "created_at": "2026-10-18T17:23:51.826361+08:00",
+  "current": "report",
+  "error": "report failed (1); see /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report.log",
+  "finished_at": "2026-10-18T17:55:14.248949+08:00"
+}

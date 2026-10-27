@@ -1,0 +1,18 @@
+[m2_device] using device: mps
+[eval] run OLD_RECON8: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/old/RECON8 (_adv_image.png)
+[eval] run OLD_LAO8: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/old/LAO8 (_adv_image.png)
+[eval] run NEW_RECON8: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/new/NEW_RECON8 (_adv_image.png)
+[eval] run Q10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/new/Q10 (_adv_image.png)
+[eval] run Q40: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/new/Q40 (_adv_image.png)
+[eval] run PGD10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/pgd/PGD10 (_adv_image.png)
+[eval] run PGD10_MATCHED: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/pgd/PGD10_MATCHED (_adv_image.png)
+[eval] 10 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] OLD_RECON8   E none             detected   8/10  cond_ASR 0.00  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] OLD_LAO8     E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 1.00
+[eval] NEW_RECON8   E none             detected   8/10  cond_ASR 0.00  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] Q10          E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 1.00
+[eval] Q40          E none             detected   8/10  cond_ASR 0.75  escape 0.80  real_FPR 0.00  AUC 1.00
+[eval] PGD10        E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.37
+[eval] PGD10_MATCHED E none             detected   8/10  cond_ASR 0.25  escape 0.40  real_FPR 0.00  AUC 0.81
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/dev_20261018_171731_no297_b1/eval_first/summary.csv, per_image.csv, real_predictions.csv

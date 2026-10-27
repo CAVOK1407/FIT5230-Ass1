@@ -1,0 +1,14 @@
+[
+  "/opt/anaconda3/envs/fit5230m2/bin/python",
+  "-B",
+  "-u",
+  "m3_lao_v3.py",
+  "--device",
+  "mps",
+  "--images_root",
+  "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/smoke_ehmvc9fc/input",
+  "--out_root",
+  "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/smoke_ehmvc9fc/methods",
+  "--config",
+  "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/smoke_ehmvc9fc/config.json"
+]

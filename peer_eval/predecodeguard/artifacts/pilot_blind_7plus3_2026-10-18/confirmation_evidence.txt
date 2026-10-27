@@ -1,0 +1,7 @@
+User-relayed final peer reply; recorded locally at 2026-10-18T05:58:22.226002+00:00
+Original post timestamp not supplied. The user also confirms the earlier 8+2 ZIP has not been sent.
+
+Confirmed: raw-latent L∞ ≤ 0.1, measured on the saved FP16 values after casting to FP32, with zero tolerance.
+
+ start with one batch: early-stopped PGD on seven inputs and three unmodified controls. Please shuffle the filenames and keep the mapping hidden until I finish reviewing. No separate random-perturbation or fixed-step batch for now.
+ I can handle decoding with my fixed VAE and blind content review. Please send the files and hashes separately from the scores and control mapping, so I can review without seeing those first.

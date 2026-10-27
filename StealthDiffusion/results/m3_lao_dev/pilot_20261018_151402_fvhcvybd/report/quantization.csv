@@ -1,0 +1,9 @@
+run,detector,n,n_clean_detected,float_predictions_available,float_success,png_success,retained_float_success,retention_rate,float_success_lost_on_png,png_only_success,all_image_prediction_disagreements
+G0,D,10,10,False,,1,,,,,
+G0,E,10,8,True,0,0,0,,0,0,0
+G0,R,10,9,False,,0,,,,,
+G0,S,10,10,False,,0,,,,,
+G1,D,10,10,False,,1,,,,,
+G1,E,10,8,True,2,2,2,1.0,0,0,0
+G1,R,10,9,False,,0,,,,,
+G1,S,10,10,False,,0,,,,,

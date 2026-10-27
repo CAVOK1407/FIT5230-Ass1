@@ -1,0 +1,34 @@
+{
+  "created_at": "2026-10-18T17:20:38.715144+08:00",
+  "images_root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/data15/gen/dev",
+  "device": "mps",
+  "n_images": 10,
+  "budget_pixels": 8,
+  "lpips_cap": 0.03,
+  "margin_buffer": 0.1,
+  "refinement_steps": 5,
+  "surrogates": "E",
+  "evaluate": "E",
+  "model_training": false,
+  "source_sha256": {
+    "0000.png": "ebcc681410116133a9839d8b2e4dd4020af3851b0b08218b14570aa2c779dd0e",
+    "0001.png": "d959c27be74297e251997f6acd6f1b02479155b8b7bbeaa6449ff6099e3bd23e",
+    "0002.png": "9526594d3d43b65c436c70afd31423dddd21c7b9a1152a610857f7a68de1aa24",
+    "0003.png": "62524ebc0bd6bd5f3c1359b51b1c1d8fc1070438261449ba5227e54545eb5224",
+    "0004.png": "084d1f6cf10a8958502f36155b25c5bea76671d263aa2a5c25627d60db19f1ef",
+    "0005.png": "5a3625c523e429cacf112fafa3229cdb6eb21b7df11941ee75956b2e3c33cb11",
+    "0006.png": "a2225dc539fa0914d6815594eab2f11f19522b42cb8cdb4979d44177d10dac1c",
+    "0007.png": "f9d53b6e457e091c13e8bac2eecc599513f64022efa51ed24df33f81ea393424",
+    "0008.png": "b9dfa0d121e31c61ee124d42098646e6e73d81163b159029ac688ab13cce8421",
+    "0009.png": "b648d3302cde1b590346d4b0d6facfff12f5bb3b2d3bc4df79258afabeee42ec"
+  },
+  "runtime_source_sha256": {
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd_v2.py": "ec9fd2a888990d7de54a52840d68f4e989bcf8ca11789327da7f1f2b535729ae",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd.py": "210690d4561380584ea0d98cce2f0ee28b64579bd99b304745b4ae97e3574bbf",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_budget.py": "4e2eda22adea1179f7acfe0908a6dd2f5024a9de587a30073f3e9cf96112d31b",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_device.py": "1daf2a23e8802de4014092cfd677509c988d8af7acdfbd099ea2bc58d5e6634c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/other_attacks.py": "cb46e1185518527d87a9f3f8f978288110773206277174dbb49c98c8b18c4a15"
+  },
+  "timing_note": "Both outputs share one ten-step computation; seconds is shared wall time including five possible refinement forwards and two saved-PNG verifications, not an independent matched-method benchmark",
+  "variant": "PGD10"
+}

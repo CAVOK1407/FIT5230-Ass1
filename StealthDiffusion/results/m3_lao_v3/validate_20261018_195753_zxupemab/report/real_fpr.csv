@@ -1,0 +1,17 @@
+detector,condition,n_real,false_positives,real_fpr
+E,none,50,1,0.02
+E,jpeg75,50,3,0.06
+E,jpeg85,50,4,0.08
+E,jpeg95,50,1,0.02
+R,none,50,0,0.0
+R,jpeg75,50,14,0.28
+R,jpeg85,50,10,0.2
+R,jpeg95,50,3,0.06
+D,none,50,1,0.02
+D,jpeg75,50,13,0.26
+D,jpeg85,50,9,0.18
+D,jpeg95,50,3,0.06
+S,none,50,0,0.0
+S,jpeg75,50,27,0.54
+S,jpeg85,50,18,0.36
+S,jpeg95,50,11,0.22

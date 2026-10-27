@@ -1,0 +1,12 @@
+[m2_device] using device: mps
+[eval] run H: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/H (_adv_image.png)
+[eval] run H_EOT: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/H_EOT (_adv_image.png)
+[eval] 10 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] H            E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 1.00
+[eval] H_EOT        E none             detected   8/10  cond_ASR 0.88  escape 0.90  real_FPR 0.00  AUC 0.85
+[eval] H            E jpeg80           detected   9/10  cond_ASR 0.33  escape 0.40  real_FPR 0.00  AUC 0.96
+[eval] H_EOT        E jpeg80           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.93
+[eval] H            E jpeg90           detected   9/10  cond_ASR 0.22  escape 0.30  real_FPR 0.00  AUC 0.97
+[eval] H_EOT        E jpeg90           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.95
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/eval_hybrids/summary.csv, per_image.csv, real_predictions.csv

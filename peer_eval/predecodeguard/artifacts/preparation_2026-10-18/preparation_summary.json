@@ -1,0 +1,39 @@
+{
+  "baseline_verified": {
+    "samples": 10,
+    "baseline_flagged": 10,
+    "max_score_difference_from_manifest": 0.0,
+    "max_linf": 0.0,
+    "all_identical_values": true,
+    "official_max_score_difference": 0.0,
+    "formal_perturbations_executed": false
+  },
+  "copy_verified": {
+    "samples": 10,
+    "baseline_flagged": 10,
+    "max_score_difference_from_manifest": 0.0,
+    "max_linf": 0.0,
+    "all_identical_values": true,
+    "official_max_score_difference": 0.0,
+    "formal_perturbations_executed": false
+  },
+  "roundtrip_verified": {
+    "samples": 10,
+    "baseline_flagged": 10,
+    "max_score_difference_from_manifest": 0.0,
+    "max_linf": 0.0,
+    "all_identical_values": true,
+    "official_max_score_difference": 0.0,
+    "formal_perturbations_executed": false
+  },
+  "scope": {
+    "attacks_run": 0,
+    "random_perturbations_run": 0,
+    "decoded_images": 0,
+    "protocol_status": "awaiting_peer_confirmation",
+    "score_min": 0.980781078338623,
+    "score_max": 0.9999885559082031,
+    "synthetic_tests_passed": 44,
+    "snapshot": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/snapshots/before_predecodeguard_migration_20261018_114654"
+  }
+}

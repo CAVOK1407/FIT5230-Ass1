@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-18T15:21:28.114394+08:00",
+  "completed": [
+    "G0",
+    "G1",
+    "evaluation",
+    "report"
+  ],
+  "current": "report",
+  "finished_at": "2026-10-18T15:24:10.523902+08:00"
+}

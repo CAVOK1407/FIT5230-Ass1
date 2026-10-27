@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "scope": "Exploratory white-box pilot on the supplied historical training examples. Repeated methods do not increase the number of independent source samples. Positive-only samples do not support FPR, AUROC, population confidence intervals, or held-out generalization claims.",
+  "denominator_rule": "Originally flagged actual attempts; invalid, missing and failed outputs remain included. Controls excluded.",
+  "review_scope": "review_* and candidate_review_complete describe valid detector-flip candidates only. all_output_* separately accounts for unique valid saved files, including controls.",
+  "rows": 10,
+  "source_samples": 10,
+  "control_rows": 10,
+  "baseline_flagged_rows": 10,
+  "attempted": 0,
+  "eligible_attempts": 0,
+  "baseline_not_flagged_attempts": 0,
+  "baseline_unknown_attempts": 0,
+  "valid_eligible_attempts": 0,
+  "invalid_eligible_attempts": 0,
+  "detector_flips": 0,
+  "detector_flip_rate": null,
+  "detector_flip_rate_all_attempts": null,
+  "review_required": 0,
+  "review_submitted": 0,
+  "review_adjudicated": 0,
+  "review_pending": 0,
+  "confirmed_count": null,
+  "confirmed_rate": null,
+  "confirmed_rate_all_attempts": null,
+  "review_complete": false,
+  "candidate_review_complete": false,
+  "status_counts": {},
+  "outcome_counts": {
+    "control": 10
+  },
+  "all_output_unique_valid_files": 10,
+  "all_output_review_submitted": 0,
+  "all_output_review_not_submitted": 10,
+  "unmatched_review_rows": 0,
+  "by_method": {
+    "baseline": {
+      "rows": 10,
+      "source_samples": 10,
+      "control_rows": 10,
+      "baseline_flagged_rows": 10,
+      "attempted": 0,
+      "eligible_attempts": 0,
+      "baseline_not_flagged_attempts": 0,
+      "baseline_unknown_attempts": 0,
+      "valid_eligible_attempts": 0,
+      "invalid_eligible_attempts": 0,
+      "detector_flips": 0,
+      "detector_flip_rate": null,
+      "detector_flip_rate_all_attempts": null,
+      "review_required": 0,
+      "review_submitted": 0,
+      "review_adjudicated": 0,
+      "review_pending": 0,
+      "confirmed_count": null,
+      "confirmed_rate": null,
+      "confirmed_rate_all_attempts": null,
+      "review_complete": false,
+      "candidate_review_complete": false,
+      "status_counts": {},
+      "outcome_counts": {
+        "control": 10
+      }
+    }
+  },
+  "sample_outcomes": [
+    {
+      "filename": "peer_01.npy",
+      "method": "baseline",
+      "sha256": "8f9b0e667cb0cba449d2de6a5024968de9ad60ad1b3eed4c1836d36d242a74b6",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_02.npy",
+      "method": "baseline",
+      "sha256": "d176728dd2f8648a27d556ef8c8a2c8d8bef7f76759da93ebef7c79dd5a0e275",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_03.npy",
+      "method": "baseline",
+      "sha256": "d166087fe5da2e39d5c8528f1eead888f6444383fa3bd65e6bd2144d94f3815e",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_04.npy",
+      "method": "baseline",
+      "sha256": "eba7f27f97d22728a07430fe1c8272b7466849358132b6b1ab1405881f6ba40a",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_05.npy",
+      "method": "baseline",
+      "sha256": "b20447b94711a21bb2b177b7539b7bc6eab3528dbeffa2890154ad75d3eca8d5",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_06.npy",
+      "method": "baseline",
+      "sha256": "9d93ff845a6377bc6408283c77eb0821c46616e47b5a70bf88e3a38c1abc2811",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_07.npy",
+      "method": "baseline",
+      "sha256": "deed375a53de6d5c22ff92400fef952ef2fd1fe7ec25022a3f9cde827af05b5b",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_08.npy",
+      "method": "baseline",
+      "sha256": "2b35d6d28cd7682002461ead6e2bfba3ba1bf6d2fcc8d83229985d153800638b",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_09.npy",
+      "method": "baseline",
+      "sha256": "dd625f0bf637597dd63821211db1f66f5c81e42ebe563794ae6a5ac6944b1c01",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_10.npy",
+      "method": "baseline",
+      "sha256": "b25ee73d34240a33d315e9231a3d9134db6b7cd8e5447bacb7a9437163f0c8fe",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    }
+  ],
+  "artifact_audit": {
+    "expected_files": 10,
+    "missing": [],
+    "extra": [],
+    "complete": true,
+    "valid_files": 10
+  },
+  "protocol_status": "awaiting_peer_confirmation",
+  "formal_perturbations_executed": false,
+  "source_exposure": "historical_training_examples_exploratory_only",
+  "official_verification": {
+    "exit_code": 0,
+    "verified_samples": 10,
+    "max_adapter_score_difference": 0.0,
+    "execution_mode": "unchanged_script_runpy",
+    "standalone_command": [
+      "/opt/anaconda3/envs/fit5230m2/bin/python",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/predecodeguard/PreDecodeGuard_ModelBreakers_Pilot_v1/score.py",
+      "--verify"
+    ],
+    "stdout_sha256": "903e54b35065e27247f7dd532b918b7c3bb847e84c9653bbc809f30a17f0aa63"
+  }
+}

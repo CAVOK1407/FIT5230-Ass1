@@ -1,0 +1,90 @@
+{
+  "started_at": "2026-10-18T03:51:04.366188+00:00",
+  "command": "baseline",
+  "method": "baseline",
+  "source_package": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/predecodeguard/PreDecodeGuard_ModelBreakers_Pilot_v1",
+  "proposal_sha256": "5f2dde62bbc6c1ee08e0f99ab744f3752a676c85a25e9463f0d03345cd6b106e",
+  "protocol": {
+    "schema_version": 1,
+    "protocol_id": "modelbreakers-predecodeguard-pilot-proposal-v1",
+    "status": "awaiting_peer_confirmation",
+    "package_manifest_sha256": "1d523a218995d1a106915b101633cf300dff5f833b83146efee4bc66ae1f1ed0",
+    "threshold": 0.6528052091598511,
+    "budget": {
+      "norm": "Linf",
+      "epsilon": 0.1,
+      "units": "raw_latent",
+      "tolerance": 0
+    },
+    "sample_filenames": [
+      "peer_01.npy",
+      "peer_02.npy",
+      "peer_03.npy",
+      "peer_04.npy",
+      "peer_05.npy",
+      "peer_06.npy",
+      "peer_07.npy",
+      "peer_08.npy",
+      "peer_09.npy",
+      "peer_10.npy"
+    ],
+    "requested_methods": [
+      "random",
+      "lpgd",
+      "lstop"
+    ],
+    "returned_batches": 3,
+    "methods": {
+      "random": {
+        "steps": 40,
+        "alpha": 0.01,
+        "seed": 42,
+        "control_filenames": []
+      },
+      "lpgd": {
+        "steps": 40,
+        "alpha": 0.01,
+        "seed": 42,
+        "control_filenames": []
+      },
+      "lstop": {
+        "steps": 40,
+        "alpha": 0.01,
+        "seed": 42,
+        "control_filenames": []
+      }
+    },
+    "review": {
+      "decoder": "peer_fixed_sd35_medium",
+      "blind_to": [
+        "method",
+        "score",
+        "control_identity"
+      ],
+      "requires_usable": true,
+      "requires_retained_target_content": true
+    },
+    "agreement": null
+  },
+  "migration_code_sha256": {
+    "__init__.py": "57fe285698c614f40fc3b880e4272e1cbfb8b692d6ef957e5553cdd684a47ef0",
+    "adapter.py": "3324e80b7785918b4e0106bebd0f4df46422e30c05f792332e9aea096ab716b5",
+    "contract.py": "096d14892e0b93dbf5a8502edcaad89b68e15cf5a173e421b190f0af76f917c6",
+    "evaluate.py": "dbf8121346e25e9694a8c33f83b20336b3a606d4bce5d0c48e708a4f8910eba2",
+    "methods.py": "82453fd15434f01e21738f3adab133e61fc5339ae382452f3e022f7a0b393a0a",
+    "report.py": "c86e4e9fd4387b2b5d753ca4c3199e36d9d64ee043a05744bf2be2636762604d",
+    "run.py": "bc78f1ba72fb1ad97d580cceaccb689624b02402c6584a5e6b74be65a59db24b",
+    "package_lock.json": "823bd9336173994faf025daab20c46f4844e4f23cc5d1a89900c1cdd54738270"
+  },
+  "environment": {
+    "python": "3.10.21 (main, Aug 27 2026, 14:36:16) [Clang 20.1.8 ]",
+    "torch": "2.2.2",
+    "numpy": "1.26.4",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "device": "cpu",
+    "torch_threads": 4
+  },
+  "formal_perturbations_executed": false,
+  "status": "failed",
+  "error": "ValueError: Official scorer failed (exit -6); see saved stderr"
+}

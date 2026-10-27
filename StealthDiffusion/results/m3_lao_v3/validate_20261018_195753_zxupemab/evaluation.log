@@ -1,0 +1,123 @@
+[m2_device] using device: mps
+[eval] run P: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/P (_adv_image.png)
+[eval] run L: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/L (_adv_image.png)
+[eval] run P_EOT: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/P_EOT (_adv_image.png)
+[eval] run L_EOT: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/L_EOT (_adv_image.png)
+[eval] run H: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/H (_adv_image.png)
+[eval] run H_EOT: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/H_EOT (_adv_image.png)
+[eval] run Z: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/methods/Z (_adv_image.png)
+[eval] 50 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] P            E none             detected  46/50  cond_ASR 0.96  escape 0.96  real_FPR 0.02  AUC 0.87
+[eval] L            E none             detected  46/50  cond_ASR 0.93  escape 0.94  real_FPR 0.02  AUC 0.98
+[eval] P_EOT        E none             detected  46/50  cond_ASR 1.00  escape 1.00  real_FPR 0.02  AUC 0.73
+[eval] L_EOT        E none             detected  46/50  cond_ASR 0.76  escape 0.78  real_FPR 0.02  AUC 0.97
+[eval] H            E none             detected  46/50  cond_ASR 0.96  escape 0.96  real_FPR 0.02  AUC 0.97
+[eval] H_EOT        E none             detected  46/50  cond_ASR 0.93  escape 0.94  real_FPR 0.02  AUC 0.86
+[eval] Z            E none             detected  46/50  cond_ASR 0.09  escape 0.16  real_FPR 0.02  AUC 0.99
+[eval] P            E jpeg75           detected  35/50  cond_ASR 0.09  escape 0.36  real_FPR 0.06  AUC 0.86
+[eval] L            E jpeg75           detected  35/50  cond_ASR 0.11  escape 0.38  real_FPR 0.06  AUC 0.86
+[eval] P_EOT        E jpeg75           detected  35/50  cond_ASR 0.20  escape 0.44  real_FPR 0.06  AUC 0.83
+[eval] L_EOT        E jpeg75           detected  35/50  cond_ASR 0.20  escape 0.44  real_FPR 0.06  AUC 0.83
+[eval] H            E jpeg75           detected  35/50  cond_ASR 0.11  escape 0.38  real_FPR 0.06  AUC 0.86
+[eval] H_EOT        E jpeg75           detected  35/50  cond_ASR 0.17  escape 0.42  real_FPR 0.06  AUC 0.83
+[eval] Z            E jpeg75           detected  35/50  cond_ASR 0.06  escape 0.34  real_FPR 0.06  AUC 0.88
+[eval] P            E jpeg85           detected  35/50  cond_ASR 0.06  escape 0.34  real_FPR 0.08  AUC 0.91
+[eval] L            E jpeg85           detected  35/50  cond_ASR 0.23  escape 0.46  real_FPR 0.08  AUC 0.89
+[eval] P_EOT        E jpeg85           detected  35/50  cond_ASR 0.66  escape 0.76  real_FPR 0.08  AUC 0.85
+[eval] L_EOT        E jpeg85           detected  35/50  cond_ASR 0.57  escape 0.70  real_FPR 0.08  AUC 0.86
+[eval] H            E jpeg85           detected  35/50  cond_ASR 0.20  escape 0.44  real_FPR 0.08  AUC 0.90
+[eval] H_EOT        E jpeg85           detected  35/50  cond_ASR 0.66  escape 0.76  real_FPR 0.08  AUC 0.85
+[eval] Z            E jpeg85           detected  35/50  cond_ASR 0.03  escape 0.32  real_FPR 0.08  AUC 0.92
+[eval] P            E jpeg95           detected  38/50  cond_ASR 0.24  escape 0.42  real_FPR 0.02  AUC 0.95
+[eval] L            E jpeg95           detected  38/50  cond_ASR 0.37  escape 0.50  real_FPR 0.02  AUC 0.94
+[eval] P_EOT        E jpeg95           detected  38/50  cond_ASR 0.87  escape 0.90  real_FPR 0.02  AUC 0.87
+[eval] L_EOT        E jpeg95           detected  38/50  cond_ASR 0.71  escape 0.76  real_FPR 0.02  AUC 0.93
+[eval] H            E jpeg95           detected  38/50  cond_ASR 0.34  escape 0.48  real_FPR 0.02  AUC 0.96
+[eval] H_EOT        E jpeg95           detected  38/50  cond_ASR 0.89  escape 0.90  real_FPR 0.02  AUC 0.90
+[eval] Z            E jpeg95           detected  38/50  cond_ASR 0.08  escape 0.28  real_FPR 0.02  AUC 0.96
+[eval] P            R none             detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.00  AUC 0.99
+[eval] L            R none             detected  43/50  cond_ASR 0.07  escape 0.20  real_FPR 0.00  AUC 0.99
+[eval] P_EOT        R none             detected  43/50  cond_ASR 0.05  escape 0.18  real_FPR 0.00  AUC 0.99
+[eval] L_EOT        R none             detected  43/50  cond_ASR 0.09  escape 0.22  real_FPR 0.00  AUC 0.99
+[eval] H            R none             detected  43/50  cond_ASR 0.05  escape 0.18  real_FPR 0.00  AUC 0.99
+[eval] H_EOT        R none             detected  43/50  cond_ASR 0.07  escape 0.20  real_FPR 0.00  AUC 0.99
+[eval] Z            R none             detected  43/50  cond_ASR 0.05  escape 0.18  real_FPR 0.00  AUC 0.99
+[eval] P            R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.28  AUC 0.92
+[eval] L            R jpeg75           detected  44/50  cond_ASR 0.02  escape 0.14  real_FPR 0.28  AUC 0.90
+[eval] P_EOT        R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.28  AUC 0.91
+[eval] L_EOT        R jpeg75           detected  44/50  cond_ASR 0.02  escape 0.14  real_FPR 0.28  AUC 0.90
+[eval] H            R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.28  AUC 0.90
+[eval] H_EOT        R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.28  AUC 0.90
+[eval] Z            R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.28  AUC 0.90
+[eval] P            R jpeg85           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.20  AUC 0.92
+[eval] L            R jpeg85           detected  43/50  cond_ASR 0.00  escape 0.14  real_FPR 0.20  AUC 0.90
+[eval] P_EOT        R jpeg85           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.20  AUC 0.92
+[eval] L_EOT        R jpeg85           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.20  AUC 0.90
+[eval] H            R jpeg85           detected  43/50  cond_ASR 0.02  escape 0.14  real_FPR 0.20  AUC 0.91
+[eval] H_EOT        R jpeg85           detected  43/50  cond_ASR 0.00  escape 0.14  real_FPR 0.20  AUC 0.91
+[eval] Z            R jpeg85           detected  43/50  cond_ASR 0.00  escape 0.14  real_FPR 0.20  AUC 0.92
+[eval] P            R jpeg95           detected  43/50  cond_ASR 0.00  escape 0.12  real_FPR 0.06  AUC 0.97
+[eval] L            R jpeg95           detected  43/50  cond_ASR 0.05  escape 0.18  real_FPR 0.06  AUC 0.95
+[eval] P_EOT        R jpeg95           detected  43/50  cond_ASR 0.02  escape 0.14  real_FPR 0.06  AUC 0.96
+[eval] L_EOT        R jpeg95           detected  43/50  cond_ASR 0.05  escape 0.18  real_FPR 0.06  AUC 0.95
+[eval] H            R jpeg95           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.06  AUC 0.96
+[eval] H_EOT        R jpeg95           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.06  AUC 0.95
+[eval] Z            R jpeg95           detected  43/50  cond_ASR 0.02  escape 0.16  real_FPR 0.06  AUC 0.96
+[eval] P            D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] L            D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] P_EOT        D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] L_EOT        D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] H            D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] H_EOT        D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] Z            D none             detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.02  AUC 1.00
+[eval] P            D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] L            D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] P_EOT        D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] L_EOT        D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] H            D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] H_EOT        D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] Z            D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.26  AUC 1.00
+[eval] P            D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] L            D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] P_EOT        D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] L_EOT        D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] H            D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] H_EOT        D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] Z            D jpeg85           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.18  AUC 1.00
+[eval] P            D jpeg95           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.06  AUC 1.00
+[eval] L            D jpeg95           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.06  AUC 1.00
+[eval] P_EOT        D jpeg95           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.06  AUC 1.00
+[eval] L_EOT        D jpeg95           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.06  AUC 1.00
+[eval] H            D jpeg95           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.06  AUC 1.00
+[eval] H_EOT        D jpeg95           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.06  AUC 1.00
+[eval] Z            D jpeg95           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.06  AUC 1.00
+[eval] P            S none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.00  AUC 1.00
+[eval] L            S none             detected  49/50  cond_ASR 0.08  escape 0.10  real_FPR 0.00  AUC 1.00
+[eval] P_EOT        S none             detected  49/50  cond_ASR 0.02  escape 0.04  real_FPR 0.00  AUC 1.00
+[eval] L_EOT        S none             detected  49/50  cond_ASR 0.10  escape 0.12  real_FPR 0.00  AUC 1.00
+[eval] H            S none             detected  49/50  cond_ASR 0.02  escape 0.04  real_FPR 0.00  AUC 1.00
+[eval] H_EOT        S none             detected  49/50  cond_ASR 0.06  escape 0.08  real_FPR 0.00  AUC 1.00
+[eval] Z            S none             detected  49/50  cond_ASR 0.08  escape 0.10  real_FPR 0.00  AUC 1.00
+[eval] P            S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.93
+[eval] L            S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.92
+[eval] P_EOT        S jpeg75           detected  48/50  cond_ASR 0.02  escape 0.06  real_FPR 0.54  AUC 0.93
+[eval] L_EOT        S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.92
+[eval] H            S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.92
+[eval] H_EOT        S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.93
+[eval] Z            S jpeg75           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.54  AUC 0.93
+[eval] P            S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.95
+[eval] L            S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.93
+[eval] P_EOT        S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.95
+[eval] L_EOT        S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.93
+[eval] H            S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.94
+[eval] H_EOT        S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.94
+[eval] Z            S jpeg85           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.36  AUC 0.93
+[eval] P            S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.97
+[eval] L            S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.95
+[eval] P_EOT        S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.97
+[eval] L_EOT        S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.96
+[eval] H            S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.96
+[eval] H_EOT        S jpeg95           detected  48/50  cond_ASR 0.02  escape 0.06  real_FPR 0.22  AUC 0.97
+[eval] Z            S jpeg95           detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.22  AUC 0.96
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/evaluation/summary.csv, per_image.csv, real_predictions.csv

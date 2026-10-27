@@ -1,0 +1,76 @@
+--- a/StealthDiffusion/m3_lao_v3_report.py
++++ b/StealthDiffusion/m3_lao_v3_report.py
+@@ -70,8 +70,8 @@
+     return int(result)
+ 
+ 
+-def close(left, right, label, abs_tol=1e-6):
+-    require(math.isclose(left, right, rel_tol=1e-6, abs_tol=abs_tol),
++def close(left, right, label, abs_tol=1e-6, rel_tol=1e-6):
++    require(math.isclose(left, right, rel_tol=rel_tol, abs_tol=abs_tol),
+             f"Inconsistent {label}: {left} vs {right}")
+ 
+ 
+@@ -370,7 +370,7 @@
+                 recorded = record.get("final", {}).get("E")
+                 if recorded is not None:
+                     require(predicted(recorded["pred"], item) == ap, f"Record versus evaluated saved-PNG class changed: {item}")
+-                    close(number(recorded["real_margin"], item), am, f"record E margin {item}", 2e-5)
++                    close(number(recorded["real_margin"], item), am, f"record E margin {item}", 2e-5, rel_tol=1e-5)
+     expected = {(name, det, cond, key) for name in METHODS for det in detectors for cond in CONDITIONS for key in ids}
+     require(set(index) == expected, f"Incomplete CSV coverage: {len(index)} vs {len(expected)}")
+     require(set(quality) == {(name, key) for name in METHODS for key in ids}, "Incomplete original-PNG quality scores")
+--- a/m2_scripts/m3_lao_v3_report.py
++++ b/m2_scripts/m3_lao_v3_report.py
+@@ -70,8 +70,8 @@
+     return int(result)
+ 
+ 
+-def close(left, right, label, abs_tol=1e-6):
+-    require(math.isclose(left, right, rel_tol=1e-6, abs_tol=abs_tol),
++def close(left, right, label, abs_tol=1e-6, rel_tol=1e-6):
++    require(math.isclose(left, right, rel_tol=rel_tol, abs_tol=abs_tol),
+             f"Inconsistent {label}: {left} vs {right}")
+ 
+ 
+@@ -370,7 +370,7 @@
+                 recorded = record.get("final", {}).get("E")
+                 if recorded is not None:
+                     require(predicted(recorded["pred"], item) == ap, f"Record versus evaluated saved-PNG class changed: {item}")
+-                    close(number(recorded["real_margin"], item), am, f"record E margin {item}", 2e-5)
++                    close(number(recorded["real_margin"], item), am, f"record E margin {item}", 2e-5, rel_tol=1e-5)
+     expected = {(name, det, cond, key) for name in METHODS for det in detectors for cond in CONDITIONS for key in ids}
+     require(set(index) == expected, f"Incomplete CSV coverage: {len(index)} vs {len(expected)}")
+     require(set(quality) == {(name, key) for name in METHODS for key in ids}, "Incomplete original-PNG quality scores")
+--- a/m2_scripts/tests/test_lao_v3_report.py
++++ b/m2_scripts/tests/test_lao_v3_report.py
+@@ -225,6 +225,29 @@
+         with self.assertRaisesRegex(ValueError, "summary FPR"):
+             self.build()
+ 
++    def test_record_margin_accepts_known_batch_error_without_changing_predictions(self):
++        def change(rows):
++            row = next(r for r in rows if r["run"] == "P_EOT" and r["detector"] == "E"
++                       and r["condition"] == "none" and r["image_id"] == "0000")
++            row["adv_margin"] = 18.022096633911133
++        self.change_rows("per_image.csv", change)
++        path = Path(self.mapping["P_EOT"]) / "records.jsonl"
++        records = [json.loads(r) for r in path.read_text().splitlines()]
++        records[0]["final"] = {"E": {"pred": 1, "real_margin": 18.022123336791992}}
++        path.write_text("\n".join(json.dumps(r) for r in records))
++        result = self.build()
++        self.assertEqual(result["primary"]["left_only_ids"], ["0001"])
++        records[0]["final"]["E"]["pred"] = 0
++        path.write_text("\n".join(json.dumps(r) for r in records))
++        with self.assertRaisesRegex(ValueError, "class changed"):
++            self.build()
++
++    def test_record_margin_tolerance_still_rejects_material_discrepancy(self):
++        with self.assertRaisesRegex(ValueError, "Inconsistent"):
++            reporter.close(18.022123336791992, 18.023, "record margin", 2e-5, rel_tol=1e-5)
++        with self.assertRaisesRegex(ValueError, "Inconsistent"):
++            reporter.close(.10003, .1, "near boundary", 2e-5, rel_tol=1e-5)
++
+     def test_overwrite_refused_and_strict_json_outputs(self):
+         report = self.build()
+         path = self.root / "report"

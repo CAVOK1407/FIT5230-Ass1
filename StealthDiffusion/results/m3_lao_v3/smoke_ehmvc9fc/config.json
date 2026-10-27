@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Z",
+    "kind": "Z",
+    "eot": false,
+    "lao_steps": 0
+  },
+  {
+    "name": "P_EOT",
+    "kind": "P",
+    "eot": true,
+    "max_steps": 2,
+    "restarts": 1,
+    "alpha_pixels": 0.25
+  },
+  {
+    "name": "L_EOT",
+    "kind": "L",
+    "eot": true,
+    "lao_steps": 2
+  },
+  {
+    "name": "H_EOT",
+    "kind": "H",
+    "eot": true,
+    "lao_steps": 2,
+    "max_steps": 2,
+    "restarts": 1,
+    "alpha_pixels": 0.25
+  }
+]

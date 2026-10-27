@@ -1,0 +1,155 @@
+{
+  "status": "frozen",
+  "created_at": "2026-10-18T19:57:35.658407+08:00",
+  "selected_configuration": {
+    "P": {
+      "name": "P",
+      "kind": "P",
+      "eot": false,
+      "alpha_pixels": 0.25,
+      "lpips_weight": 1.0,
+      "max_steps": 80,
+      "restarts": 3
+    },
+    "L": {
+      "name": "L",
+      "kind": "L",
+      "eot": false,
+      "lao_steps": 40,
+      "lao_lr": 0.02,
+      "lao_lpips_weight": 1.0
+    },
+    "P_EOT": {
+      "name": "P_EOT",
+      "kind": "P",
+      "eot": true,
+      "alpha_pixels": 0.25,
+      "lpips_weight": 10.0,
+      "max_steps": 80,
+      "restarts": 3
+    },
+    "L_EOT": {
+      "name": "L_EOT",
+      "kind": "L",
+      "eot": true,
+      "lao_steps": 40,
+      "lao_lr": 0.02,
+      "lao_lpips_weight": 1.0
+    },
+    "H": {
+      "name": "H",
+      "kind": "H",
+      "eot": false,
+      "alpha_pixels": 0.25,
+      "lpips_weight": 1.0,
+      "max_steps": 40,
+      "restarts": 3,
+      "lao_steps": 40,
+      "lao_lr": 0.02,
+      "lao_lpips_weight": 1.0
+    },
+    "H_EOT": {
+      "name": "H_EOT",
+      "kind": "H",
+      "eot": true,
+      "alpha_pixels": 0.25,
+      "lpips_weight": 10.0,
+      "max_steps": 40,
+      "restarts": 3,
+      "lao_steps": 40,
+      "lao_lr": 0.02,
+      "lao_lpips_weight": 1.0
+    },
+    "Z": {
+      "name": "Z",
+      "kind": "Z",
+      "eot": false,
+      "lao_steps": 0,
+      "lao_lr": 0.02,
+      "lao_lpips_weight": 1.0
+    }
+  },
+  "development_evidence": {
+    "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/selection.json",
+    "sha256": "ff2ba4e74626c54d7a2633f554339d46474066155163b3228b24dc51f114d828"
+  },
+  "source_sha256": {
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/ControlVAE.py": "555fb5e094f1dbfd3d3e83e80b55e811eafb433ae34faa34b52701d7004bb9eb",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/demo_dir.py": "a432234d1c81b0ef7111b3ba5c2215cc2ec5f0f049858720800cd1712ab4c48b",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/diff_latent_attack.py": "5c5f776fcf3776e118f1ab534745bd668c7602cbcc06121c44f3ceede9a68851",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/distances.py": "c560aaa8c91ebbb7c61cdea54339c9db9d3df9eea348b310c5fd60c8f4a43de7",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/earlystop.py": "84b3bd14fd2fc4849ac4999d4731bc03354734823d86e51bb8fbf6813799167c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/eval.py": "f71436d78631e074cfaf33b6ae86514144fd8894a3335ee8e60091a87b2c554b",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/eval_config.py": "2d6151e649f8ce5afb296381656107fa8223790d2942a31519dd2c19e01828f1",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/loggers.py": "278a10e8549b819b6a58285b55206f9f83ac1a00e4dcf9963a6075459f258214",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_challenge.py": "10d53b4c213b6f9a882d54c153f08fddfcae740e1345131c5b3fc7b33e86a872",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_data.py": "dde6ef037c15728af97cf6a30102ff39f4afb6f26dc242f8bca52421ec88212d",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_device.py": "1daf2a23e8802de4014092cfd677509c988d8af7acdfbd099ea2bc58d5e6634c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_diag.py": "ee1bb209177194c68556ba312f42535545f43c8a6216a0daf50e2ec2ce998663",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_evaluate.py": "a20926206b19822840ef2aee5f9e7d78262ee829b3669298f0210c4557e0bc2f",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_stealth.py": "19ab03ec922c1463d7828e8bc2e13186c77772f666daf8c8ab8b7fc57d18c990",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_budget.py": "4e2eda22adea1179f7acfe0908a6dd2f5024a9de587a30073f3e9cf96112d31b",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_newdata.py": "24f3bee1e25aab4374ffbfe22484671aeef94376e3ace320f6c2563a3cd07658",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_newdata_v2.py": "ff68c888b5619ccab2166c605af4c6cca85d59f7685c8a845afe2978f00c69bc",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_newdata_v3.py": "3cda7102cf6ba9d12452cbbb5093f8a9fc88f7a20f286860ab3a6e24753f0b2f",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd.py": "210690d4561380584ea0d98cce2f0ee28b64579bd99b304745b4ae97e3574bbf",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd_v2.py": "ec9fd2a888990d7de54a52840d68f4e989bcf8ca11789327da7f1f2b535729ae",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_report.py": "f499734e74add42b5285a54592f0510b6d96f5b3d1ef3e7e84c01cedf9e498ac",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_run.py": "52abc9a8af3e7dbfc14117d917212daf77a4935ad37cbb67b3282c25278f7cb8",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_support.py": "8f247101ba98ee083b329388d9da79da70353a3a5e4b4ce6a3d31df8938d08c4",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v2.py": "10d0a107504e25cc9ce060ed5c96b5467ce4afaba58efc8f41b4206ab5b1d4f3",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v2_report.py": "b0c92e0d13d47fb0bbfd8dccc596d855f980ab74350e0ac396d5107b1b50d107",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v2_run.py": "03fa181e24e151eb72f72877df2db762b969e136f3a46cb385d9a2e952b08e71",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3.py": "98c969dbec0e3dc6cf59e6ef667c485abae790d42da6dbce370a011b4a805dc2",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3_report.py": "f52517a4bbfc4fa816c0fcb7b0138bbdaa5edac755570333ab9e2880dd25d335",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3_run.py": "0283cf9f24bbe4dc6a1981bbe677ad3be04dabbc9a72ed6c5caf846fffe683be",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_validate_report.py": "f3160ffafb7f7502ffecd2ab2dfdc997eb131150c7fdb547144a273ce467e9db",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_validation_run.py": "d36efb70c931143c3856324c5413d0a0f783a12c4b5ba1061cabb38621d115bb",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_report.py": "5c27db090fc28aaa21e35a5187a99cfc5cc565bd6848f5ded33b3dcf2faf6c9c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/main.py": "fdf38dd8ed2700ee15a0d7d6c704465d3583462b6022e6f8ccc2af02d07fb0e9",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/network.py": "47f309af42b9f4e0e3802e329b84c407df0e724c4ea7d28dfc2978d2f99733f0",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/other_attacks.py": "cb46e1185518527d87a9f3f8f978288110773206277174dbb49c98c8b18c4a15",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/train.py": "15bc1ac1d20ac18574c96d797878f3bb6f53ecfca382e466739b10164265818c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/train_vae.py": "3b33d1baebe5b2c2ce180b08d320dbc672b9a90765012fbc74a231e2cb152fc3",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/util.py": "97059ec20dfb7ab81e3488414d7e32f7a32f7ba603dcb9c64927d617fde7ad6a",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/utils.py": "b2b36eeff55d79df8a58cd908e8897a6da3f1522428d24cedf7dfc94f8fc3303",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/validate.py": "b6c65045a11c108947cd49de0128347ecfd789677c57f5f91065d3a76beca49a",
+    "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/lossers/lpips/__init__.py": "59ebd6d5b9c36cd3d41d4b2e119daf0e0a24ecdf47267ddc085de0ef11822e35",
+    "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/lossers/lpips/lpips.py": "3fc6420686774d438c3826a228599a3f767e8927d3ffcca5f09037a7ff14bc29",
+    "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/lossers/lpips/pretrained_model.py": "48656cfaa6c6fa790cb5ffa633d3a8dda64136304357f14fa107cb691094d806"
+  },
+  "checkpoint_sha256": {
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/checkpoints/Controlvae.pt": "c3b51b0a63b7e6ad7c687d2d3f09300bdabce2b5e29b7991d3c8ca830fe59495",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/checkpoints/efficientnet-b0.pth": "1aaa7f97deb2cc13a20c9c6c6628fbe04a794319ce2ea02438738eb69b4207a9",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/checkpoints/resnet50.pth": "2b154169983ff92980d05e5374dd107d2e9c9fee32264d23afbf5daa6372fb7a",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/checkpoints/deit.pth": "022df4c37288fb1553ddd76ca8097b20ac5e7670bda20982792c308aee0af4a8",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/checkpoints/swin-t.pth": "e50469ee6d9fbf9e19fbc0d8fd2829f83c062cb78ca4ede82bba7056fabaf456",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/.cache/checkpoints/vgg16-397923af.pth": "397923af8e79cdbb6a7127f12361acd7a2f83e06b05044ddf496e83de57a5bf0",
+    "/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/lossers/lpips/vgg_v0.1.pth": "a78928a0af1e5f0fcb1f3b9e8f8c3a2a5a3de244d830ad5c1feddc79b8432868"
+  },
+  "diffusion_model": {
+    "requested": "Manojb/stable-diffusion-2-1-base",
+    "resolved_local_path": "/Users/wangyunjie/.cache/huggingface/hub/models--Manojb--stable-diffusion-2-1-base/snapshots/0094d483a120f3f33dafbd187ea4aa60d10de75c",
+    "file_sha256": {
+      "model_index.json": "518553e098fdaa4153d9a92139e344e44f53bb329c22f383293e3099c4f1bad2",
+      "scheduler/scheduler_config.json": "11ac5627d7df0fa344b875c4b5722b1767a8a2aa1684c2cf8b4d614300127234",
+      "unet/config.json": "ce0c6d379e3b1d3e1f79338de70c80a1e36f17a6372439a8249b6fb0dfa1b608",
+      "unet/diffusion_pytorch_model.bin": "a434f8fdbb51f080ac57a4377281241467c4efc1417b27646ffae989644de60c",
+      "vae/config.json": "424117cb534ce03497c41305ed868980123917b2b6abba4bbaa615e968772903",
+      "vae/diffusion_pytorch_model.bin": "1b4889b6b1d4ce7ae320a02dedaeff1780ad77d415ea0d744b476155c6377ddc",
+      "text_encoder/config.json": "7e33bfc475f6cf76e69b28b101993ca834d1f22ff4d35caefde32d63d4f42fba",
+      "text_encoder/pytorch_model.bin": "c3e254d7b61353497ea0be2c4013df4ea8f739ee88cffa0ba58cd085459ed565"
+    }
+  },
+  "protocol": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/docs/M3_LAO_V3_PROTOCOL_ZH.md",
+  "protocol_sha256": "2d70b0c18201049c9f5d857a3d40bf2a6aad810e33aa23660cb8fba398406147",
+  "snapshot": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/snapshots/before_lao_pgd_eot_v3_20261018_183003",
+  "parent_freeze": {
+    "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/freeze.json",
+    "sha256": "113da208790bbb61b0f673a3afb78746c12f98934a61c830c6bad6abf331b21a"
+  },
+  "reporting_amendment": {
+    "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/reporting_amendment/amendment.json",
+    "sha256": "d546ee7585fa15cc05d9f662632c95a021117934129afbb06daa371a6ba49b66"
+  }
+}

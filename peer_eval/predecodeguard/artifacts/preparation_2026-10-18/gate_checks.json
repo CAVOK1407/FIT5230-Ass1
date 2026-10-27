@@ -1,0 +1,20 @@
+[
+  {
+    "method": "random",
+    "returncode": 2,
+    "blocked_before_output": true,
+    "message": "Blocked/failed: Real perturbations are blocked: peer protocol is not confirmed"
+  },
+  {
+    "method": "lpgd",
+    "returncode": 2,
+    "blocked_before_output": true,
+    "message": "Blocked/failed: Real perturbations are blocked: peer protocol is not confirmed"
+  },
+  {
+    "method": "lstop",
+    "returncode": 2,
+    "blocked_before_output": true,
+    "message": "Blocked/failed: Real perturbations are blocked: peer protocol is not confirmed"
+  }
+]

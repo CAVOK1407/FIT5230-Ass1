@@ -1,0 +1,68 @@
+[m2_device] using device: mps
+[eval] run P_a0.25_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a0.25_w1 (_adv_image.png)
+[eval] run P_a0.25_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a0.25_w10 (_adv_image.png)
+[eval] run P_a0.5_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a0.5_w1 (_adv_image.png)
+[eval] run P_a0.5_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a0.5_w10 (_adv_image.png)
+[eval] run P_a1_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a1_w1 (_adv_image.png)
+[eval] run P_a1_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_a1_w10 (_adv_image.png)
+[eval] run P_EOT_a0.25_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a0.25_w1 (_adv_image.png)
+[eval] run P_EOT_a0.25_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a0.25_w10 (_adv_image.png)
+[eval] run P_EOT_a0.5_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a0.5_w1 (_adv_image.png)
+[eval] run P_EOT_a0.5_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a0.5_w10 (_adv_image.png)
+[eval] run P_EOT_a1_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a1_w1 (_adv_image.png)
+[eval] run P_EOT_a1_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/P_EOT_a1_w10 (_adv_image.png)
+[eval] run L: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/L (_adv_image.png)
+[eval] run L_EOT_w1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/L_EOT_w1 (_adv_image.png)
+[eval] run L_EOT_w10: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/L_EOT_w10 (_adv_image.png)
+[eval] run Z: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/methods/Z (_adv_image.png)
+[eval] 10 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] P_a0.25_w1   E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 1.00
+[eval] P_a0.25_w10  E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 1.00
+[eval] P_a0.5_w1    E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.94
+[eval] P_a0.5_w10   E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.94
+[eval] P_a1_w1      E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 0.74
+[eval] P_a1_w10     E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 0.74
+[eval] P_EOT_a0.25_w1 E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.62
+[eval] P_EOT_a0.25_w10 E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.66
+[eval] P_EOT_a0.5_w1 E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.54
+[eval] P_EOT_a0.5_w10 E none             detected   8/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.54
+[eval] P_EOT_a1_w1  E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 0.66
+[eval] P_EOT_a1_w10 E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 0.66
+[eval] L            E none             detected   8/10  cond_ASR 0.75  escape 0.80  real_FPR 0.00  AUC 1.00
+[eval] L_EOT_w1     E none             detected   8/10  cond_ASR 0.62  escape 0.70  real_FPR 0.00  AUC 1.00
+[eval] L_EOT_w10    E none             detected   8/10  cond_ASR 0.88  escape 0.90  real_FPR 0.00  AUC 1.00
+[eval] Z            E none             detected   8/10  cond_ASR 0.00  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] P_a0.25_w1   E jpeg80           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.96
+[eval] P_a0.25_w10  E jpeg80           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.96
+[eval] P_a0.5_w1    E jpeg80           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.96
+[eval] P_a0.5_w10   E jpeg80           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.96
+[eval] P_a1_w1      E jpeg80           detected   9/10  cond_ASR 0.22  escape 0.30  real_FPR 0.00  AUC 0.96
+[eval] P_a1_w10     E jpeg80           detected   9/10  cond_ASR 0.22  escape 0.30  real_FPR 0.00  AUC 0.96
+[eval] P_EOT_a0.25_w1 E jpeg80           detected   9/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.90
+[eval] P_EOT_a0.25_w10 E jpeg80           detected   9/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.90
+[eval] P_EOT_a0.5_w1 E jpeg80           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.96
+[eval] P_EOT_a0.5_w10 E jpeg80           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.94
+[eval] P_EOT_a1_w1  E jpeg80           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.92
+[eval] P_EOT_a1_w10 E jpeg80           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.92
+[eval] L            E jpeg80           detected   9/10  cond_ASR 0.33  escape 0.40  real_FPR 0.00  AUC 0.96
+[eval] L_EOT_w1     E jpeg80           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.93
+[eval] L_EOT_w10    E jpeg80           detected   9/10  cond_ASR 0.78  escape 0.80  real_FPR 0.00  AUC 0.92
+[eval] Z            E jpeg80           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.96
+[eval] P_a0.25_w1   E jpeg90           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.97
+[eval] P_a0.25_w10  E jpeg90           detected   9/10  cond_ASR 0.00  escape 0.10  real_FPR 0.00  AUC 0.97
+[eval] P_a0.5_w1    E jpeg90           detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 0.97
+[eval] P_a0.5_w10   E jpeg90           detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 0.97
+[eval] P_a1_w1      E jpeg90           detected   9/10  cond_ASR 0.22  escape 0.30  real_FPR 0.00  AUC 0.97
+[eval] P_a1_w10     E jpeg90           detected   9/10  cond_ASR 0.22  escape 0.30  real_FPR 0.00  AUC 0.97
+[eval] P_EOT_a0.25_w1 E jpeg90           detected   9/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.88
+[eval] P_EOT_a0.25_w10 E jpeg90           detected   9/10  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.89
+[eval] P_EOT_a0.5_w1 E jpeg90           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.89
+[eval] P_EOT_a0.5_w10 E jpeg90           detected   9/10  cond_ASR 0.89  escape 0.90  real_FPR 0.00  AUC 0.87
+[eval] P_EOT_a1_w1  E jpeg90           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.88
+[eval] P_EOT_a1_w10 E jpeg90           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.88
+[eval] L            E jpeg90           detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 0.97
+[eval] L_EOT_w1     E jpeg90           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.97
+[eval] L_EOT_w10    E jpeg90           detected   9/10  cond_ASR 0.67  escape 0.70  real_FPR 0.00  AUC 0.97
+[eval] Z            E jpeg90           detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 0.97
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj/eval_base/summary.csv, per_image.csv, real_predictions.csv

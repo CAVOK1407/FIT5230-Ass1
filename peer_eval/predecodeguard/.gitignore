@@ -1,0 +1,5 @@
+artifacts/**/returned/
+artifacts/**/traces/
+*.npy
+*.pt
+__pycache__/

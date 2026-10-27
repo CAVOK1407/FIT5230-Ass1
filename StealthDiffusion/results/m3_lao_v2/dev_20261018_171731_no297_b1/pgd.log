@@ -1,0 +1,12 @@
+[m2_device] using device: mps
+Loaded pretrained weights for efficientnet-b0
+[PGD pair] 1/10: saved and verified
+[PGD pair] 2/10: saved and verified
+[PGD pair] 3/10: saved and verified
+[PGD pair] 4/10: saved and verified
+[PGD pair] 5/10: saved and verified
+[PGD pair] 6/10: saved and verified
+[PGD pair] 7/10: saved and verified
+[PGD pair] 8/10: saved and verified
+[PGD pair] 9/10: saved and verified
+[PGD pair] 10/10: saved and verified

@@ -1,0 +1,26 @@
+{
+  "run_third": true,
+  "Q40": {
+    "n": 10,
+    "n_clean_detected": 8,
+    "classifier_success": 6,
+    "low_distortion_success": 6,
+    "quality_qualified": 10,
+    "mean_lpips": 0.011241623549722135,
+    "max_lpips": 0.029368408024311066,
+    "mean_lpips_pass": true,
+    "actual_gradient_steps": 123,
+    "output_sha256": {
+      "0000": "07c5a14c91ec34e7626eb730838c077a1e32d5a5d3a1450f0fe484ab2dc96889",
+      "0001": "44afc7d87244b1a36d59b14a20505cffe0f3baff382b8474c4f2b7a72d655f51",
+      "0002": "6fee12bf5685c6831d643a01671c4c293023d9682c1ba5936b46bac7d7b762ff",
+      "0003": "26572a9720ed17456e1b42444e17e134c515e883fb60f9684957e0b3915240f7",
+      "0004": "4e0896ec474205956733f5de8664035bb922d6ff9372d9923ad16e6e347c2929",
+      "0005": "052980fbe7b83223b3115061546c72628a28a4c692651eb268a44e3e0e21e971",
+      "0006": "15e8fea3896245e18fce3a17d7caf73c2cca1bdd82988aa270c92e28778b639e",
+      "0007": "ac689d97a34f948a5b1341ae79d554f54256de920278506c1d0707fc5a0fd2a6",
+      "0008": "c77953f2da0a1158f97cea9799c43a682f8d3f8f917412e1b51137fffb2f96da",
+      "0009": "751a8182415a8428f10671beed875a517ab8d60eddfb64aee268d05df5eebd3d"
+    }
+  }
+}

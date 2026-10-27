@@ -1,0 +1,32 @@
+{
+  "train_dirs": [
+    "results/m3_lao_validation/validation_20261018_154651_tm5zwx4p/data/gen/test",
+    "results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/data/gen/test",
+    "results/m3_lao_v3/validate_20261018_195753_zxupemab/data/gen/test"
+  ],
+  "dev_dir": "data15/gen/dev",
+  "real_dev_dir": "data15/real/dev",
+  "pretrained_diffusion_path": "Manojb/stable-diffusion-2-1-base",
+  "encoder_weights": "./checkpoints/Controlvae.pt",
+  "surrogates": "E,R,D",
+  "monitor": "E,R,D,S",
+  "loss": "margin",
+  "kappa": 3.0,
+  "adv_weight": 0.05,
+  "lpips_weight": 1.0,
+  "l1_weight": 1.0,
+  "epochs": 30,
+  "batch_size": 2,
+  "lr": 2e-05,
+  "res": 224,
+  "seed": 42,
+  "out": "checkpoints/Controlvae_m4.pt",
+  "log_dir": "results/m4_cvae/train",
+  "device": "mps",
+  "max_train": 0,
+  "min_psnr": 32.0,
+  "max_lpips": 0.05,
+  "train_zero_convs_only": false,
+  "torch": "2.2.2",
+  "command": "m4_finetune_cvae.py --device mps --train_dirs results/m3_lao_validation/validation_20261018_154651_tm5zwx4p/data/gen/test results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/data/gen/test results/m3_lao_v3/validate_20261018_195753_zxupemab/data/gen/test --dev_dir data15/gen/dev --real_dev_dir data15/real/dev --pretrained_diffusion_path Manojb/stable-diffusion-2-1-base --epochs 30 --out checkpoints/Controlvae_m4.pt --log_dir results/m4_cvae/train"
+}

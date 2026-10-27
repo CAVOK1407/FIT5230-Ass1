@@ -8,6 +8,7 @@
 #   bash m3_run.sh data15    # SD 1.5 data set, dev 10 / test 100, + real photos (Imagenette) -> data15/
 #   bash m3_run.sh t4        # T4: all T1 configurations + B10 / ENS / FULL on data15, 100 images (long, resumable)
 #   bash m3_run.sh t2        # T2: capped variant (own PGD, stop at the real-dev median score)   -> CAP_E, CAP_ENS
+#   bash m3_run.sh t2b       # T2b: capped variant with step bisection (lands at the cap)            -> CAPB_E, CAPB_ENS
 #   bash m3_run.sh t3        # T3: EOT (JPEG 75 + 0.5x resize) inside PGD                        -> EOT_E, EOT_ENS
 #   bash m3_run.sh t5        # T5: pixel PGD baseline, eps 8/255, step 2/255, 10 steps           -> PGD8
 #   bash m3_run.sh eval15    # evaluation of everything that exists under results/m3_sd15
@@ -102,6 +103,11 @@ EOF
     run_cfg "$R15" CAP_E   "${common15[@]}" "${cap[@]}"
     run_cfg "$R15" CAP_ENS "${common15[@]}" "${cap[@]}" --surrogates E,R,D
     ;;
+  t2b)   # capped variant with step bisection: the score lands at the cap instead of overshooting it
+    cap=(--pgd_impl own --cap auto --cap_bisect --real_dev_dir "$real_dev15" --pgd_alpha "$alpha_cap" --pgd_steps 40 --loss margin --kappa cap)
+    run_cfg "$R15" CAPB_E   "${common15[@]}" "${cap[@]}"
+    run_cfg "$R15" CAPB_ENS "${common15[@]}" "${cap[@]}" --surrogates E,R,D
+    ;;
   t3)
     eot=(--pgd_impl own --pgd_eot both --eot_jpeg_q 75 --eot_resize 0.5)
     run_cfg "$R15" EOT_E   "${common15[@]}" "${eot[@]}"
@@ -123,6 +129,6 @@ EOF
     done
     ls data15/gen/test 2>/dev/null | grep -c png | sed 's/^/data15\/gen\/test: /' || true
     ;;
-  *) echo "usage: bash m3_run.sh [t1|pgdcheck|data15|t4|t2|t3|t5|eval15|status]"; exit 1 ;;
+  *) echo "usage: bash m3_run.sh [t1|pgdcheck|data15|t4|t2|t2b|t3|t5|eval15|status]"; exit 1 ;;
 esac
 echo "[m3_run] stage '$stage' done $(date '+%F %T')" | tee -a "$LOG/$stage.log"

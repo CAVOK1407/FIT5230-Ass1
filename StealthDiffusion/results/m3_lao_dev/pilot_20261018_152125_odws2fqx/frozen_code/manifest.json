@@ -1,0 +1,15 @@
+{
+  "archived_at": "2026-10-18T15:21:28.114176+08:00",
+  "verified_against_original_run_plan": true,
+  "source_sha256": {
+    "m2_stealth.py": "19ab03ec922c1463d7828e8bc2e13186c77772f666daf8c8ab8b7fc57d18c990",
+    "m3_lao_support.py": "8f247101ba98ee083b329388d9da79da70353a3a5e4b4ce6a3d31df8938d08c4",
+    "m3_lao_run.py": "52abc9a8af3e7dbfc14117d917212daf77a4935ad37cbb67b3282c25278f7cb8",
+    "m3_lao_report.py": "f499734e74add42b5285a54592f0510b6d96f5b3d1ef3e7e84c01cedf9e498ac",
+    "m2_evaluate.py": "a20926206b19822840ef2aee5f9e7d78262ee829b3669298f0210c4557e0bc2f",
+    "ControlVAE.py": "555fb5e094f1dbfd3d3e83e80b55e811eafb433ae34faa34b52701d7004bb9eb",
+    "diff_latent_attack.py": "5c5f776fcf3776e118f1ab534745bd668c7602cbcc06121c44f3ceede9a68851",
+    "m2_device.py": "1daf2a23e8802de4014092cfd677509c988d8af7acdfbd099ea2bc58d5e6634c",
+    "other_attacks.py": "cb46e1185518527d87a9f3f8f978288110773206277174dbb49c98c8b18c4a15"
+  }
+}

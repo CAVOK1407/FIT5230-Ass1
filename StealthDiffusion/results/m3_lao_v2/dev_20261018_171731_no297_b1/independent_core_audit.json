@@ -1,0 +1,72 @@
+{
+  "status": "passed_with_metadata_note",
+  "created_at": "2026-10-18T17:25:41.344961+08:00",
+  "scope": "all ten old development inputs; no new validation observations used",
+  "model_execution": false,
+  "source_edits": false,
+  "methods": {
+    "NEW_RECON8": {
+      "images": 10,
+      "actual_gradient_steps": 0,
+      "finite_nonzero_gradient_steps": 0,
+      "refinement_evaluations": 0,
+      "fallback_failures": 9,
+      "successful_selected": 1,
+      "reset_matches_independent_zero": 10
+    },
+    "Q10": {
+      "images": 10,
+      "actual_gradient_steps": 62,
+      "finite_nonzero_gradient_steps": 62,
+      "refinement_evaluations": 35,
+      "fallback_failures": 3,
+      "successful_selected": 7,
+      "reset_matches_independent_zero": 10
+    },
+    "Q40": {
+      "images": 10,
+      "actual_gradient_steps": 123,
+      "finite_nonzero_gradient_steps": 123,
+      "refinement_evaluations": 40,
+      "fallback_failures": 2,
+      "successful_selected": 8,
+      "reset_matches_independent_zero": 10
+    },
+    "Q40_LR02": {
+      "images": 10,
+      "actual_gradient_steps": 104,
+      "finite_nonzero_gradient_steps": 104,
+      "refinement_evaluations": 40,
+      "fallback_failures": 2,
+      "successful_selected": 8,
+      "reset_matches_independent_zero": 10
+    }
+  },
+  "independent_old_new_zero_bytewise_matches": 10,
+  "all_new_reset_bytewise_matches": 40,
+  "prefix_pairs_verified": 10,
+  "unique_new_candidate_gradient_updates": 227,
+  "max_saved_vs_independent_eval_E_margin_difference": 6.67572021484375e-06,
+  "max_saved_vs_independent_eval_lpips_difference": 0,
+  "frozen_source_files_verified": 36,
+  "selection_recomputed": "Q40_LR02",
+  "selected_and_refinement_policy": "All 40 new records exactly reproduce declared success/fallback policy from observed candidates; all selected PNG E and LPIPS agree with independent evaluation within stated tolerance.",
+  "notes": [
+    {
+      "severity": "metadata_only",
+      "location": "selection.json metrics.OLD_LAO8.actual_gradient_steps",
+      "recorded": 0,
+      "actual_original_run_gradient_steps": 100,
+      "explanation": "Projected OLD_LAO8 export intentionally has empty history; selector defaults absent step field to zero. The old trajectory actually used ten updates for each of ten images. Old baseline is not a candidate, so candidate ranking is unaffected. Do not interpret this zero as old-LAO computational cost; preserve frozen selection evidence."
+    },
+    {
+      "severity": "interpretation",
+      "explanation": "Finite nonzero recorded latent gradients and updates plus frozen-core source show an active latent path. This is an audit of stored evidence, not an independent gradient recomputation. Projection is a deterministic image renderer constraint, not a pixel optimizer."
+    },
+    {
+      "severity": "interpretation",
+      "explanation": "Shared Q10 and Q40 gradient counts overlap; their counts must not be summed as independent work. Distinct new candidate trajectories comprise Q40 plus Q40_LR02."
+    }
+  ],
+  "counter_semantics": "successful_selected/fallback_failures classify the stopping rule over all ten inputs, including two initially missed by E; these are NOT attack-success rates. Eligible clean-detected success counts are separately stored in selection.json."
+}

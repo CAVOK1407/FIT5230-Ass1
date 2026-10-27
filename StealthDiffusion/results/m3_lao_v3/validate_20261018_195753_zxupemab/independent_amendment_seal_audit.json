@@ -1,0 +1,25 @@
+{
+  "status": "verified",
+  "created_at": "2026-10-18T19:59:25.214433+08:00",
+  "sealed_root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/dev_20261018_184038_1mmcu3yj",
+  "sealed_root_not_modified": true,
+  "manifest_entries_verified": 548,
+  "manifest_coverage_complete": true,
+  "active_freeze_sha256": "3cb6d0b4f480a5c82d5d60042748942f304829082419d8171fb0c705d267cdd9",
+  "runtime_source_files_verified": 43,
+  "runtime_source_changes": [
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3_report.py"
+  ],
+  "source_before": "29d84ee9890957c090ac6686f460063937e9f33fce1f8f05b1d6ae2e712ff5fc",
+  "source_after": "f52517a4bbfc4fa816c0fcb7b0138bbdaa5edac755570333ab9e2880dd25d335",
+  "only_declared_score_comparison_tolerance_changed": true,
+  "selected_configuration_unchanged": true,
+  "quality_budget_threshold_protocol_unchanged": true,
+  "checkpoint_files_verified": 7,
+  "diffusion_files_verified": 8,
+  "old_frozen_source_copies_verified": true,
+  "parent_and_amendment_hash_bindings_verified": true,
+  "original_selection_audit_hash_bound": true,
+  "regression_test_log": "111 tests passed",
+  "amended_source_mirror_identical": true
+}

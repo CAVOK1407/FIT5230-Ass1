@@ -1,0 +1,13 @@
+{
+  "status": "verified",
+  "sealed_at": "2026-10-18T18:03:18.397869+08:00",
+  "files": 1499,
+  "bytes": 161789012,
+  "manifest_sha256": "35e0fda0f3f30b09ebbc2f031dd0669182a77ee4f33a860a39e825a827776f1b",
+  "manifest": "SHA256SUMS.json",
+  "excluded": [
+    "SHA256SUMS.json",
+    "SEAL.json"
+  ],
+  "note": "Sealed experiment including original failure evidence and independently verified report-only recovery."
+}

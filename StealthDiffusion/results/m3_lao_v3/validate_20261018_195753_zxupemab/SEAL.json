@@ -1,0 +1,10 @@
+{
+  "status": "verified",
+  "created_at": "2026-10-18T21:11:15.831548+08:00",
+  "files": 1312,
+  "total_bytes": 167059935,
+  "manifest_sha256": "9a7d6018fa48d63db472301081df0571d73e32222d53a8ed5823788a55e70a7f",
+  "completion_sha256": "9b03ed07f788e414850900ff5d488d5e1673c41790ba94273d3ea4bab7bdb0fb",
+  "report_sha256": "16d4e98dd36b1345ad03bdebfc61e7243beea1a0c974e1c2e0859fbad72f3ecd",
+  "instruction": "Preserve all files; any subsequent work uses a separate run directory."
+}

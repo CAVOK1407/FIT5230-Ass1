@@ -1,0 +1,25 @@
+{
+  "status": "complete",
+  "completed": [
+    "data",
+    "RAW_RECON",
+    "RAW_LAO",
+    "old_export",
+    "new_zero",
+    "new_lao",
+    "pgd",
+    "evaluation",
+    "report_recovery",
+    "independent_audits"
+  ],
+  "created_at": "2026-10-18T17:23:51.826361+08:00",
+  "current": null,
+  "finished_at": "2026-10-18T18:03:18.204289+08:00",
+  "reporting_amendment": "report_recovery/amendment.json",
+  "original_report_failure": {
+    "error": "report failed (1); see /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report.log",
+    "finished_at": "2026-10-18T17:55:14.248949+08:00",
+    "preserved_session": "report_recovery/original_session.json",
+    "preserved_log": "report.log"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "verified",
+  "old_dev_only": true,
+  "PGD10_matches_prior_real_run_bytewise": true,
+  "v2_reset_matches_old_zero_step_integer_projection": true,
+  "new_steps": 8,
+  "new_lpips": 0.004657625220716,
+  "new_E_margin": 0.20421630144119263
+}

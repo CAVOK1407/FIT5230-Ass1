@@ -1,0 +1,35 @@
+{
+  "purpose": "Implementation verification on old development image 0000 only",
+  "commands": [
+    [
+      "/opt/anaconda3/envs/fit5230m2/bin/python",
+      "-B",
+      "-u",
+      "m3_lao_v2.py",
+      "--images_root",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/implementation_smoke_4w5v5cno/input",
+      "--out_root",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/implementation_smoke_4w5v5cno/new",
+      "--name",
+      "SMOKE",
+      "--max_iterations",
+      "10",
+      "--device",
+      "mps",
+      "--pretrained_diffusion_path",
+      "/Users/wangyunjie/.cache/huggingface/hub/models--Manojb--stable-diffusion-2-1-base/snapshots/0094d483a120f3f33dafbd187ea4aa60d10de75c"
+    ],
+    [
+      "/opt/anaconda3/envs/fit5230m2/bin/python",
+      "-B",
+      "-u",
+      "m3_lao_pgd_v2.py",
+      "--images_root",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/implementation_smoke_4w5v5cno/input",
+      "--out_root",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/implementation_smoke_4w5v5cno/pgd",
+      "--device",
+      "mps"
+    ]
+  ]
+}

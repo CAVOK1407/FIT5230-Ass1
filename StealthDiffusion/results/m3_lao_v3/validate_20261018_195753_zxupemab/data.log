@@ -1,0 +1,54 @@
+Prepared immutable generation plan and 50 novel real images: /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/data
+/opt/anaconda3/envs/fit5230m2/lib/python3.10/site-packages/accelerate/utils/torch_xla.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Generated 1/50 | seed=5233000 | 7.0s
+Generated 2/50 | seed=5233001 | 6.9s
+Generated 3/50 | seed=5233002 | 6.8s
+Generated 4/50 | seed=5233003 | 7.3s
+Generated 5/50 | seed=5233004 | 7.0s
+Generated 6/50 | seed=5233005 | 7.6s
+Generated 7/50 | seed=5233006 | 7.1s
+Generated 8/50 | seed=5233007 | 7.7s
+Generated 9/50 | seed=5233008 | 8.1s
+Generated 10/50 | seed=5233009 | 8.6s
+Generated 11/50 | seed=5233010 | 9.6s
+Generated 12/50 | seed=5233011 | 8.3s
+Generated 13/50 | seed=5233012 | 8.4s
+Generated 14/50 | seed=5233013 | 8.0s
+Generated 15/50 | seed=5233014 | 8.1s
+Generated 16/50 | seed=5233015 | 7.7s
+Generated 17/50 | seed=5233016 | 7.8s
+Generated 18/50 | seed=5233017 | 7.5s
+Generated 19/50 | seed=5233018 | 7.7s
+Generated 20/50 | seed=5233019 | 7.6s
+Generated 21/50 | seed=5233020 | 7.8s
+Generated 22/50 | seed=5233021 | 7.6s
+Generated 23/50 | seed=5233022 | 7.9s
+Generated 24/50 | seed=5233023 | 7.6s
+Generated 25/50 | seed=5233024 | 8.0s
+Generated 26/50 | seed=5233025 | 7.8s
+Generated 27/50 | seed=5233026 | 8.2s
+Generated 28/50 | seed=5233027 | 8.3s
+Generated 29/50 | seed=5233028 | 8.8s
+Generated 30/50 | seed=5233029 | 8.6s
+Generated 31/50 | seed=5233030 | 8.2s
+Generated 32/50 | seed=5233031 | 8.7s
+Generated 33/50 | seed=5233032 | 8.2s
+Generated 34/50 | seed=5233033 | 8.7s
+Generated 35/50 | seed=5233034 | 8.7s
+Generated 36/50 | seed=5233035 | 9.1s
+Generated 37/50 | seed=5233036 | 9.0s
+Generated 38/50 | seed=5233037 | 8.2s
+Generated 39/50 | seed=5233038 | 9.0s
+Generated 40/50 | seed=5233039 | 8.3s
+Generated 41/50 | seed=5233040 | 8.7s
+Generated 42/50 | seed=5233041 | 8.9s
+Generated 43/50 | seed=5233042 | 9.2s
+Generated 44/50 | seed=5233043 | 9.7s
+Generated 45/50 | seed=5233044 | 8.4s
+Generated 46/50 | seed=5233045 | 8.8s
+Generated 47/50 | seed=5233046 | 8.6s
+Generated 48/50 | seed=5233047 | 8.8s
+Generated 49/50 | seed=5233048 | 8.7s
+Generated 50/50 | seed=5233049 | 8.4s
+Complete: 50 new generated + 50 new real; zero old-content overlap. /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v3/validate_20261018_195753_zxupemab/data/data_manifest.json

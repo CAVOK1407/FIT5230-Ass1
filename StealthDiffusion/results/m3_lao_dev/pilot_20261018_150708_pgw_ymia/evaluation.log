@@ -1,0 +1,24 @@
+[m2_device] using device: mps
+[eval] run R0: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_150708_pgw_ymia/R0 (_adv_image.png)
+[eval] run R1: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_150708_pgw_ymia/R1 (_adv_image.png)
+[eval] run R2: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_150708_pgw_ymia/R2 (_adv_image.png)
+[eval] run R3: 10 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_150708_pgw_ymia/R3 (_adv_image.png)
+[eval] 10 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] R0           E none             detected   8/10  cond_ASR 0.00  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R1           E none             detected   8/10  cond_ASR 0.00  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R2           E none             detected   8/10  cond_ASR 0.25  escape 0.40  real_FPR 0.00  AUC 1.00
+[eval] R3           E none             detected   8/10  cond_ASR 0.25  escape 0.40  real_FPR 0.00  AUC 1.00
+[eval] R0           R none             detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R1           R none             detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R2           R none             detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R3           R none             detected   9/10  cond_ASR 0.11  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R0           D none             detected  10/10  cond_ASR 0.00  escape 0.00  real_FPR 0.00  AUC 1.00
+[eval] R1           D none             detected  10/10  cond_ASR 0.00  escape 0.00  real_FPR 0.00  AUC 1.00
+[eval] R2           D none             detected  10/10  cond_ASR 0.00  escape 0.00  real_FPR 0.00  AUC 1.00
+[eval] R3           D none             detected  10/10  cond_ASR 0.00  escape 0.00  real_FPR 0.00  AUC 1.00
+[eval] R0           S none             detected  10/10  cond_ASR 0.00  escape 0.00  real_FPR 0.00  AUC 1.00
+[eval] R1           S none             detected  10/10  cond_ASR 0.20  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R2           S none             detected  10/10  cond_ASR 0.20  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] R3           S none             detected  10/10  cond_ASR 0.10  escape 0.10  real_FPR 0.00  AUC 1.00
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_150708_pgw_ymia/eval/summary.csv, per_image.csv, real_predictions.csv

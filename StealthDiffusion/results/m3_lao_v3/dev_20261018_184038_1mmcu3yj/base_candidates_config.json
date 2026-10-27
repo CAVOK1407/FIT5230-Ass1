@@ -1,0 +1,142 @@
+[
+  {
+    "name": "P_a0.25_w1",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_a0.25_w10",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_a0.5_w1",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 0.5,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_a0.5_w10",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 0.5,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_a1_w1",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 1.0,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_a1_w10",
+    "kind": "P",
+    "eot": false,
+    "alpha_pixels": 1.0,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a0.25_w1",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a0.25_w10",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a0.5_w1",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 0.5,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a0.5_w10",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 0.5,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a1_w1",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 1.0,
+    "lpips_weight": 1.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "P_EOT_a1_w10",
+    "kind": "P",
+    "eot": true,
+    "alpha_pixels": 1.0,
+    "lpips_weight": 10.0,
+    "max_steps": 80,
+    "restarts": 3
+  },
+  {
+    "name": "L",
+    "kind": "L",
+    "eot": false,
+    "lao_steps": 40,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 1.0
+  },
+  {
+    "name": "L_EOT_w1",
+    "kind": "L",
+    "eot": true,
+    "lao_steps": 40,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 1.0
+  },
+  {
+    "name": "L_EOT_w10",
+    "kind": "L",
+    "eot": true,
+    "lao_steps": 40,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 10.0
+  },
+  {
+    "name": "Z",
+    "kind": "Z",
+    "eot": false,
+    "lao_steps": 0,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 1.0
+  }
+]

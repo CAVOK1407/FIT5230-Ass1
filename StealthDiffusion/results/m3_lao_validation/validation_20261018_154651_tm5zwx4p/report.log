@@ -1,0 +1,1 @@
+{"status": "verified", "out": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_validation/validation_20261018_154651_tm5zwx4p/report", "model_executed": false, "n_generated": 50, "budget_violations": 0, "primary_difference": -0.06976744186046512, "primary_ci95": [-0.27906976744186046, 0.13953488372093023]}

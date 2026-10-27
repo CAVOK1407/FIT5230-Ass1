@@ -1,0 +1,37 @@
+{
+  "status": "verified",
+  "variants": {
+    "PGD10": {
+      "0000": "94a7fa7f59533f6c82a733ea1ffa2c6a79e3d9412afeabc870e0ed827170179c"
+    },
+    "PGD40": {
+      "0000": "da470d6bdd3627001d518e325eadf23906bc2355f5f49e78f7d8d7444da6091d"
+    }
+  },
+  "created_at": "2026-10-18T15:40:15.298083+08:00",
+  "images_root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_validation/implementation_smoke__m1bjfy_/inputs",
+  "device": "mps",
+  "budget_pixels": 8,
+  "seed": 20261018,
+  "res": 224,
+  "n_images": 1,
+  "surrogates": "E",
+  "evaluate": "E",
+  "torch": "2.2.2",
+  "alpha_pixels": 2,
+  "image_normalization": "ImageNet mean/std; no inverse-normalization roundtrip",
+  "saved_budget_definition": "max(abs(int16(saved PNG) - int16(canonical RGB/PIL input))) <= budget_pixels",
+  "quantization": "CPU NumPy floor, integer projection, identity BPDA derivative",
+  "model_training": false,
+  "diffusion_model_loaded": false,
+  "source_sha256": {
+    "0000.png": "ebcc681410116133a9839d8b2e4dd4020af3851b0b08218b14570aa2c779dd0e"
+  },
+  "runtime_source_sha256": {
+    "m3_lao_pgd.py": "210690d4561380584ea0d98cce2f0ee28b64579bd99b304745b4ae97e3574bbf",
+    "m3_lao_budget.py": "4e2eda22adea1179f7acfe0908a6dd2f5024a9de587a30073f3e9cf96112d31b",
+    "m2_device.py": "1daf2a23e8802de4014092cfd677509c988d8af7acdfbd099ea2bc58d5e6634c",
+    "other_attacks.py": "cb46e1185518527d87a9f3f8f978288110773206277174dbb49c98c8b18c4a15"
+  },
+  "command": "m3_lao_pgd.py --images_root results/m3_lao_validation/implementation_smoke__m1bjfy_/inputs --out_root results/m3_lao_validation/implementation_smoke__m1bjfy_ --device mps --budget_pixels 8 --seed 20261018"
+}

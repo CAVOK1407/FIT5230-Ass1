@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-10-18T17:17:32.536014+08:00",
+  "source_run": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_152125_odws2fqx/G1",
+  "baseline_run": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_152125_odws2fqx/G0",
+  "images_root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/data15/gen/dev",
+  "budget_pixels": 8,
+  "n_images": 10,
+  "source_config_sha256": "a5e588241d26c41198193b1650735baedea656af34a71847f3eafa0591a62ab6",
+  "source_records_sha256": "f80756f222c9320c8a9f972e358cdd607a034973970a19e8851f14eb0cc44eeb",
+  "baseline_config_sha256": "a40b2e871c8d0a2c92d61691b632154392d761e5de81c02ee1613f0ff4093f70",
+  "baseline_records_sha256": "0994fafa2960dc7f5ea5cecfb82ff164338f236ea6992cb4077d1436f7d59ec5",
+  "model_executed": false,
+  "independent_reset_check": "raw reset PNG SHA-256 equals the independent zero-step output",
+  "timing_note": "seconds is the corresponding original LAO/baseline run time, including diagnostics; projection is not a new optimization",
+  "status": "verified",
+  "variants": {
+    "LAO8": {
+      "0000": "68a5da2cedf457001980eec60b96fd27f73d38b17805041e90e507964000050c",
+      "0001": "abd14b04ac84174364e7b4fa82f2d4321331d65c31af136c12b4f184989d1d2e",
+      "0002": "2af75fcdbce1cb445afed2e1a54b0806d86a77210fee9c7d2dbcfc0692cf1168",
+      "0003": "6a8da7cfa7d4527880c00175bd701c491da470eef91ad6fa2eee1b6b6933862c",
+      "0004": "b6bac13e33926d5ea93df87c8b788454906a8dd8b097154495411bb65f7ebc61",
+      "0005": "69fb0208e910b5c5a8242a353539fb60fd81b66b82c1138dda547de80e0df3c2",
+      "0006": "fb4b5395ba8b90990f7e62916880ea7f128b9ea857be012e5321f5849509c8eb",
+      "0007": "1aee661eebe6228226e4e793c51ec50cbf90b8493241fa6f57fe1dba695fff1b",
+      "0008": "6b5694b31bcc819b243f2b82d2c1e76b05b634ece383082a22a281e7b7e2b287",
+      "0009": "2a8c64e102f47554ae5bb52bf6cb38d6fb9be16a88aefc2b99c8206ca815b000"
+    },
+    "RECON8": {
+      "0000": "6f8edacd703b71bfd6b7d023893d3e3008a2cae4465a7005ec16c290deb2095f",
+      "0001": "2c3b2a7e22d988f59a7b8c2df1f0aabf43c7d74b63c3de3b95ba98b7f88f8da7",
+      "0002": "8d526539a8f1bcaa4201cff2d87329ab47ff42587ab8ef37d060c2a5eaf546af",
+      "0003": "26572a9720ed17456e1b42444e17e134c515e883fb60f9684957e0b3915240f7",
+      "0004": "180c92379d382865bd06cbe09baf674cc327dff84a642ce4655688a5f8dbcd54",
+      "0005": "cfd1e46c730f75eb8923cc0f229847e4f6ed3e7e494a958fc04eb17b349d2985",
+      "0006": "46ff56d3a1c1718ea78c2330aa9b9bbd5553053d7a7021fdb50d6178eab1372f",
+      "0007": "706acd069a571166d1a806cc0c39658ac70a9c3d86b4f957f31c46905ddb73dc",
+      "0008": "15c12ac3c9482afde95677a26df282544c5573a857d7bd59467dadd69c790b7e",
+      "0009": "659d93d8128352b1005cfe6166e743ccd91edb4ec1d2c672cd6f6febc004fc2c"
+    }
+  }
+}

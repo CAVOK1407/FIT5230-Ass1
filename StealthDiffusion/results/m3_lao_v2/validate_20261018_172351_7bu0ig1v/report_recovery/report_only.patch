@@ -1,0 +1,12 @@
+--- /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v2_report.py
++++ /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report_recovery/m3_lao_v2_report_numeric_compat.py
+@@ -771,7 +771,8 @@
+                 for key, field in (("real_margin", "adv_margin"), ("lpips", "lpips"), ("psnr", "psnr")):
+                     observed = math.inf if key == "psnr" and saved.get("psnr_infinite") is True else numeric(
+                         saved.get(key), "selected " + key, infinity=key == "psnr")
+-                    require(math.isclose(observed, row[field], rel_tol=1e-5, abs_tol=1e-5),
++                    require(math.isclose(observed, row[field], rel_tol=1e-5,
++                                         abs_tol=2e-5 if key == "real_margin" else 1e-5),
+                             f"Selected PNG {key} differs from independent evaluation: {image_id}")
+             require(all(value >= 0 for value in gradients + updates), "A gradient/update norm is negative")
+             item = {"run": name, "image_id": image_id, "selected_step": selected_step, "actual_steps": actual_steps,

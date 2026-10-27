@@ -1,0 +1,14 @@
+{
+  "zip": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/deliverables/PreDecodeGuard_Return_Batch_v1_2026-10-18.zip",
+  "zip_sha256": "27d01f943a16ec6cb111c9a6b115dfb09e8785825b7dc3994c63cb0c8aff5524",
+  "zip_bytes": 4511504,
+  "payload_files": 17,
+  "returned_latents": 10,
+  "review_images_required": 10,
+  "original_package_unchanged": true,
+  "preexisting_tracked_worktree_unchanged": true,
+  "frozen_python_code_unchanged_since_preregistration": true,
+  "archive_integrity": "passed CRC and SHA256 checks",
+  "uploaded": false,
+  "messages_sent": false
+}

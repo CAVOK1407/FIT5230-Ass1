@@ -1,0 +1,26 @@
+[
+  {
+    "name": "H",
+    "kind": "H",
+    "eot": false,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 1.0,
+    "max_steps": 40,
+    "restarts": 3,
+    "lao_steps": 40,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 1.0
+  },
+  {
+    "name": "H_EOT",
+    "kind": "H",
+    "eot": true,
+    "alpha_pixels": 0.25,
+    "lpips_weight": 10.0,
+    "max_steps": 40,
+    "restarts": 3,
+    "lao_steps": 40,
+    "lao_lr": 0.02,
+    "lao_lpips_weight": 1.0
+  }
+]

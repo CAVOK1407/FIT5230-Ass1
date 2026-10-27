@@ -1,0 +1,82 @@
+[m2_device] using device: mps
+[eval] run OLD_RECON8: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/old/RECON8 (_adv_image.png)
+[eval] run OLD_LAO8: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/old/LAO8 (_adv_image.png)
+[eval] run NEW_RECON8: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/new/NEW_RECON8 (_adv_image.png)
+[eval] run NEW_LAO8: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/new/NEW_LAO8 (_adv_image.png)
+[eval] run PGD10: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/pgd/PGD10 (_adv_image.png)
+[eval] run PGD10_MATCHED: 50 images from /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/pgd/PGD10_MATCHED (_adv_image.png)
+[eval] 50 real test images
+Loaded pretrained weights for efficientnet-b0
+[eval] OLD_RECON8   E none             detected  41/50  cond_ASR 0.02  escape 0.18  real_FPR 0.00  AUC 0.99
+[eval] OLD_LAO8     E none             detected  41/50  cond_ASR 0.61  escape 0.68  real_FPR 0.00  AUC 0.95
+[eval] NEW_RECON8   E none             detected  41/50  cond_ASR 0.02  escape 0.18  real_FPR 0.00  AUC 0.99
+[eval] NEW_LAO8     E none             detected  41/50  cond_ASR 0.98  escape 0.98  real_FPR 0.00  AUC 0.99
+[eval] PGD10        E none             detected  41/50  cond_ASR 1.00  escape 1.00  real_FPR 0.00  AUC 0.41
+[eval] PGD10_MATCHED E none             detected  41/50  cond_ASR 0.46  escape 0.56  real_FPR 0.00  AUC 0.68
+[eval] OLD_RECON8   E jpeg75           detected  38/50  cond_ASR 0.11  escape 0.32  real_FPR 0.08  AUC 0.89
+[eval] OLD_LAO8     E jpeg75           detected  38/50  cond_ASR 0.26  escape 0.44  real_FPR 0.08  AUC 0.84
+[eval] NEW_RECON8   E jpeg75           detected  38/50  cond_ASR 0.11  escape 0.32  real_FPR 0.08  AUC 0.89
+[eval] NEW_LAO8     E jpeg75           detected  38/50  cond_ASR 0.13  escape 0.34  real_FPR 0.08  AUC 0.88
+[eval] PGD10        E jpeg75           detected  38/50  cond_ASR 0.53  escape 0.64  real_FPR 0.08  AUC 0.71
+[eval] PGD10_MATCHED E jpeg75           detected  38/50  cond_ASR 0.13  escape 0.34  real_FPR 0.08  AUC 0.87
+[eval] OLD_RECON8   E resize05         detected  49/50  cond_ASR 0.02  escape 0.02  real_FPR 0.88  AUC 0.69
+[eval] OLD_LAO8     E resize05         detected  49/50  cond_ASR 0.00  escape 0.00  real_FPR 0.88  AUC 0.68
+[eval] NEW_RECON8   E resize05         detected  49/50  cond_ASR 0.02  escape 0.02  real_FPR 0.88  AUC 0.69
+[eval] NEW_LAO8     E resize05         detected  49/50  cond_ASR 0.02  escape 0.02  real_FPR 0.88  AUC 0.67
+[eval] PGD10        E resize05         detected  49/50  cond_ASR 0.00  escape 0.00  real_FPR 0.88  AUC 0.67
+[eval] PGD10_MATCHED E resize05         detected  49/50  cond_ASR 0.00  escape 0.00  real_FPR 0.88  AUC 0.70
+[eval] OLD_RECON8   R none             detected  41/50  cond_ASR 0.05  escape 0.22  real_FPR 0.00  AUC 1.00
+[eval] OLD_LAO8     R none             detected  41/50  cond_ASR 0.17  escape 0.32  real_FPR 0.00  AUC 0.99
+[eval] NEW_RECON8   R none             detected  41/50  cond_ASR 0.05  escape 0.22  real_FPR 0.00  AUC 1.00
+[eval] NEW_LAO8     R none             detected  41/50  cond_ASR 0.07  escape 0.24  real_FPR 0.00  AUC 1.00
+[eval] PGD10        R none             detected  41/50  cond_ASR 0.56  escape 0.64  real_FPR 0.00  AUC 0.94
+[eval] PGD10_MATCHED R none             detected  41/50  cond_ASR 0.02  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] OLD_RECON8   R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.22  AUC 0.91
+[eval] OLD_LAO8     R jpeg75           detected  44/50  cond_ASR 0.02  escape 0.14  real_FPR 0.22  AUC 0.90
+[eval] NEW_RECON8   R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.22  AUC 0.91
+[eval] NEW_LAO8     R jpeg75           detected  44/50  cond_ASR 0.02  escape 0.14  real_FPR 0.22  AUC 0.91
+[eval] PGD10        R jpeg75           detected  44/50  cond_ASR 0.02  escape 0.14  real_FPR 0.22  AUC 0.89
+[eval] PGD10_MATCHED R jpeg75           detected  44/50  cond_ASR 0.00  escape 0.12  real_FPR 0.22  AUC 0.92
+[eval] OLD_RECON8   R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.51
+[eval] OLD_LAO8     R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.52
+[eval] NEW_RECON8   R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.51
+[eval] NEW_LAO8     R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.50
+[eval] PGD10        R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.50
+[eval] PGD10_MATCHED R resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.94  AUC 0.53
+[eval] OLD_RECON8   D none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.02  AUC 1.00
+[eval] OLD_LAO8     D none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.02  AUC 1.00
+[eval] NEW_RECON8   D none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.02  AUC 1.00
+[eval] NEW_LAO8     D none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.02  AUC 1.00
+[eval] PGD10        D none             detected  49/50  cond_ASR 0.14  escape 0.16  real_FPR 0.02  AUC 0.99
+[eval] PGD10_MATCHED D none             detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 0.02  AUC 1.00
+[eval] OLD_RECON8   D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] OLD_LAO8     D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] NEW_RECON8   D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] NEW_LAO8     D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] PGD10        D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] PGD10_MATCHED D jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.22  AUC 0.97
+[eval] OLD_RECON8   D resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 1.00  AUC 0.65
+[eval] OLD_LAO8     D resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 1.00  AUC 0.64
+[eval] NEW_RECON8   D resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 1.00  AUC 0.65
+[eval] NEW_LAO8     D resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 1.00  AUC 0.63
+[eval] PGD10        D resize05         detected  49/50  cond_ASR 0.00  escape 0.02  real_FPR 1.00  AUC 0.66
+[eval] PGD10_MATCHED D resize05         detected  49/50  cond_ASR 0.00  escape 0.00  real_FPR 1.00  AUC 0.67
+[eval] OLD_RECON8   S none             detected  48/50  cond_ASR 0.15  escape 0.18  real_FPR 0.00  AUC 1.00
+[eval] OLD_LAO8     S none             detected  48/50  cond_ASR 0.19  escape 0.22  real_FPR 0.00  AUC 1.00
+[eval] NEW_RECON8   S none             detected  48/50  cond_ASR 0.15  escape 0.18  real_FPR 0.00  AUC 1.00
+[eval] NEW_LAO8     S none             detected  48/50  cond_ASR 0.17  escape 0.20  real_FPR 0.00  AUC 1.00
+[eval] PGD10        S none             detected  48/50  cond_ASR 0.96  escape 0.96  real_FPR 0.00  AUC 0.99
+[eval] PGD10_MATCHED S none             detected  48/50  cond_ASR 0.00  escape 0.04  real_FPR 0.00  AUC 1.00
+[eval] OLD_RECON8   S jpeg75           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.46  AUC 0.90
+[eval] OLD_LAO8     S jpeg75           detected  50/50  cond_ASR 0.06  escape 0.06  real_FPR 0.46  AUC 0.89
+[eval] NEW_RECON8   S jpeg75           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.46  AUC 0.90
+[eval] NEW_LAO8     S jpeg75           detected  50/50  cond_ASR 0.02  escape 0.02  real_FPR 0.46  AUC 0.90
+[eval] PGD10        S jpeg75           detected  50/50  cond_ASR 0.06  escape 0.06  real_FPR 0.46  AUC 0.87
+[eval] PGD10_MATCHED S jpeg75           detected  50/50  cond_ASR 0.00  escape 0.00  real_FPR 0.46  AUC 0.91
+[eval] OLD_RECON8   S resize05         detected  12/50  cond_ASR 0.50  escape 0.78  real_FPR 0.12  AUC 0.60
+[eval] OLD_LAO8     S resize05         detected  12/50  cond_ASR 0.58  escape 0.88  real_FPR 0.12  AUC 0.56
+[eval] NEW_RECON8   S resize05         detected  12/50  cond_ASR 0.50  escape 0.78  real_FPR 0.12  AUC 0.60
+[eval] NEW_LAO8     S resize05         detected  12/50  cond_ASR 0.33  escape 0.76  real_FPR 0.12  AUC 0.61
+[eval] PGD10        S resize05         detected  12/50  cond_ASR 0.50  escape 0.78  real_FPR 0.12  AUC 0.62
+[eval] PGD10_MATCHED S resize05         detected  12/50  cond_ASR 0.25  escape 0.82  real_FPR 0.12  AUC 0.59
+[eval] wrote /Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/eval/summary.csv, per_image.csv, real_predictions.csv

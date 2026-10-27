@@ -1,0 +1,67 @@
+\begin{table}[!t]
+\caption{Fine-tuning log on the 10 development images (reconstruction only, PNG-quantised). ``Flagged'': fraction judged AI by each detector. Gate: PSNR $\geq 32$ and LPIPS $\leq 0.05$. Epoch 2 was selected (lowest mean flagged among epochs passing the gate).}
+\label{tab:ft_log}
+\centering\footnotesize
+\begin{tabular}{l cccc cc c}
+\toprule
+Epoch & E & R & D & S & PSNR & LPIPS & Gate \\
+\midrule
+0 (released) & 0.8 & 0.8 & 1.0 & 1.0 & 39.9 & 0.004 & -- \\
+1 & 0.1 & 0.0 & 0.9 & 0.2 & 35.8 & 0.020 & yes \\
+2 $\star$ & 0.0 & 0.0 & 0.9 & 0.2 & 35.8 & 0.018 & yes \\
+3 & 0.0 & 0.0 & 1.0 & 0.2 & 34.2 & 0.020 & yes \\
+4 & 0.0 & 0.0 & 1.0 & 0.3 & 33.2 & 0.024 & yes \\
+5 & 0.1 & 0.0 & 1.0 & 0.3 & 30.8 & 0.031 & no \\
+6 & 0.1 & 0.0 & 1.0 & 0.2 & 27.8 & 0.050 & no \\
+8 & 0.0 & 0.0 & 1.0 & 0.2 & 23.0 & 0.114 & no \\
+10 & 0.0 & 0.1 & 1.0 & 0.3 & 17.0 & 0.236 & no \\
+15 & 0.1 & 0.2 & 1.0 & 0.2 & 12.2 & 0.450 & no \\
+20 & 0.0 & 0.2 & 1.0 & 0.2 & 11.1 & 0.513 & no \\
+30 & 0.0 & 0.1 & 1.0 & 0.4 & 10.3 & 0.574 & no \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table*}[!t]
+\caption{Fine-tuned control branch vs.\ released weights on the 100 SD\,1.5 test images (never used in training). Conditional ASR per detector (denominator in parentheses in the header), lossless PNG and after JPEG 75. Distortion is measured against the clean input. ``s/img'': attack time per image on the M5 Max (MPS). The fine-tuned weights come from 2 epochs on 150 disjoint images (80 s).}
+\label{tab:ft_main}
+\centering\footnotesize
+\begin{tabular}{l cccc cccc ccc c}
+\toprule
+ & \multicolumn{4}{c}{Lossless PNG} & \multicolumn{4}{c}{JPEG 75} & & & & \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Configuration & E (94) & R (84) & D (99) & S (98) & E (82) & R (88) & D (99) & S (97) & PSNR & LPIPS & $L_\infty$ & s/img \\
+\midrule
+Recon. only, released & 0.01 & 0.04 & 0.01 & 0.15 & 0.04 & 0.02 & 0.00 & 0.00 & 39.1 & 0.005 & 0.172 & 2.4 \\
+Recon. only, fine-tuned & 0.97 & 0.92 & 0.05 & 0.69 & 0.56 & 0.33 & 0.01 & 0.06 & 35.1 & 0.018 & 0.218 & 2.4 \\
+\addlinespace
+Official, released & 1.00 & 0.77 & 0.39 & 0.90 & 0.91 & 0.15 & 0.02 & 0.06 & 34.0 & 0.126 & 0.183 & 10.0 \\
+Official, fine-tuned & 1.00 & 1.00 & 0.58 & 1.00 & 1.00 & 0.58 & 0.04 & 0.19 & 31.8 & 0.145 & 0.229 & 10.2 \\
+\addlinespace
+ENS, released & 1.00 & 1.00 & 1.00 & 0.97 & 0.91 & 0.62 & 0.06 & 0.09 & 33.9 & 0.126 & 0.183 & 11.1 \\
+ENS, fine-tuned & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 0.88 & 0.20 & 0.23 & 31.7 & 0.146 & 0.229 & 11.4 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table}[!t]
+\caption{The fine-tuned attacker against the Section~\ref{sec:defence} defender (lossless PNG). AUC: real vs.\ attacked images under the released detectors ($0.5$ = inseparable; $0$ = separable because of overshoot). Right: fraction flagged by Defence~3 (calibrated two-sided thresholds, 2-of-4 vote), same thresholds as Table~\ref{tab:calibrated}.}
+\label{tab:ft_defence}
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{l cccc ccccc}
+\toprule
+ & \multicolumn{4}{c}{AUC real vs.\ attacked} & \multicolumn{5}{c}{Flagged by Defence 3} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-10}
+Configuration & E & R & D & S & E & R & D & S & 2-of-4 \\
+\midrule
+Recon. only, released & 1.00 & 0.99 & 1.00 & 1.00 & 0.99 & 0.97 & 1.00 & 1.00 & 1.00 \\
+Recon. only, fine-tuned & 0.74 & 0.76 & 1.00 & 0.99 & 0.17 & 0.36 & 0.98 & 0.97 & 0.96 \\
+Official, released & 0.00 & 0.84 & 0.96 & 0.99 & 0.99 & 0.58 & 0.80 & 0.93 & 0.99 \\
+Official, fine-tuned & 0.00 & 0.53 & 0.91 & 0.97 & 1.00 & 0.28 & 0.55 & 0.82 & 0.90 \\
+ENS, released & 0.01 & 0.00 & 0.15 & 0.98 & 0.97 & 0.96 & 0.06 & 0.89 & 0.99 \\
+ENS, fine-tuned & 0.00 & 0.00 & 0.15 & 0.96 & 0.99 & 0.96 & 0.06 & 0.78 & 0.99 \\
+\midrule
+Real FPR &  &  &  &  & 0.08 & 0.13 & 0.07 & 0.10 & 0.04 \\
+\bottomrule
+\end{tabular}
+\end{table}

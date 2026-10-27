@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "scope": "Exploratory white-box pilot on the supplied historical training examples. Repeated methods do not increase the number of independent source samples. Positive-only samples do not support FPR, AUROC, population confidence intervals, or held-out generalization claims.",
+  "denominator_rule": "Originally flagged actual attempts; invalid, missing and failed outputs remain included. Controls excluded.",
+  "review_scope": "review_* and candidate_review_complete describe valid detector-flip candidates only. all_output_* separately accounts for unique valid saved files, including controls.",
+  "rows": 10,
+  "source_samples": 10,
+  "control_rows": 3,
+  "baseline_flagged_rows": 10,
+  "attempted": 7,
+  "eligible_attempts": 7,
+  "baseline_not_flagged_attempts": 0,
+  "baseline_unknown_attempts": 0,
+  "valid_eligible_attempts": 7,
+  "invalid_eligible_attempts": 0,
+  "detector_flips": 7,
+  "detector_flip_rate": 1.0,
+  "detector_flip_rate_all_attempts": 1.0,
+  "detector_flip_rate_all_rows_including_controls": 0.7,
+  "review_required": 7,
+  "review_submitted": 0,
+  "review_adjudicated": 0,
+  "review_pending": 7,
+  "confirmed_count": null,
+  "confirmed_rate": null,
+  "confirmed_rate_all_attempts": null,
+  "confirmed_rate_all_rows_including_controls": null,
+  "review_complete": false,
+  "candidate_review_complete": false,
+  "status_counts": {
+    "candidate_pending_review": 7
+  },
+  "outcome_counts": {
+    "control": 3,
+    "review_missing": 7
+  },
+  "all_output_unique_valid_files": 10,
+  "all_output_review_submitted": 0,
+  "all_output_review_not_submitted": 10,
+  "unmatched_review_rows": 0,
+  "by_method": {
+    "lstop": {
+      "rows": 10,
+      "source_samples": 10,
+      "control_rows": 3,
+      "baseline_flagged_rows": 10,
+      "attempted": 7,
+      "eligible_attempts": 7,
+      "baseline_not_flagged_attempts": 0,
+      "baseline_unknown_attempts": 0,
+      "valid_eligible_attempts": 7,
+      "invalid_eligible_attempts": 0,
+      "detector_flips": 7,
+      "detector_flip_rate": 1.0,
+      "detector_flip_rate_all_attempts": 1.0,
+      "detector_flip_rate_all_rows_including_controls": 0.7,
+      "review_required": 7,
+      "review_submitted": 0,
+      "review_adjudicated": 0,
+      "review_pending": 7,
+      "confirmed_count": null,
+      "confirmed_rate": null,
+      "confirmed_rate_all_attempts": null,
+      "confirmed_rate_all_rows_including_controls": null,
+      "review_complete": false,
+      "candidate_review_complete": false,
+      "status_counts": {
+        "candidate_pending_review": 7
+      },
+      "outcome_counts": {
+        "control": 3,
+        "review_missing": 7
+      }
+    }
+  },
+  "sample_outcomes": [
+    {
+      "filename": "peer_01.npy",
+      "method": "lstop",
+      "sha256": "8f9b0e667cb0cba449d2de6a5024968de9ad60ad1b3eed4c1836d36d242a74b6",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_02.npy",
+      "method": "lstop",
+      "sha256": "d176728dd2f8648a27d556ef8c8a2c8d8bef7f76759da93ebef7c79dd5a0e275",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_03.npy",
+      "method": "lstop",
+      "sha256": "3136c245bf36ee3b8b58c8ceedef954f8e19a0f35f88ec1d16ec94974e55c7cb",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_04.npy",
+      "method": "lstop",
+      "sha256": "702334a048ce6418c26e1fc1e2e29f365bc8bea609def992cf68fcec5343909d",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_05.npy",
+      "method": "lstop",
+      "sha256": "d9024d02f1333afa55f65ea86bb98d532d4008093ae95b20bfb05a181c68ef34",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_06.npy",
+      "method": "lstop",
+      "sha256": "9bc9a293960a86387a8de469122f262f4caee65fb3d282ee928a989491a5e3e6",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_07.npy",
+      "method": "lstop",
+      "sha256": "888db816583fbd34084b5b81317d6e6752c18ba10bfae5f27b4ac9061758b47a",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_08.npy",
+      "method": "lstop",
+      "sha256": "2b35d6d28cd7682002461ead6e2bfba3ba1bf6d2fcc8d83229985d153800638b",
+      "review_matched": false,
+      "review_status": "control",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_09.npy",
+      "method": "lstop",
+      "sha256": "1062a70f36c6edd198bb0d1554f1cb10ef4bafdaf5911ca8d2dcc731e763feba",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    },
+    {
+      "filename": "peer_10.npy",
+      "method": "lstop",
+      "sha256": "96f7d4f8601d28f7bbb1471645b99fabcc50215390efd5b168e7c1f08e43d8b7",
+      "review_matched": false,
+      "review_status": "review_missing",
+      "confirmed": null
+    }
+  ],
+  "artifact_audit": {
+    "expected_files": 10,
+    "missing": [],
+    "extra": [],
+    "complete": true,
+    "valid_files": 10
+  },
+  "protocol_status": "confirmed",
+  "formal_perturbations_executed": true,
+  "source_exposure": "historical_training_examples_exploratory_only",
+  "official_verification": {
+    "exit_code": 0,
+    "verified_samples": 10,
+    "max_adapter_score_difference": 0.0,
+    "execution_mode": "unchanged_script_runpy",
+    "standalone_command": [
+      "/opt/anaconda3/envs/fit5230m2/bin/python",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/predecodeguard/PreDecodeGuard_ModelBreakers_Pilot_v1/score.py",
+      "--returned",
+      "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/peer_eval/predecodeguard/artifacts/local_reproduction_2026-10-18/runs/replay_20261018_141034_zm60gfeh/run/returned"
+    ],
+    "stdout_sha256": "7bd39c04444196a75935a9249878f69648b974c7888b72d922ff0ede6ffc8916"
+  }
+}

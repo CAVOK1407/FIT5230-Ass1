@@ -1,0 +1,33 @@
+{
+  "status": "verified",
+  "variants": {
+    "PGD10": {
+      "0000": "94a7fa7f59533f6c82a733ea1ffa2c6a79e3d9412afeabc870e0ed827170179c"
+    },
+    "PGD10_MATCHED": {
+      "0000": "ddadfc8ed1a2f48095cbb113dfa0c265bf70d6e5786e09804e8159a13f9a3932"
+    }
+  },
+  "created_at": "2026-10-18T17:13:09.114017+08:00",
+  "images_root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/implementation_smoke_4w5v5cno/input",
+  "device": "mps",
+  "n_images": 1,
+  "budget_pixels": 8,
+  "lpips_cap": 0.03,
+  "margin_buffer": 0.1,
+  "refinement_steps": 5,
+  "surrogates": "E",
+  "evaluate": "E",
+  "model_training": false,
+  "source_sha256": {
+    "0000.png": "ebcc681410116133a9839d8b2e4dd4020af3851b0b08218b14570aa2c779dd0e"
+  },
+  "runtime_source_sha256": {
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd_v2.py": "ec9fd2a888990d7de54a52840d68f4e989bcf8ca11789327da7f1f2b535729ae",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_pgd.py": "210690d4561380584ea0d98cce2f0ee28b64579bd99b304745b4ae97e3574bbf",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_budget.py": "4e2eda22adea1179f7acfe0908a6dd2f5024a9de587a30073f3e9cf96112d31b",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m2_device.py": "1daf2a23e8802de4014092cfd677509c988d8af7acdfbd099ea2bc58d5e6634c",
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/other_attacks.py": "cb46e1185518527d87a9f3f8f978288110773206277174dbb49c98c8b18c4a15"
+  },
+  "timing_note": "Both outputs share one ten-step computation; seconds is shared wall time including five possible refinement forwards and two saved-PNG verifications, not an independent matched-method benchmark"
+}

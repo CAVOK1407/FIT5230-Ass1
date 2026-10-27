@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-10-18T17:58:16.618029+08:00",
+  "scope": "Report-only floating-point consistency check; no attack, output, protocol or statistical changes",
+  "original_report_path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v2_report.py",
+  "original_report_sha256": "b0c92e0d13d47fb0bbfd8dccc596d855f980ab74350e0ac396d5107b1b50d107",
+  "patched_report_path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report_recovery/m3_lao_v2_report_numeric_compat.py",
+  "patched_report_sha256": "86493dcd58acccc69ea4ca07dd67a3607496e820ba840a3ca9e5394eefedb871",
+  "batching_audit_sha256": "e59a2c9325c022280cb0875bf346eba5050f67f7c6f3c9430c1e62fde72f0fdd",
+  "only_tolerance_change": {
+    "field": "real_margin",
+    "absolute_before": 1e-05,
+    "absolute_after": 2e-05,
+    "relative_unchanged": 1e-05
+  },
+  "unchanged": "PNG and evaluation files; predictions; margin stop-rule decisions; quality/budget/mean guards; paired statistics; all 36 frozen runtime sources",
+  "evidence": "All 50 single-image scores exactly reproduced stored values, all 50 batch16 scores exactly reproduced independent evaluation. Only0041 exceeds old tolerance; max difference 1.017749309539795e-5."
+}

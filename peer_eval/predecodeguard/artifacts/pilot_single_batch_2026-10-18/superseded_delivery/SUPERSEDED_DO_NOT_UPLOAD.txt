@@ -1,0 +1,7 @@
+SUPERSEDED - DO NOT UPLOAD
+
+The final peer reply requests 7 early-stopped PGD outputs plus 3 unchanged controls, shuffled filenames, and scores/mapping withheld until review.
+The user confirmed that this earlier 8+2 package was never sent.
+Its contents and original run records are preserved for provenance, but it is not the current delivery.
+
+Use deliverables/PreDecodeGuard_Blind_7plus3_v2_2026-10-18.zip instead.

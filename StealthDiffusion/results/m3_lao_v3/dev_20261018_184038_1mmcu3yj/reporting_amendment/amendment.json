@@ -1,0 +1,21 @@
+{
+  "status": "verified",
+  "created_at": "2026-10-18T19:57:35.657620+08:00",
+  "scope": "Report consistency check only: E margin relative tolerance 1e-6 to 1e-5; absolute tolerance remains 2e-5. Align with existing core saved-image check. No optimization, budget, quality, decision threshold, scores, output PNGs or selection changes.",
+  "observed_max_margin_difference": 2.6702880859375e-05,
+  "prediction_changes": 0,
+  "stop_margin_decision_changes": 0,
+  "changed_source": [
+    "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/m3_lao_v3_report.py"
+  ],
+  "source_before": "29d84ee9890957c090ac6686f460063937e9f33fce1f8f05b1d6ae2e712ff5fc",
+  "source_after": "f52517a4bbfc4fa816c0fcb7b0138bbdaa5edac755570333ab9e2880dd25d335",
+  "selection_audit_sha256": "0648ed21723b51232baa4894218af7d8560db9843ff271208ecc80fc56626999",
+  "tests": "111 unittest tests passed",
+  "artifacts": {
+    "report_only.patch": "7a7a6011e78672e94904b5dfffbe4cd399e9c222f10c1f184f4122be656b4693",
+    "report_before.py": "29d84ee9890957c090ac6686f460063937e9f33fce1f8f05b1d6ae2e712ff5fc",
+    "111_tests.log": "5f449e87f0a7e48242943afe5e9f07cd64510ea6995111fcc121b6a3d256d2ee",
+    "report_after.py": "f52517a4bbfc4fa816c0fcb7b0138bbdaa5edac755570333ab9e2880dd25d335"
+  }
+}

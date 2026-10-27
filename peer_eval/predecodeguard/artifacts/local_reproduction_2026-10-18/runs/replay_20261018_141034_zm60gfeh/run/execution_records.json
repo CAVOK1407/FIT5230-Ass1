@@ -1,0 +1,42 @@
+{
+  "peer_01.npy": {
+    "steps": 0,
+    "seconds": 0.0002961249556392431
+  },
+  "peer_02.npy": {
+    "steps": 0,
+    "seconds": 0.0002133749658241868
+  },
+  "peer_03.npy": {
+    "steps": 6,
+    "seconds": 0.06092116690706462
+  },
+  "peer_04.npy": {
+    "steps": 2,
+    "seconds": 0.01966037496458739
+  },
+  "peer_05.npy": {
+    "steps": 5,
+    "seconds": 0.041611584019847214
+  },
+  "peer_06.npy": {
+    "steps": 8,
+    "seconds": 0.0649544580373913
+  },
+  "peer_07.npy": {
+    "steps": 2,
+    "seconds": 0.018765166983939707
+  },
+  "peer_08.npy": {
+    "steps": 0,
+    "seconds": 0.0003226250410079956
+  },
+  "peer_09.npy": {
+    "steps": 1,
+    "seconds": 0.011663250043056905
+  },
+  "peer_10.npy": {
+    "steps": 3,
+    "seconds": 0.026191500015556812
+  }
+}

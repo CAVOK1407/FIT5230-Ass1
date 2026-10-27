@@ -1,0 +1,39 @@
+{
+  "status": "prepared_not_executed",
+  "formal_perturbations_executed": false,
+  "protocol_status": "awaiting_peer_confirmation",
+  "proposal_sha256": "a6f83b367f4510be4581d9322caf9061ad9fa3371dfc4b65043604e05fbcf359",
+  "independent_source_samples": 10,
+  "requested_return_batches": 3,
+  "requested_return_files": 30,
+  "requested_review_images": 40,
+  "experiments": [
+    {
+      "method": "random",
+      "steps": 40,
+      "alpha": 0.01,
+      "seed": 42,
+      "control_filenames": [],
+      "attempted_samples": 10,
+      "epsilon": 0.1
+    },
+    {
+      "method": "lpgd",
+      "steps": 40,
+      "alpha": 0.01,
+      "seed": 42,
+      "control_filenames": [],
+      "attempted_samples": 10,
+      "epsilon": 0.1
+    },
+    {
+      "method": "lstop",
+      "steps": 40,
+      "alpha": 0.01,
+      "seed": 42,
+      "control_filenames": [],
+      "attempted_samples": 10,
+      "epsilon": 0.1
+    }
+  ]
+}

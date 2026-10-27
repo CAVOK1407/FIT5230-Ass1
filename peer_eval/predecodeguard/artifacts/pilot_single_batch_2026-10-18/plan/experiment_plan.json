@@ -1,0 +1,25 @@
+{
+  "status": "prepared_not_executed",
+  "formal_perturbations_executed": false,
+  "protocol_status": "confirmed",
+  "proposal_sha256": "78c0d1af923b1736c2d83103b488beba861162d4600d1b92c23e1d013a276fc7",
+  "independent_source_samples": 10,
+  "requested_return_batches": 1,
+  "requested_return_files": 10,
+  "requested_review_images": 20,
+  "experiments": [
+    {
+      "method": "lstop",
+      "steps": 40,
+      "alpha": 0.01,
+      "seed": 42,
+      "early_stop_margin": 0.001,
+      "control_filenames": [
+        "peer_01.npy",
+        "peer_08.npy"
+      ],
+      "attempted_samples": 8,
+      "epsilon": 0.1
+    }
+  ]
+}

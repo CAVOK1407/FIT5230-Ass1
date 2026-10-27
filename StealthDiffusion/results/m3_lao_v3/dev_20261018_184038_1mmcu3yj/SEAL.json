@@ -1,0 +1,8 @@
+{
+  "status": "verified",
+  "created_at": "2026-10-18T19:57:35.743873+08:00",
+  "files": 548,
+  "manifest_sha256": "5852fbc3899ab4a6bdcd06de8eb5b88791494c1e4cf9cac47096d113e7dc8245",
+  "active_freeze": "freeze_amended.json",
+  "active_freeze_sha256": "3cb6d0b4f480a5c82d5d60042748942f304829082419d8171fb0c705d267cdd9"
+}

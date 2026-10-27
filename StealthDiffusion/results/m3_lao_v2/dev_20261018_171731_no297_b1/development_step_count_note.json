@@ -1,0 +1,8 @@
+{
+  "status": "verified",
+  "scope": "Development informational step-count correction only; no outputs, selection or frozen artifacts modified",
+  "recorded_old_lao_export_counter": 0,
+  "actual_old_lao_gradient_steps": 100,
+  "source_records": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_dev/pilot_20261018_152125_odws2fqx/G1/records.jsonl",
+  "reason": "Budget-export records omit optimization history; read original raw LAO history for computation cost. Candidate ranking compares only Q configurations and is unaffected."
+}

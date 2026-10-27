@@ -1,0 +1,37 @@
+{
+  "frozen_at_utc": "2026-10-21T08:07:44.881419+00:00",
+  "strategy": "Spectral Fingerprint Alignment",
+  "strategy_author": "LIU JUNPENG",
+  "modes": [
+    "PGD",
+    "SFA",
+    "SPEC"
+  ],
+  "surrogates": [
+    "E",
+    "R"
+  ],
+  "evaluation_only": [
+    "D",
+    "S"
+  ],
+  "ai_class": 0,
+  "budget_levels": 8,
+  "alpha": 0.00784313725490196,
+  "steps": 50,
+  "lambda": 30.0,
+  "lambda_source": "Prespecified from teammate synthetic development; no project test tuning",
+  "default_generated_test_count": 10,
+  "generated_selection": "First 10 sorted PNGs from archived course gen/test; all results retained",
+  "real_reference": "All 10 real/dev PNGs",
+  "real_evaluation": "All 100 real/test PNGs",
+  "image_size": [
+    224,
+    224
+  ],
+  "initialization": "zero",
+  "parameter_training": false,
+  "paper_experiments_included": false,
+  "peer_sfa_execution": false,
+  "interpretation": "Small demonstration on existing course images, not new held-out validation. Same strict saved-PNG 8/255 budget applies to the three pixel-space methods only."
+}

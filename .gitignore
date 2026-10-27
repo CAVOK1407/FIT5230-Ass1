@@ -22,3 +22,12 @@ venv/
 /StealthDiffusion/data/imagenette2-320*
 /StealthDiffusion/results/m3_*/**/*.png
 /StealthDiffusion/results/m3_logs/
+
+# M3 LAO v1-v3 and M4: image outputs and fine-tuned weights stay local; records, logs and CSV summaries are kept
+/StealthDiffusion/results/**/*.png
+/StealthDiffusion/results/**/*.pt
+/StealthDiffusion/results/m4_cvae_v1_failed/
+/StealthDiffusion/results/m3_lao_*/**/data/
+
+# LPIPS VGG weights are downloaded by the code on first run (528 MB)
+/StealthDiffusion/.cache/

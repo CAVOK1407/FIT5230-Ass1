@@ -1,0 +1,11 @@
+image_id,class,wnid,source
+0000,tench,n01440764,imagenette2-320/val/n01440764/n01440764_24502.JPEG
+0001,English springer spaniel,n02102040,imagenette2-320/val/n02102040/n02102040_5890.JPEG
+0002,cassette player,n02979186,imagenette2-320/val/n02979186/n02979186_1281.JPEG
+0003,chain saw,n03000684,imagenette2-320/val/n03000684/n03000684_13352.JPEG
+0004,church,n03028079,imagenette2-320/val/n03028079/n03028079_59261.JPEG
+0005,French horn,n03394916,imagenette2-320/val/n03394916/n03394916_29842.JPEG
+0006,garbage truck,n03417042,imagenette2-320/val/n03417042/n03417042_15482.JPEG
+0007,gas pump,n03425413,imagenette2-320/val/n03425413/n03425413_15291.JPEG
+0008,golf ball,n03445777,imagenette2-320/val/n03445777/n03445777_7652.JPEG
+0009,unknown,n03888257,imagenette2-320/val/n03888257/n03888257_25420.JPEG

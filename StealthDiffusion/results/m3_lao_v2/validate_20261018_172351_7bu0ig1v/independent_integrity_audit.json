@@ -1,0 +1,142 @@
+{
+  "status": "complete",
+  "updated_at": "2026-10-18T18:02:51.203264+08:00",
+  "root": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v",
+  "model_execution": false,
+  "source_edits": false,
+  "scope": "artifact, budget, provenance, gradient and counterfactual integrity only; no score-driven changes",
+  "completed": {
+    "raw_reconstruction_images": 50,
+    "raw_lao_images": 50,
+    "raw_lao_finite_nonzero_gradient_and_update_steps": 500,
+    "canonical_source_groups_verified": 4,
+    "canonical_source_images_per_group": 50,
+    "raw_resets_equal_independent_baseline_bytewise": 50,
+    "projected_resets_equal_independent_projected_baseline_bytewise": 50,
+    "projected_export_images_strict_budget_and_exact_projection": 100,
+    "projection_statistics_and_hashes_verified": 100,
+    "frozen_source_files_verified": 36
+  },
+  "new_zero": {
+    "status": "complete",
+    "records_verified": 50,
+    "expected": 50,
+    "new_vs_old_zero_and_real_reset_bytewise_matches": 50,
+    "zero_optimizer_steps": true,
+    "actual_renderer_calls_per_image": 2
+  },
+  "pending": [],
+  "limitations": [
+    "Finite logged gradients audited against frozen source; no independent model/gradient recomputation was performed.",
+    "No detector outcomes were used to select images or change the frozen candidate."
+  ],
+  "new_lao": {
+    "status": "complete",
+    "frozen_candidate_verified": {
+      "max_iterations": 40,
+      "lr": 0.02
+    },
+    "images": 50,
+    "gradient_updates": 290,
+    "finite_nonzero_gradient_updates": 290,
+    "refinement_evaluations": 240,
+    "refined_images": 48,
+    "stopping_rule_satisfied_all_inputs": 48,
+    "fallback_failures_all_inputs": 2,
+    "fallback_without_quality_candidate": 0,
+    "zero_update_images": 9,
+    "reset_bytewise_matches_independent_new_and_old_zero": 50,
+    "selected_saved_pixels_and_policy_checks": 50,
+    "pixel_psnr_max_error": 0,
+    "record_forward_and_saved_rescore_consistent": 50,
+    "counter_semantics": "Stopping-rule counts include all 50 inputs, including any clean-detector misses; they are not eligible attack-success rates.",
+    "independent_eval_consistency": {
+      "status": "complete",
+      "images": 50,
+      "predictions_agree": 50,
+      "max_E_margin_abs_error": 1.017749309539795e-05,
+      "max_lpips_abs_error": 0,
+      "max_psnr_abs_error": 7.105427357601002e-15,
+      "evaluation_csv_sha256": "fa0e4c4dff8bdc84ef1432b6cae96e44c89bc5db331335a7871a69f793d4c94c"
+    }
+  },
+  "verification_outcome": "passed_with_documented_report_only_numerical_amendment",
+  "external_evidence": {
+    "independent_statistics_audit.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/independent_statistics_audit.json",
+      "sha256": "e4352507dd2d116db0876a925dbec3448fac40bbf0403e1cd32f2c59b7c4bb12"
+    },
+    "independent_pgd_audit.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/independent_pgd_audit.json",
+      "sha256": "55948aeaf671a1c4687ff2764962e4a3ddedf31426246091fa052190b8722608"
+    },
+    "independent_data_audit.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/independent_data_audit.json",
+      "sha256": "d1236a9aedc7a678c5a6efcbf4d42ddbc1d08fe5475d2b089e0093af205c2dcf"
+    },
+    "report/report.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report/report.json",
+      "sha256": "f535a1c4e409ef938ee7e7941f1d3c6752fcfbffcb011d8f71293980d4ebc57d"
+    },
+    "report_recovery/amendment.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report_recovery/amendment.json",
+      "sha256": "746b45944b50d48b5181c30caea358f5ef1d2d6fcb3c173f79c7e5889db902ab"
+    },
+    "report_recovery/batching_audit.json": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report_recovery/batching_audit.json",
+      "sha256": "e59a2c9325c022280cb0875bf346eba5050f67f7c6f3c9430c1e62fde72f0fdd"
+    },
+    "report.log": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/report.log",
+      "sha256": "bb4024991c1246d7327fc70abd3f4b5adbafa957fc827d0f64d0bbde85f840db"
+    },
+    "eval/per_image.csv": {
+      "path": "/Users/wangyunjie/Documents/ChatGPT/FIT5230/github/FIT5230-Ass1/StealthDiffusion/results/m3_lao_v2/validate_20261018_172351_7bu0ig1v/eval/per_image.csv",
+      "sha256": "fa0e4c4dff8bdc84ef1432b6cae96e44c89bc5db331335a7871a69f793d4c94c"
+    }
+  },
+  "separate_pgd_audit": {
+    "status": "verified",
+    "reference": "independent_pgd_audit.json",
+    "outputs_verified": 100,
+    "canonical_inputs": 50,
+    "scope": "Artifact, strict-budget, final-iterate, prefix/refinement and selection verification accepted by reference; not rerun here."
+  },
+  "statistics_audit": {
+    "status": "independently_verified",
+    "reference": "independent_statistics_audit.json",
+    "report_consistent": true,
+    "primary_counts_match": true
+  },
+  "report_recovery": {
+    "status": "verified",
+    "original_margin_check_failure": {
+      "log": "report.log",
+      "message": "[LAO v2 report] Selected PNG real_margin differs from independent evaluation: 0041",
+      "image_id": "0041",
+      "single_image_stored_margin": 0.13082219660282135,
+      "batch16_evaluation_margin": 0.13083237409591675,
+      "absolute_difference": 1.017749309539795e-05,
+      "original_abs_tolerance": 1e-05,
+      "original_rel_tolerance": 1e-05
+    },
+    "saved_png_batching_rescore_evidence": {
+      "source": "report_recovery/batching_audit.json",
+      "n": 50,
+      "single_exactly_reproduces_stored": 50,
+      "batch16_exactly_reproduces_evaluation": 50,
+      "predictions_and_margin_buffer_decisions_unchanged": true
+    },
+    "separate_report_copy_amendment": {
+      "field": "real_margin",
+      "absolute_before": 1e-05,
+      "absolute_after": 2e-05,
+      "relative_unchanged": 1e-05
+    },
+    "frozen_original_report_and_all_36_runtime_sources_unchanged": true,
+    "protocol_unchanged": true,
+    "no_attack_rerun": true,
+    "no_png_or_evaluation_change": true,
+    "final_report_status": "verified"
+  }
+}

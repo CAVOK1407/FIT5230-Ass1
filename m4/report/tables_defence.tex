@@ -1,0 +1,97 @@
+\begin{table}[!t]
+\caption{Real-vs-AI margin $m$ (logit\textsubscript{real} $-$ logit\textsubscript{AI}) on lossless PNG. Real: 100 Imagenette photographs. Attacked: SD\,1.5 images caught before the attack (denominator of M3). ``$>$max'' is the fraction of attacked images whose margin exceeds the largest real-image margin.}
+\label{tab:margins}
+\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{l rrr rr rr rr}
+\toprule
+ & \multicolumn{3}{c}{Real} & \multicolumn{2}{c}{Official} & \multicolumn{2}{c}{ENS} & \multicolumn{2}{c}{CAP-ENS} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Det. & min & med & max & med & $>$max & med & $>$max & med & $>$max \\
+\midrule
+E & 0.2 & 11.0 & 46.9 & 153.0 & 0.99 & 155.0 & 0.97 & 20.7 & 0.09 \\
+R & -0.2 & 9.0 & 17.2 & 1.3 & 0.00 & 26.4 & 0.90 & 9.7 & 0.04 \\
+D & -0.5 & 6.1 & 9.8 & -0.8 & 0.00 & 9.1 & 0.03 & 2.0 & 0.00 \\
+S & 5.8 & 10.5 & 11.3 & 5.5 & 0.00 & 6.1 & 0.00 & -0.4 & 0.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\caption{Defence 1, two-sided test on lossless PNG. Upper bound $U$ = largest margin of the calibration real images (two-fold cross-fitting on 100 real images). Cells: conditional ASR before $\rightarrow$ after adding the rule $m > U \Rightarrow$ AI. Last row: real-image false positive rate before $\rightarrow$ after.}
+\label{tab:twosided}
+\centering\footnotesize
+\begin{tabular}{l cccc}
+\toprule
+Attack & E & R & D & S \\
+\midrule
+PGD-8 & 1.00$\rightarrow$0.00 & 0.80$\rightarrow$0.80 & 0.38$\rightarrow$0.38 & 0.99$\rightarrow$0.99 \\
+Official & 1.00$\rightarrow$0.01 & 0.77$\rightarrow$0.77 & 0.39$\rightarrow$0.39 & 0.90$\rightarrow$0.90 \\
+ENS & 1.00$\rightarrow$0.03 & 1.00$\rightarrow$0.05 & 1.00$\rightarrow$0.94 & 0.97$\rightarrow$0.97 \\
+FULL & 1.00$\rightarrow$0.02 & 1.00$\rightarrow$0.04 & 1.00$\rightarrow$0.93 & 0.97$\rightarrow$0.97 \\
+EOT-ENS & 1.00$\rightarrow$0.00 & 1.00$\rightarrow$0.16 & 1.00$\rightarrow$0.96 & 0.97$\rightarrow$0.97 \\
+CAP-E & 1.00$\rightarrow$0.85 & 0.13$\rightarrow$0.13 & 0.01$\rightarrow$0.01 & 0.30$\rightarrow$0.30 \\
+CAP-ENS & 1.00$\rightarrow$0.85 & 1.00$\rightarrow$0.87 & 0.66$\rightarrow$0.66 & 0.44$\rightarrow$0.44 \\
+\midrule
+Real FPR & 0.00$\rightarrow$0.02 & 0.01$\rightarrow$0.07 & 0.01$\rightarrow$0.02 & 0.00$\rightarrow$0.03 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\caption{Defence 2, pre-process then detect with the \emph{unchanged} threshold. Attack = ENS (strongest M2/M3 variant). Left: fraction of the 100 attacked images flagged as AI. Right: real-image false positive rate under the same pre-processing. ``Sys'' = flag if any of the four detectors flags.}
+\label{tab:preprocess}
+\centering\footnotesize\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{l ccccc ccccc}
+\toprule
+ & \multicolumn{5}{c}{Attacked flagged (ENS)} & \multicolumn{5}{c}{Real FPR} \\
+\cmidrule(lr){2-6}\cmidrule(lr){7-11}
+Pre-proc. & E & R & D & S & Sys & E & R & D & S & Sys \\
+\midrule
+none (PNG) & 0.00 & 0.00 & 0.00 & 0.03 & 0.03 & 0.00 & 0.01 & 0.01 & 0.00 & 0.02 \\
+JPEG 95 & 0.00 & 0.00 & 0.05 & 0.24 & 0.24 & 0.03 & 0.07 & 0.06 & 0.24 & 0.30 \\
+JPEG 75 & 0.07 & 0.33 & 0.93 & 0.88 & 0.97 & 0.11 & 0.27 & 0.30 & 0.63 & 0.74 \\
+JPEG 50 & 0.37 & 0.66 & 0.98 & 0.96 & 1.00 & 0.27 & 0.46 & 0.43 & 0.87 & 0.91 \\
+resize 0.75 & 0.99 & 0.89 & 0.95 & 0.38 & 1.00 & 0.80 & 0.80 & 0.93 & 0.15 & 1.00 \\
+resize 0.5 & 0.98 & 0.94 & 0.99 & 0.31 & 1.00 & 0.96 & 0.97 & 0.98 & 0.24 & 1.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table*}[!t]
+\caption{Defence 3, calibrated two-sided thresholds ($L$ = 5\% quantile, $U$ = max of calibration real images, two-fold cross-fitting) and a 2-of-4 vote. Cells: fraction of the 100 attacked images flagged as AI. ``Clean'': un-attacked generated images flagged. ``Real FPR'': held-out real photographs flagged. Rows: pre-processing applied before detection (calibration is repeated under the same pre-processing).}
+\label{tab:calibrated}
+\centering
+\begin{tabular}{l ccccccc cc}
+\toprule
+Pre-proc. & PGD-8 & Official & ENS & FULL & EOT-ENS & CAP-E & CAP-ENS & Clean & Real FPR \\
+\midrule
+none (PNG) & 0.99 & 0.99 & 0.99 & 0.99 & 0.99 & 1.00 & 0.59 & 1.00 & 0.04 \\
+JPEG 95 & 0.75 & 0.90 & 0.96 & 0.95 & 0.88 & 0.89 & 0.73 & 0.95 & 0.05 \\
+JPEG 75 & 0.78 & 0.79 & 0.51 & 0.54 & 0.69 & 0.78 & 0.74 & 0.86 & 0.06 \\
+JPEG 50 & 0.71 & 0.69 & 0.56 & 0.50 & 0.49 & 0.81 & 0.80 & 0.85 & 0.07 \\
+resize 0.75 & 0.41 & 0.38 & 0.42 & 0.40 & 0.41 & 0.45 & 0.41 & 0.48 & 0.03 \\
+resize 0.5 & 0.12 & 0.10 & 0.12 & 0.14 & 0.12 & 0.14 & 0.13 & 0.12 & 0.07 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table}[!t]
+\caption{Defence 3 on lossless PNG, per detector (same thresholds as Table~\ref{tab:calibrated}). Fraction of attacked images flagged; last row real FPR.}
+\label{tab:calibrated_det}
+\centering
+\begin{tabular}{l cccc c}
+\toprule
+Attack & E & R & D & S & 2-of-4 \\
+\midrule
+PGD-8 & 1.00 & 0.56 & 0.78 & 0.98 & 0.99 \\
+Official & 0.99 & 0.58 & 0.80 & 0.93 & 0.99 \\
+ENS & 0.97 & 0.96 & 0.06 & 0.89 & 0.99 \\
+FULL & 0.98 & 0.97 & 0.07 & 0.88 & 0.99 \\
+EOT-ENS & 1.00 & 0.86 & 0.04 & 0.88 & 0.99 \\
+CAP-E & 0.19 & 0.93 & 1.00 & 1.00 & 1.00 \\
+CAP-ENS & 0.15 & 0.17 & 0.41 & 1.00 & 0.59 \\
+\midrule
+Real FPR & 0.08 & 0.13 & 0.07 & 0.10 & 0.04 \\
+\bottomrule
+\end{tabular}
+\end{table}
